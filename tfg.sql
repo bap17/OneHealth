@@ -87,7 +87,7 @@ CREATE TABLE `Consulta` (
   PRIMARY KEY (`id`,`historial`),
   KEY `consulta_historial` (`historial`),
   CONSTRAINT `consulta_historial` FOREIGN KEY (`historial`) REFERENCES `Historial_Clinico` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +96,7 @@ CREATE TABLE `Consulta` (
 
 LOCK TABLES `Consulta` WRITE;
 /*!40000 ALTER TABLE `Consulta` DISABLE KEYS */;
+INSERT INTO `Consulta` VALUES (1,5,'2018-06-22','Dolor en el culo xd','Herpes','Herpes en el culo','pomadas'),(2,5,'2018-06-29','Dolor en el culo xd','Herpes','Herpes en el culo','pomadas');
 /*!40000 ALTER TABLE `Consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,6 +223,7 @@ DROP TABLE IF EXISTS `Medico`;
 CREATE TABLE `Medico` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `especialidad` varchar(300) NOT NULL,
+  `validado` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `medico_usuario` FOREIGN KEY (`id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -233,7 +235,7 @@ CREATE TABLE `Medico` (
 
 LOCK TABLES `Medico` WRITE;
 /*!40000 ALTER TABLE `Medico` DISABLE KEYS */;
-INSERT INTO `Medico` VALUES (3,'Familia');
+INSERT INTO `Medico` VALUES (3,'Familia',NULL);
 /*!40000 ALTER TABLE `Medico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,13 +250,13 @@ CREATE TABLE `Mensaje` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `origen` int(11) NOT NULL,
   `destino` int(11) NOT NULL,
-  `texto` varchar(300) NOT NULL,
+  `texto` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`,`origen`,`destino`),
   KEY `mensaje_origen` (`origen`),
   KEY `mensaje_destino` (`destino`),
   CONSTRAINT `mensaje_destino` FOREIGN KEY (`destino`) REFERENCES `Usuario` (`id`),
   CONSTRAINT `mensaje_origen` FOREIGN KEY (`origen`) REFERENCES `Usuario` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,6 +265,7 @@ CREATE TABLE `Mensaje` (
 
 LOCK TABLES `Mensaje` WRITE;
 /*!40000 ALTER TABLE `Mensaje` DISABLE KEYS */;
+INSERT INTO `Mensaje` VALUES (1,3,4,'Que pasa loca, una consulta rapida? xd'),(2,3,4,'siempre arriba');
 /*!40000 ALTER TABLE `Mensaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,7 +337,8 @@ CREATE TABLE `Usuario` (
   `username` varchar(45) NOT NULL,
   `password` varchar(900) NOT NULL,
   `salt` varchar(300) DEFAULT NULL,
-  `telefono` int(11) DEFAULT NULL,
+  `key` varchar(300) DEFAULT NULL,
+  `disponible` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -345,7 +349,7 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES (3,NULL,NULL,'andre@gmail.com','andre','fGov0ImNIduzsWQRQy5hY7nB44SzNbt3nopP1XTkPMQmvA42/k7q9VXqSw0x3ex/DpOfZBfS0PB4m9fmiPgFyQ==','j03X2FQmWJjQmxtOVx9K0zFLgXHFdFxZr25w6f0ktTo6nJQ7/s7whFUK5xS9g71Tgfol/0o3eXx93sttz0h9MQ==',NULL),(4,NULL,NULL,'bea@gmail.com','bea','Zf3yfCSKC+kfnDNVONjSu55Mg42htDM7rNJhoBYI1N/myvDssBN1U8M3Xsles/EIx5Xrdyn1chQEGyF1suPn/g==','HvmuWwCzfj+Nlu3lC1IBMvcYadUwRaCi+IuRwO8iWIt4vJQFn+I6yxkced9sdZTA3o6dV/D9FqJQsQXGzfD0JQ==',NULL),(5,NULL,NULL,'sergio@gmail.com','sergio','UbGOvDNrH+pwUB7oRDgoUi3CW80bWzexfsxhwy/mTeZFi5lrGT3hih4VgBhc4rKwSjr+taKEopgqGXkaWc2qvQ==','4tQ/UOO40E+6R5LLAfbQTx9wU9L9u3AG+b65Rh+uhdYi57EcZr/619fQa8QoKgW9UssqlatUpiSHpSGN7tdfEQ==',NULL);
+INSERT INTO `Usuario` VALUES (3,'Roberto Andre','Vega','andre@gmail.com','andre','vmM8TBpjuWaF3p4xOdWRqSpnp07XUIjHmiG0nHxUz8Q928ogVfYUT9DeO5BTi2dZ9pewLzUnTQ6cYjG55Dm3GQ==','k3xAeuM0MQ+X5uWLxcPjhcpqVcMtO62TYgYQ3zVleEef6o6ozuikH/0ZgZAWRNKRISAbgH3XZcUSXzupPuTPZw==',NULL,NULL),(4,'Beatriz','Asensi','bea@gmail.com','bea','Zf3yfCSKC+kfnDNVONjSu55Mg42htDM7rNJhoBYI1N/myvDssBN1U8M3Xsles/EIx5Xrdyn1chQEGyF1suPn/g==','HvmuWwCzfj+Nlu3lC1IBMvcYadUwRaCi+IuRwO8iWIt4vJQFn+I6yxkced9sdZTA3o6dV/D9FqJQsQXGzfD0JQ==',NULL,NULL),(5,'Sergio Julio','Garcia','sergio@gmail.com','sergio','UbGOvDNrH+pwUB7oRDgoUi3CW80bWzexfsxhwy/mTeZFi5lrGT3hih4VgBhc4rKwSjr+taKEopgqGXkaWc2qvQ==','4tQ/UOO40E+6R5LLAfbQTx9wU9L9u3AG+b65Rh+uhdYi57EcZr/619fQa8QoKgW9UssqlatUpiSHpSGN7tdfEQ==',NULL,NULL);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -358,11 +362,11 @@ DROP TABLE IF EXISTS `Video`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Video` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cita` int(11) NOT NULL,
+  `consulta` int(11) NOT NULL,
   `video` varchar(300) NOT NULL,
-  PRIMARY KEY (`id`,`cita`),
-  KEY `video_cita` (`cita`),
-  CONSTRAINT `video_cita` FOREIGN KEY (`cita`) REFERENCES `Cita` (`id`)
+  PRIMARY KEY (`id`,`consulta`),
+  KEY `video_cita_idx` (`consulta`),
+  CONSTRAINT `video_consulta` FOREIGN KEY (`consulta`) REFERENCES `Consulta` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -384,4 +388,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-06-27 11:50:42
+-- Dump completed on 2018-07-02 18:38:41
