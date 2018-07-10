@@ -70,7 +70,7 @@ exports.verMensajesRecibidos=function(pet,resp){
 
 exports.borrarMensaje=function(pet,resp){
     var id = pet.params.id
-    var idMen = pet.params.mensaje
+    var idMen = pet.params.idMen
 
     if(id==undefined){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
@@ -80,15 +80,12 @@ exports.borrarMensaje=function(pet,resp){
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('DELETE * FROM Mensaje WHERE id=?',[idMen],function (err, results2) {//TODO: comprobar que sea el origen
+                    connection.query('DELETE FROM Mensaje WHERE id=?',[idMen],function (err, results2) {//TODO: comprobar que sea el origen
                         if(err) {
-                            resp.status(500).send({message: "Error en el servidor"})
+                            resp.status(500).send({message: err})
                         } else {
-                            if(results2.length > 0) {
-                                resp.status(200).send({message: "Mensaje borrado"})
-                            } else {
-                                resp.status(404).send({message: "No existe el mensaje"})
-                            }
+                            resp.status(200).send({message: "Mensaje borrado", results2})
+                            
                         }
                     })
                 } else {
