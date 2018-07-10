@@ -8,6 +8,7 @@ var usuario = require('../controllers/usuarioController')
 var consulta = require('../controllers/consultaController')
 var mensaje = require('../controllers/mensajesController')
 var cita = require('../controllers/citaController')
+var webrtc = require('../controllers/webrtcController')
 
 router.get('/',function (pet,resp){
     resp.status(200).send({message: 'Bienvenido'})
@@ -40,5 +41,11 @@ router.put('/usuario/:id/password', midd.isAuth,usuario.updatePassword)
 router.post('/usuario/:id/mensaje', midd.isAuth, mensaje.nuevoMensaje)
 router.get('/usuario/:id/mensaje', midd.isAuth, mensaje.verMensajesRecibidos)
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
+
+/**
+ * WebRTC
+ */
+router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
+router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
 
 module.exports = router
