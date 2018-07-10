@@ -56,7 +56,7 @@ CREATE TABLE `Cita` (
   KEY `cita_medico` (`medico`),
   CONSTRAINT `cita_medico` FOREIGN KEY (`medico`) REFERENCES `Medico` (`id`),
   CONSTRAINT `cita_paciente` FOREIGN KEY (`paciente`) REFERENCES `Paciente` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `Cita` (
 
 LOCK TABLES `Cita` WRITE;
 /*!40000 ALTER TABLE `Cita` DISABLE KEYS */;
-INSERT INTO `Cita` VALUES (1,'2018-12-12','19:30:00',5,3),(2,'2018-06-22','20:37:00',5,3);
+INSERT INTO `Cita` VALUES (2,'2018-06-22','20:37:00',10,3),(3,'2018-07-05','17:40:00',5,3),(4,'2018-07-09','17:37:00',5,3),(5,'2018-07-09','17:37:00',5,3),(6,'2018-07-10','17:37:00',5,3),(7,'2018-07-10','17:37:00',5,3),(8,'2018-07-10','16:25:00',5,3),(9,'2018-07-10','16:26:00',5,3),(10,'2018-07-10','16:26:00',5,3),(11,'2018-07-10','16:27:00',5,3),(12,'2018-07-10','16:28:00',5,3),(13,'2018-07-10','16:29:00',5,3),(14,'2018-07-10','16:30:00',5,3),(15,'2018-07-10','17:22:00',5,3),(16,'2018-07-10','17:22:00',5,3),(17,'2018-07-10','17:21:00',5,3),(18,'2018-07-10','17:21:00',5,3);
 /*!40000 ALTER TABLE `Cita` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +209,7 @@ CREATE TABLE `Historial_Clinico` (
 
 LOCK TABLES `Historial_Clinico` WRITE;
 /*!40000 ALTER TABLE `Historial_Clinico` DISABLE KEYS */;
-INSERT INTO `Historial_Clinico` VALUES (5,'Sergio Julio Garcia','12345678X',26,'Hombre','Española','soltero','Informatico','desconocido','calle las flores','coca cola',75,1.75,NULL);
+INSERT INTO `Historial_Clinico` VALUES (4,'Beatriz Asensi','87654321Y',23,'Mujer','Española','soltera','Informatica','aspe','calle tutankamon','la vida',0,1.65,'no'),(5,'Sergio Julio Garcia','12345678X',26,'Hombre','Española','soltero','Informatico','desconocido','calle las flores','coca cola',75,1.75,NULL);
 /*!40000 ALTER TABLE `Historial_Clinico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +226,7 @@ CREATE TABLE `Medico` (
   `validado` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `medico_usuario` FOREIGN KEY (`id`) REFERENCES `Usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +235,7 @@ CREATE TABLE `Medico` (
 
 LOCK TABLES `Medico` WRITE;
 /*!40000 ALTER TABLE `Medico` DISABLE KEYS */;
-INSERT INTO `Medico` VALUES (3,'Familia',NULL);
+INSERT INTO `Medico` VALUES (3,'Familia',1),(11,'cirujano',NULL);
 /*!40000 ALTER TABLE `Medico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +256,7 @@ CREATE TABLE `Mensaje` (
   KEY `mensaje_destino` (`destino`),
   CONSTRAINT `mensaje_destino` FOREIGN KEY (`destino`) REFERENCES `Usuario` (`id`),
   CONSTRAINT `mensaje_origen` FOREIGN KEY (`origen`) REFERENCES `Usuario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +265,6 @@ CREATE TABLE `Mensaje` (
 
 LOCK TABLES `Mensaje` WRITE;
 /*!40000 ALTER TABLE `Mensaje` DISABLE KEYS */;
-INSERT INTO `Mensaje` VALUES (1,3,4,'Que pasa loca, una consulta rapida? xd'),(2,3,4,'siempre arriba');
 /*!40000 ALTER TABLE `Mensaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +289,7 @@ CREATE TABLE `Paciente` (
 
 LOCK TABLES `Paciente` WRITE;
 /*!40000 ALTER TABLE `Paciente` DISABLE KEYS */;
-INSERT INTO `Paciente` VALUES (4,123456789),(5,987654321);
+INSERT INTO `Paciente` VALUES (4,123456789),(5,987654321),(10,15345345);
 /*!40000 ALTER TABLE `Paciente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -337,10 +336,10 @@ CREATE TABLE `Usuario` (
   `username` varchar(45) NOT NULL,
   `password` varchar(900) NOT NULL,
   `salt` varchar(300) DEFAULT NULL,
-  `key` varchar(300) DEFAULT NULL,
+  `clave` varchar(300) DEFAULT NULL,
   `disponible` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,7 +348,7 @@ CREATE TABLE `Usuario` (
 
 LOCK TABLES `Usuario` WRITE;
 /*!40000 ALTER TABLE `Usuario` DISABLE KEYS */;
-INSERT INTO `Usuario` VALUES (3,'Roberto Andre','Vega','andre@gmail.com','andre','vmM8TBpjuWaF3p4xOdWRqSpnp07XUIjHmiG0nHxUz8Q928ogVfYUT9DeO5BTi2dZ9pewLzUnTQ6cYjG55Dm3GQ==','k3xAeuM0MQ+X5uWLxcPjhcpqVcMtO62TYgYQ3zVleEef6o6ozuikH/0ZgZAWRNKRISAbgH3XZcUSXzupPuTPZw==',NULL,NULL),(4,'Beatriz','Asensi','bea@gmail.com','bea','Zf3yfCSKC+kfnDNVONjSu55Mg42htDM7rNJhoBYI1N/myvDssBN1U8M3Xsles/EIx5Xrdyn1chQEGyF1suPn/g==','HvmuWwCzfj+Nlu3lC1IBMvcYadUwRaCi+IuRwO8iWIt4vJQFn+I6yxkced9sdZTA3o6dV/D9FqJQsQXGzfD0JQ==',NULL,NULL),(5,'Sergio Julio','Garcia','sergio@gmail.com','sergio','UbGOvDNrH+pwUB7oRDgoUi3CW80bWzexfsxhwy/mTeZFi5lrGT3hih4VgBhc4rKwSjr+taKEopgqGXkaWc2qvQ==','4tQ/UOO40E+6R5LLAfbQTx9wU9L9u3AG+b65Rh+uhdYi57EcZr/619fQa8QoKgW9UssqlatUpiSHpSGN7tdfEQ==',NULL,NULL);
+INSERT INTO `Usuario` VALUES (3,'Roberto Andre','Vega','robertoandrevega3d@gmail.com','andre','vmM8TBpjuWaF3p4xOdWRqSpnp07XUIjHmiG0nHxUz8Q928ogVfYUT9DeO5BTi2dZ9pewLzUnTQ6cYjG55Dm3GQ==','k3xAeuM0MQ+X5uWLxcPjhcpqVcMtO62TYgYQ3zVleEef6o6ozuikH/0ZgZAWRNKRISAbgH3XZcUSXzupPuTPZw==','pOBWT5or4gmha35EBqKTMwYKRDLmF+Wp',NULL),(4,'Beatriz','Asensi','bea@gmail.com','bea','Zf3yfCSKC+kfnDNVONjSu55Mg42htDM7rNJhoBYI1N/myvDssBN1U8M3Xsles/EIx5Xrdyn1chQEGyF1suPn/g==','HvmuWwCzfj+Nlu3lC1IBMvcYadUwRaCi+IuRwO8iWIt4vJQFn+I6yxkced9sdZTA3o6dV/D9FqJQsQXGzfD0JQ==','djeOIV3Zv0miskLgaYU7kRgNlsZTfl4m',NULL),(5,'Sergio Julio','Garcia','sergio@gmail.com','sergio','UbGOvDNrH+pwUB7oRDgoUi3CW80bWzexfsxhwy/mTeZFi5lrGT3hih4VgBhc4rKwSjr+taKEopgqGXkaWc2qvQ==','4tQ/UOO40E+6R5LLAfbQTx9wU9L9u3AG+b65Rh+uhdYi57EcZr/619fQa8QoKgW9UssqlatUpiSHpSGN7tdfEQ==','ZekBPZU8fGmO+Uoqo098J2i62JCvHvIV',NULL),(10,NULL,NULL,'luis@gmail.com','luis','+pVli+Eu9hHfOcbzgzb/RTlRhJ5IHeP9PUY3xKjK9+LGFNSp6fOAZZUqsmEHFkCraigX5YcbWdNX+haKycJrQg==','sE5Bh0KUT87b756iIhVKQZ73lFkK0ykXyy9C2nr33tGxttj57G0tiviMu/JP2oOXA4cm8UmR3QHpR9CyQIrhxg==','0aFhBOeGY1l+Wb8v45XzsGmMB4PZGd2r',NULL),(11,NULL,NULL,'larry@gmail.com','larry','AelzmP0uVF9jumKXjbgQo8LuwTWppRnujUyg06xv9MnkovK/gKI3g41CpJn/+6n5DaYiDTIysKZ2gO842gaDDQ==','E+i27ZSHsnspUZ+W6dAmSKTu5AkHiVqBnJOGPfk1AE4EHm9AKONL07hLQgdPvcnghb4zWBvX/4qMK/A2O/52Ig==','JJ/lJBUk6jeeEcX2wAC9u8LNwDMjT0SS',NULL);
 /*!40000 ALTER TABLE `Usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -388,4 +387,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-02 18:38:41
+-- Dump completed on 2018-07-10 17:59:45
