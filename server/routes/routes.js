@@ -9,6 +9,8 @@ var consulta = require('../controllers/consultaController')
 var mensaje = require('../controllers/mensajesController')
 var cita = require('../controllers/citaController')
 var webrtc = require('../controllers/webrtcController')
+var kurento = require('../controllers/kurentoController')
+
 
 router.get('/',function (pet,resp){
     resp.status(200).send({message: 'Bienvenido'})
@@ -47,5 +49,11 @@ router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
  */
 router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
 router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
+
+/**
+ * Kurento
+ */
+
+router.get('/kurento',kurento.verServer)
 
 module.exports = router

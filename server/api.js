@@ -11,12 +11,17 @@ app.use(bp.json())
 app.use(logger('dev'))
 app.use(rutas)
 
+
+
 var httpsOptions ={
     cert:fs.readFileSync(path.join(__dirname,'security','server.crt')),
     key: fs.readFileSync(path.join(__dirname,'security','server.key'))
 }
 
-https.createServer(httpsOptions, app).listen(3000, function(){
+var server = https.createServer(httpsOptions, app).listen(3000, function(){
     console.log("Servidor arrancado")
 })
 
+exports.main = {
+    server: server
+};
