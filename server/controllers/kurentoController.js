@@ -18,13 +18,15 @@ var argv = minimist(process.argv.slice(2), {
 
 
 var api = require('../api.js');
-var sourceFile = require('../api.js');
-console.log(sourceFile.variableName);
+var server
 
-console.log(api.getServer)
 
 exports.verServer=function(req,res){ 
 
-	console.info(server)
+	//console.log(api.getServer())
+	server = api.getServer()
+	console.log(server)
+
 	res.status(201)
 }
+

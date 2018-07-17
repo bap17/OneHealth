@@ -3,6 +3,8 @@ var mysql = require('mysql')
 var connection = require('./bd')
 
 
+
+
 //Buscar un médico 
 exports.buscarMedico = function(req, res) {
    var obj = req.params
@@ -25,8 +27,7 @@ exports.buscarMedico = function(req, res) {
                             "apellidos": results[i].apellidos
                         }
                         medicos.push(medico)
-                    }
-                                   
+                    }                  
                     res.status(200)                       
                     res.send(medicos)       
                 } else {
@@ -80,4 +81,6 @@ exports.buscarPaciente = function(req, res) {
         res.send({error: "Alguno de los campos es invalido"})
     }
 }
+
+
 

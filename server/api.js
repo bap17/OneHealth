@@ -10,10 +10,6 @@ var app = express()
 app.use(bp.json())
 app.use(logger('dev'))
 app.use(rutas)
-var server = null
-
-
-
 
 
 var httpsOptions ={
@@ -21,14 +17,17 @@ var httpsOptions ={
     key: fs.readFileSync(path.join(__dirname,'security','server.key'))
 }
 
-server = https.createServer(httpsOptions, app).listen(3000, function(){
+var server = https.createServer(httpsOptions, app).listen(3000, function(){
     console.log("Servidor arrancado")
+
 })
 
-function getServer() {
-	return server;
-}
+
+exports.getServer = function() {return server}
 
 
-module.exports.getServer = getServer;
-module.exports.variableName = "variableValue";
+
+
+
+
+
