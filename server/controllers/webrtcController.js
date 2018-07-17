@@ -10,7 +10,7 @@ exports.buscarMedico = function(req, res) {
     console.log(especialidad)
 
     if( especialidad != null) {
-        connection.query('SELECT * FROM medico as me right join usuario as us on us.id = me.id where me.especialidad = ?', [especialidad], function(err, results) {
+        connection.query('SELECT * FROM Medico as me right join Usuario as us on us.id = me.id where me.especialidad like ?', [especialidad], function(err, results) {
             if(err) {
                 res.status(500)
                 res.send({error: "Hay un error al buscar los medicos"})
@@ -48,7 +48,7 @@ exports.buscarPaciente = function(req, res) {
     console.log(nombre)
 
     if( nombre != null && nombre != "") {
-        connection.query('SELECT * FROM paciente as pa right join usuario as us on us.id = pa.id where us.nombre like ?', ['%'+nombre+'%'], function(err, results) {
+        connection.query('SELECT * FROM Paciente as pa right join Usuario as us on us.id = pa.id where us.nombre like ?', ['%'+nombre+'%'], function(err, results) {
             if(err) {
                 res.status(500)
                 res.send({error: "Hay un error al buscar los pacientes"})
