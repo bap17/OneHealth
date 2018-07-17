@@ -54,6 +54,6 @@ router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
  * Kurento
  */
 
-router.get('/kurento',kurento.verServer)
+router.get('/kurento',kurento.init)
 
 module.exports = router
