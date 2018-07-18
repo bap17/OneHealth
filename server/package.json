@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "crypto": "0.9.3",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
@@ -20,6 +21,7 @@
     "moment": "^2.22.2",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
-    "nodemailer": "^4.6.7"
+    "nodemailer": "^4.6.7",
+    "socket.io": "^2.1.1"
   }
 }

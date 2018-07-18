@@ -12,6 +12,7 @@ var webrtc = require('../controllers/webrtcController')
 var kurento = require('../controllers/kurentoController')
 
 
+
 router.get('/',function (pet,resp){
     resp.status(200).send({message: 'Bienvenido'})
 })
@@ -54,6 +55,7 @@ router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
  * Kurento
  */
 
-router.get('/kurento',kurento.init)
+//router.get('/kurento/init',kurento.init)
+//router.get('/kurento/init1',kurento.init1)
 
 module.exports = router

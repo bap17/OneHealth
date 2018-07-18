@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Video from './ComponenteInitVideo'
+import Kurento from './ComponenteKurento'
 
 class ComponenteInicio extends React.Component {
 
@@ -38,10 +39,11 @@ class ComponenteInicio extends React.Component {
 		            	<button className=" nav-opt">Cita</button>
 		            	<button className=" nav-opt">Mensajes</button>
 		            	<button className=" nav-opt">Eventos</button>
-		            	<button className=" nav-opt">Videollamada</button>		            
+		            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 		            </div>
 
-		            <Video ></Video>
+		            {/* <Video ></Video> */}
+		            <Kurento></Kurento>
 		   
 		        </div> 
 
