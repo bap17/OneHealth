@@ -2,6 +2,8 @@ import React from 'react'
 import ApiKurento from './servicios/apiKurento.js'
 import io from 'socket.io-client';
 
+
+
 class ComponenteKurento extends React.Component {
 
 	constructor() {
@@ -9,23 +11,40 @@ class ComponenteKurento extends React.Component {
 
 
         this.registro = this.registro.bind(this);
-        this.init = this.init.bind(this);
-        this.sendMessage = this.sendMessage.bind(this);
+        this.resgisterResponse = this.resgisterResponse.bind(this);
+
+
+
     }
 
 
-	init() {
 
+	componentDidMount() {
+		var connectionOptions = {
+			"force new connection": true,
+			"reconnectionAttempts": "Infinity",
+			"timeout": 10000,
+			"transports": ["websocket"]
+		}
+		var mythis =this;
 
-		new ApiKurento().init1().then(function(datos){
+		this.socket = io.connect("https://localhost:3000", connectionOptions);
+		this.socket.on('connect', function() {
+			mythis.socket.on('messageC', function(message) {
+				var uu =message.id.toString()
+				console.log('Received message: ')
+				console.log(message) ;
+				console.log(message.id.toString())
 
-			if(datos.status==200) {
-				console.log("bien 204")
-			} else {
-				console.log("mal otra cosa diferente a 200")
-			}
+				switch (uu) {
+				case 'registerResponse':
+					mythis.resgisterResponse(message);
+					break;
+				default:
+					console.log('Unrecognized message', message);
+				}
+		  	})
 		})
-
 
 	}
 
@@ -38,30 +57,15 @@ class ComponenteKurento extends React.Component {
 			id : 'register',
 			name : name
 		};
-
-
-		/*var jsonMessage = JSON.stringify(message);
-		console.log('Senging message: ' + jsonMessage);
-		this.ws.send(jsonMessage);*/
-		var connectionOptions = {
-			"force new connection": true,
-			"reconnectionAttempts": "Infinity",
-			"timeout": 10000,
-			"transports": ["websocket"]
-		}
-
-      	const socket = io.connect("https://localhost:3000", connectionOptions);
-		socket.emit('message', 'Hello world!');
+		
+		this.socket.emit('message', message);
 
 
 	}
 
-	sendMessage(message) {
-		var jsonMessage = JSON.stringify(message);
-		console.log('Senging message: ' + jsonMessage);
-		this.ws.send(jsonMessage);
+	resgisterResponse(message) {
+		console.log("registerResponse function")
 	}
-
 
     render() {
         return <div>
