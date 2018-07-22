@@ -39,8 +39,9 @@ function UserRegistry() {
     this.usersByName = {};
 }
 
-UserSession.prototype.sendMessage = function(message) {
-    this.ws.send(JSON.stringify(message));
+UserSession.prototype.sendMessage = function(message, io) {
+    io.emit('messageC', message)
+    //this.ws.send(JSON.stringify(message));
 }
 
 UserRegistry.prototype.register = function(user) {
@@ -99,6 +100,59 @@ exports.register = function(id, name, ws, callback) {
         onError(exception);
     }
 }
+
+exports.onIceCandidate = function(sessionId, _candidate) {
+    var candidate = kurento.getComplexType('IceCandidate')(_candidate);
+    var user = userRegistry.getById(sessionId);
+
+    if (pipelines[user.id] && pipelines[user.id].webRtcEndpoint && pipelines[user.id].webRtcEndpoint[user.id]) {
+        var webRtcEndpoint = pipelines[user.id].webRtcEndpoint[user.id];
+        webRtcEndpoint.addIceCandidate(candidate);
+    }
+    else {
+        if (!candidatesQueue[user.id]) {
+            candidatesQueue[user.id] = [];
+        }
+        candidatesQueue[sessionId].push(candidate);
+    }
+}
+
+
+exports.call = function(callerId, to, from, sdpOffer, io){
+    clearCandidatesQueue(callerId);
+
+    var caller = userRegistry.getById(callerId);
+    var rejectCause = 'User ' + to + ' is not registered';
+    if (userRegistry.getByName(to)) {
+        var callee = userRegistry.getByName(to);
+        caller.sdpOffer = sdpOffer
+        callee.peer = from;
+        caller.peer = to;
+        var message = {
+            id: 'incomingCall',
+            from: from
+        };
+        try{
+            return callee.sendMessage(message, io);
+            return 
+        } catch(exception) {
+            rejectCause = "Error " + exception;
+        }
+    }
+    var message  = {
+        id: 'callResponse',
+        response: 'rejected: ',
+        message: rejectCause
+    };
+    //caller.sendMessage(message);
+}
+
+function clearCandidatesQueue(sessionId) {
+    if (candidatesQueue[sessionId]) {
+        delete candidatesQueue[sessionId];
+    }
+}
+
 
 /***************************/
 /**********Socket***********/

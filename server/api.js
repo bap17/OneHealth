@@ -65,6 +65,17 @@ io.on('connection', function(socket){
         case 'register':
             kurento.register(sessionId, message.name, io);
             break;
+        case 'call':
+            console.log("------------------hola he entrado al call")
+            kurento.call(sessionId, message.to, message.from, message.sdpOffer, io);
+            break;
+        case 'onIceCandidate':
+            console.log("/////////////////////hola he entrado al onIce")
+            kurento.onIceCandidate(sessionId, message.candidate);
+            break;
+        case 'stop':
+            kurento.stop(sessionId);
+            break;
         default:
            var error = {
                 id : 'error',

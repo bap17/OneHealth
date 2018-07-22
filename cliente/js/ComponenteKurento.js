@@ -1,22 +1,21 @@
 import React from 'react'
 import ApiKurento from './servicios/apiKurento.js'
 import io from 'socket.io-client';
-
+var kurentoUtils = require('kurento-utils');
 
 
 class ComponenteKurento extends React.Component {
 
 	constructor() {
         super()
-
-
         this.registro = this.registro.bind(this);
+        this.call = this.call.bind(this);
         this.resgisterResponse = this.resgisterResponse.bind(this);
-
-
-
+        this.callResponse = this.callResponse.bind(this);
+        this.onIceCandidate = this.onIceCandidate.bind(this); 
+        this.incomingCall = this.incomingCall.bind(this); 
+        this.stop = this.stop.bind(this);
     }
-
 
 
 	componentDidMount() {
@@ -39,6 +38,12 @@ class ComponenteKurento extends React.Component {
 				switch (uu) {
 				case 'registerResponse':
 					mythis.resgisterResponse(message);
+					break;
+				case 'callResponse':
+					mythis.callResponse(parsedMessage);
+					break;
+				case 'incomingCall':
+					mythis.incomingCall(parsedMessage);
 					break;
 				default:
 					console.log('Unrecognized message', message);
@@ -63,8 +68,152 @@ class ComponenteKurento extends React.Component {
 
 	}
 
+	call() {
+
+		console.log("entro a la funcion llamar")
+		var videoInput = this.videoIn.value
+		var videoInput = this.videoOut.value
+		var auxFrom = this.name.value
+		var auxTo = this.peer.value
+		var mythis = this
+
+		var options = {
+			localVideo : videoInput,
+			remoteVideo : videoOutput,
+			onicecandidate : this.onIceCandidate
+		}
+
+		this.webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(
+				error) {
+			if (error) {
+				console.error(error);
+				setCallState(NO_CALL);
+			}
+
+			this.generateOffer(function(error, offerSdp) {
+				if (error) {
+					console.error(error);
+					//setCallState(NO_CALL);
+				}
+				var message = {
+					id : 'call',
+					from : auxFrom,
+					to : auxTo,
+					sdpOffer : offerSdp
+				};
+				mythis.socket.emit('message', message);
+			});
+		});
+	}
+
+	onIceCandidate(candidate) {
+		var mythis = this
+		console.log("entro a la funcion oncandidate")
+		console.log('Local candidate' + JSON.stringify(candidate));
+
+		var message = {
+			id : 'onIceCandidate',
+			candidate : candidate
+		}
+		mythis.socket.emit('message', message);
+	}
+
+
+	callResponse(message) {
+		if (message.response != 'accepted') {
+			console.info('Call not accepted by peer. Closing call');
+			var errorMessage = message.message ? message.message
+					: 'Unknown reason for call rejection.';
+			console.log(errorMessage);
+			stop(true);
+		} else {
+			//setCallState(IN_CALL);
+			webRtcPeer.processAnswer(message.sdpAnswer);
+		}
+	}
+
 	resgisterResponse(message) {
 		console.log("registerResponse function")
+	}
+
+	incomingCall(message) {
+		var videoInput = this.videoIn.value
+		var videoInput = this.videoOut.value
+		var mythis = this
+		// If bussy just reject without disturbing user
+		if (callState != NO_CALL) {
+			var response = {
+				id : 'incomingCallResponse',
+				from : message.from,
+				callResponse : 'reject',
+				message : 'bussy'
+
+			};
+			return sendMessage(response);
+		}
+
+		//setCallState(PROCESSING_CALL);
+		if (confirm('User ' + message.from
+				+ ' is calling you. Do you accept the call?')) {
+			//showSpinner(videoInput, videoOutput);
+
+			var options = {
+				localVideo : videoInput,
+				remoteVideo : videoOutput,
+				onicecandidate : onIceCandidate
+			}
+
+			webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+					function(error) {
+						if (error) {
+							console.error(error);
+							setCallState(NO_CALL);
+						}
+
+						this.generateOffer(function(error, offerSdp) {
+							if (error) {
+								console.error(error);
+								setCallState(NO_CALL);
+							}
+							var response = {
+								id : 'incomingCallResponse',
+								from : message.from,
+								callResponse : 'accept',
+								sdpOffer : offerSdp
+							};
+							//sendMessage(response);
+							mythis.socket.emit('message', message);
+						});
+					});
+
+		} else {
+			var response = {
+				id : 'incomingCallResponse',
+				from : message.from,
+				callResponse : 'reject',
+				message : 'user declined'
+			};
+			//sendMessage(response);
+			mythis.socket.emit('message', message);
+			stop(true);
+		}
+	}
+
+	stop(message) {
+		var mythis = this
+		//setCallState(NO_CALL);
+		if (webRtcPeer) {
+			webRtcPeer.dispose();
+			webRtcPeer = null;
+
+			if (!message) {
+				var message = {
+					id : 'stop'
+				}
+				mythis.socket.emit('message', message);
+			}
+		}
+		//hideSpinner(videoInput, videoOutput);
 	}
 
     render() {
@@ -73,8 +222,22 @@ class ComponenteKurento extends React.Component {
 				<span>Usuario: </span>  <br></br>
 				<input id="user" className="input" ref={(campo)=>{this.name=campo}}></input> <br></br>
 				<button id="registro" onClick={this.registro} className="button">Registrar</button>  <br></br> <br></br>
-				<button id="inicio" onClick={this.init} className="button">Iniciar</button>  <br></br> <br></br>
 			</div>
+			<div className="call">
+				<span>Usuario: </span>  <br></br>
+				<input id="peer" className="input" ref={(campo)=>{this.peer=campo}}></input> <br></br>
+				<button id="call" onClick={this.call} className="button">Llamar</button>  <br></br> <br></br>
+			</div>
+			<div className="clear"></div>
+			<div className="videos">
+	          <div className="videoBig">
+	            <video id="videoOutput" autoPlay width="640px" height="480px" ref={(campo)=>{this.videoOut=campo}}></video>
+	          </div>
+	          <div className="clear"></div>
+	          <div className="videoSmall">
+	            <video id="videoInput" autoPlay width="240px" height="180px" ref={(campo)=>{this.videoIn=campo}}></video>
+	          </div>
+	        </div>
         </div> 
     }
 }
