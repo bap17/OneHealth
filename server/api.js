@@ -59,22 +59,24 @@ io.on('connection', function(socket){
     });
     socket.on('message', function(msg){
         var message = msg
-        console.log('Connection ' + sessionId + ' received message ', message);
+        //console.log('Connection ' + sessionId + ' received message ', message);
 
         switch (message.id) {
         case 'register':
             kurento.register(sessionId, message.name, io);
             break;
         case 'call':
-            console.log("------------------hola he entrado al call")
             kurento.call(sessionId, message.to, message.from, message.sdpOffer, io);
             break;
-        case 'onIceCandidate':
-            console.log("/////////////////////hola he entrado al onIce")
+        case 'onIceCandidate':            
             kurento.onIceCandidate(sessionId, message.candidate);
             break;
+        case 'incomingCallResponse':
+            console.log("///////////////estoy en incommingCallResponse///////////////////////////")
+            kurento.incomingCallResponse(sessionId, message.from, message.callResponse, message.sdpOffer, io);
+            break;
         case 'stop':
-            kurento.stop(sessionId);
+            kurento.stop(sessionId, io);
             break;
         default:
            var error = {
