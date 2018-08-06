@@ -40,7 +40,7 @@ exports.emailSignup = function(pet, resp) {
                     resp.status(409).send({message: "Ya hay un usuario con el mismo nombre de usuario"})
                 } else {
                     var salt = crypto.randomBytes(SALTBYTES).toString('base64')
-                    var key = crypto.randomBytes(16).toString('base64')
+                    var key = crypto.randomBytes(24).toString('base64')
                     crypto.pbkdf2(pass, salt, PBKDF2ITERATIONS, HASHBYTES, 'sha512', (err, derivedKey) => {
                         if (err) throw err
                         connection.query('INSERT INTO Usuario (username, email, password, salt, clave) VALUES(?,?,?,?,?)', [nombre,email,derivedKey,salt,key], function(err2, result) {
@@ -63,11 +63,17 @@ exports.emailSignup = function(pet, resp) {
                                     if(esp==undefined){
                                         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
                                     }else{
-                                        connection.query('INSERT INTO Medico (id,especialidad) VALUES(?,?)', [result.insertId,esp], function(err3, result2) {
+                                        connection.query('INSERT INTO Medico (id) VALUES(?)', [result.insertId], function(err3, result2) {
                                             if(err3) {
                                                 resp.status(500).send({message: "Error en el servidor4"})
                                             } else {
-                                                resp.status(201).send({message:"El usuario se ha registrado correctamente"})
+                                                connection.query('INSERT INTO Especialidad (medico,nombre) VALUES(?,?)', [result.insertId,esp], function(err4, result3) {
+                                                    if(err4) {
+                                                        resp.status(500).send({message: err4})
+                                                    } else {
+                                                        resp.status(201).send({message:"El usuario se ha registrado correctamente"})
+                                                    }
+                                                })
                                             }
                                         })
                                     } 

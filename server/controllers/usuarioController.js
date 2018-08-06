@@ -22,7 +22,7 @@ exports.updateUsuario=function (pet,resp){
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('UPDATE usuario SET nombre = ?, apellidos = ? WHERE id = ?', [nombre,apellidos,id], function(err, results2) {
+                    connection.query('UPDATE Usuario SET nombre = ?, apellidos = ? WHERE id = ?', [nombre,apellidos,id], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
