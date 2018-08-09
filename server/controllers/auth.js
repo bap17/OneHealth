@@ -110,6 +110,7 @@ exports.emailLogin = function(pet, resp) {
                                     "id": results[0].id,
                                     "nombre": results[0].nombre,
                                     "apellidos": results[0].apellidos,
+                                    "username": results[0].username,
                                     "email": results[0].email,
                                     "tipo": "medico"
                                 }
@@ -118,6 +119,7 @@ exports.emailLogin = function(pet, resp) {
                                     "id": results[0].id,
                                     "nombre": results[0].nombre,
                                     "apellidos": results[0].apellidos,
+                                    "username": results[0].username,
                                     "email": results[0].email,
                                     "tipo": "paciente"
                                 }
@@ -127,7 +129,7 @@ exports.emailLogin = function(pet, resp) {
                     crypto.pbkdf2(pass, results[0].salt, PBKDF2ITERATIONS, HASHBYTES, 'sha512', (err, derivedKey) => {
                         if (err) throw err
                         if(derivedKey == results[0].password) {
-                            usuario = results[0]
+                            usuario = resultado
                             codigo = Math.floor((Math.random() * 9000) + 1000)
                             var code = {
                                 email: results[0].email,
@@ -162,7 +164,7 @@ exports.checkCode=function(pet,resp){
     }else{
         if(cod==codigo){
             var token = service.createToken(usuario)                        
-            resp.status(200).send({message: "Login correcto",token: token})
+            resp.status(200).send({message: "Login correcto",token: token, usuario})
         }else{
             resp.status(401).send({message: "Codigo incorrecto"})
         }

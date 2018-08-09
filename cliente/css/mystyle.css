@@ -33,19 +33,34 @@ html {
     right: 10px;
 }
 
+.options-top *{
+	float: left;
+	padding: 0px 5px!important;
+	margin: 0px !important;
+}
+
 .welcome {
-    font-weight: bold;
-   
+	color: #D47189;
+	font-size: 17px;
 }
 
-.cerrar-sesion {
-    
-    background: white;
-    color: grey;
-    margin: 0px 1%x 0px 10px;
-    border: none;
-
+.mi-cuenta {
+	background: white !important;
+	border: 0px;
+	border-bottom: 2px !important;
+	border-color: #D47189;
+	font-size: 18px;
 }
+.mi-cuenta:focus {
+ 	outline: 0px !important;
+}
+.mi-cuenta:hover {
+ 	outline: 0px !important;
+ 	color: #D47189;;
+}
+
+
+
 .top-nav {
 	width:100%;
 

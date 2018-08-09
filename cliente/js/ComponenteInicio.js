@@ -25,21 +25,24 @@ class ComponenteInicio extends React.Component {
 
     render() {
     	console.log(this.state.videollamada)
+    	var login = localStorage.getItem('username');
 
     	if(this.state.videollamada == true) {
     		return <div>
         			<div className="header">
 		                <img className="logo" src="../img/logo.png"></img>
 		                <div className="options-top">
-		                    <p className="welcome">¡Hola user! :D </p> 
+		                    <p className="welcome">¡Hola @{login}! :D </p> 
+		                    <button className="mi-cuenta" >Mi cuenta</button>
 		                </div>
+		                
 
 		            </div>
 		            <div className="top-nav">
-		            	<button className=" nav-opt" >Inicio</button>
-		            	<button className=" nav-opt">Cita</button>
+		            	<button className=" nav-opt">Inicio</button>
+		            	<button className=" nav-opt">Citas</button>
+		            	<button className=" nav-opt">Historial</button>
 		            	<button className=" nav-opt">Mensajes</button>
-		            	<button className=" nav-opt">Eventos</button>
 		            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 		            </div>
 
@@ -52,19 +55,19 @@ class ComponenteInicio extends React.Component {
         			<div className="header">
 		                <img className="logo" src="../img/logo.png"></img>
 		                <div className="options-top">
-		                    <p className="welcome">¡Hola user! :D 
-		                        <button className="btn btn-default btn-lg cerrar-sesion" ><span className="glyphicon glyphicon-cog"></span></button>
-		                        <button className="btn btn-default btn-lg cerrar-sesion" ><span className="glyphicon glyphicon-log-out"></span></button> </p> 
+		                    <p className="welcome">¡Hola @{login}! :D </p> 
+		                    <button className="mi-cuenta" >Mi cuenta</button>
 		                </div>
-
+		                
 		            </div>
 		            <div className="top-nav">
-		            	<button className=" nav-opt" >Inicio</button>
-		            	<button className=" nav-opt">Cita</button>
+		            	<button className=" nav-opt">Inicio</button>
+		            	<button className=" nav-opt">Citas</button>
+		            	<button className=" nav-opt">Historial</button>
 		            	<button className=" nav-opt">Mensajes</button>
-		            	<button className=" nav-opt">Eventos</button>
 		            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 		            </div>
+
 		   
 		        </div> 
 
