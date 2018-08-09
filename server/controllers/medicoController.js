@@ -11,7 +11,7 @@ exports.listarPacientes=function (pet,resp){
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT nombre, apellidos, sip, email FROM Paciente p INNER JOIN Usuario u ON p.id = u.id',function (err, results2) {
+                    connection.query('SELECT nombre, apellidos, sip, email, username FROM Paciente p INNER JOIN Usuario u ON p.id = u.id',function (err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {

@@ -3,8 +3,6 @@ var mysql = require('mysql')
 var connection = require('./bd')
 
 
-
-
 //Buscar un médico 
 exports.buscarMedico = function(req, res) {
    var obj = req.params
@@ -12,7 +10,7 @@ exports.buscarMedico = function(req, res) {
     console.log(especialidad)
 
     if( especialidad != null) {
-        connection.query('SELECT * FROM medico as me right join usuario as us on us.id = me.id where me.especialidad = ?', [especialidad], function(err, results) {
+        connection.query('SELECT us.* FROM medico as me right join usuario as us on us.id = me.id inner join especialidad as es on me.id = es.medico where es.nombre like ?', [especialidad], function(err, results) {
             if(err) {
                 res.status(500)
                 res.send({error: "Hay un error al buscar los medicos"})
@@ -24,7 +22,8 @@ exports.buscarMedico = function(req, res) {
                     for(var i = 0;  i < results.length; i++) {                                        
                         var medico = {
                             "usuario" : results[i].nombre,
-                            "apellidos": results[i].apellidos
+                            "apellidos": results[i].apellidos,
+                            "username": results[i].username
                         }
                         medicos.push(medico)
                     }                  
@@ -61,7 +60,8 @@ exports.buscarPaciente = function(req, res) {
                     for(var i = 0;  i < results.length; i++) {                                        
                         var paciente = {
                             "usuario" : results[i].nombre,
-                            "apellidos": results[i].apellidos
+                            "apellidos": results[i].apellidos,
+                            "username": results[i].username
                         }
                         pacientes.push(paciente)
                     }
