@@ -83,8 +83,10 @@ class ComponenteConnect extends React.Component {
     	$('#yourMessage').val('');
     }
 
-    handleVideo(str) {
-    	 this.setState({ videoSrc: window.URL.createObjectURL(str) });
+    handleVideo(str) {	
+    	this.setState({ stream: str });
+
+    	this.setState({ videoSrc: window.URL.createObjectURL(str) });
     }
 
     videoError() {

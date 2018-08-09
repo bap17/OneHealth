@@ -5,6 +5,135 @@ html {
 }
 
 
+/* header */
+
+.header {
+    width: 100%;
+    height: 80px;
+    border-bottom: 0px;
+    border-style: solid;
+    border-color: grey;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    clear: both;
+    float: left;
+}
+
+.logo {
+    float: left;
+    width: 200px;
+    margin: 10px 0px 10px 20px;
+}
+
+.options-top {
+    float: right;
+    position: relative;
+    top: 28%;
+    right: 10px;
+}
+
+.welcome {
+    font-weight: bold;
+   
+}
+
+.cerrar-sesion {
+    
+    background: white;
+    color: grey;
+    margin: 0px 1%x 0px 10px;
+    border: none;
+
+}
+.top-nav {
+	width:100%;
+
+}
+
+.nav-opt {
+	float: left;
+	padding: 10px;
+	/*background-color: white;*/
+	background-color: #D47189;
+	border-style: hidden;
+	/*border: 1px solid  #D47189;*/
+	border: 1px solid  white;
+	color:white;
+	width: 20%;
+}
+.nav-opt:focus {
+	outline:0px;
+}
+
+/* end header */
+
+/***** OPT VIDEOLLAMADA ******/
+
+.banner {
+
+	width:80%;
+	margin: 0 auto;
+	text-align: center;
+	padding-top: 20px;
+
+}
+
+.img-banner {
+
+	width: 30%;
+
+}
+
+.form {
+	width: 70%;
+	margin:0 auto;
+	margin-top: 60px;
+}
+
+.filtros label, .filtros select {
+	float: left;
+}
+.form label {
+	padding:6px;
+	margin-bottom: 0px !important;
+}
+.select {
+	width: 50%;
+}
+.select:focus {
+	box-shadow: none;
+}
+
+.medicos {
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 1px solid #C7C7C7;
+
+	margin-top: 30px;
+}
+.titulo-medico {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	border-bottom: 1px solid #C7C7C7;
+}
+
+.lista-medicos {
+	list-style: none;
+	padding: 10px;
+}
+
+.lista-medicos li {
+	padding: 10px 0px;
+	border-bottom: 1px solid #E0E0E0;
+}
+
+/***** END OPT VIDEOLLAMADA ******/
+
+/******************** PROVISIONAL WEBRTC **************************/
+
 
 .boxMyID, .boxYourId, .boxMessages, .boxVideo {
 	border: 1px solid #C7C7C7;
@@ -55,3 +184,7 @@ html {
 	float: left;
 	width: 45%;
 }
+
+
+
+/******************** END PROVISIONAL WEBRTC **************************/
