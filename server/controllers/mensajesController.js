@@ -148,29 +148,23 @@ exports.borrarMensaje=function(pet,resp){
     }
 }
 
-<<<<<<< HEAD
-var descifrar =function(results2,callback){
-    var mensajes = new Array()
-    results2.forEach(mensaje => {
-=======
+
 var descifrar =function(mensaje,callback){
     //var mensajes = new Array()
     
->>>>>>> cliente
-        connection.query('SELECT * FROM Usuario WHERE id = ?',[mensaje.origen],function (err2, results3) {
-            if(err2) {
-                resp.status(500).send({message: "Error en el servidor"})
-            } else {
-                var resul={
-                    "texto":service.decrypt({text:mensaje.texto,clave:results3[0].clave}) 
-                }
-<<<<<<< HEAD
-=======
-                //mensajes.push(resul)
-                console.log(resul)
-                callback(resul)
+
+    connection.query('SELECT * FROM Usuario WHERE id = ?',[mensaje.origen],function (err2, results3) {
+        if(err2) {
+            resp.status(500).send({message: "Error en el servidor"})
+        } else {
+            var resul={
+                "texto":service.decrypt({text:mensaje.texto,clave:results3[0].clave}) 
             }
-        }) 
+            //mensajes.push(resul)
+            console.log(resul)
+            callback(resul)
+        }
+    }) 
    
     /*for(var i=0; i<results2.length;i++){
         
@@ -183,23 +177,11 @@ var descifrar =function(mensaje,callback){
                 var resul={
                     //"texto":service.decrypt({text:results2[i].texto,clave:results3[0].clave}) 
                 }
->>>>>>> cliente
                 mensajes.push(resul)
                 console.log(mensajes)
             }
-        }) 
-<<<<<<< HEAD
-    })   
-    console.log("2"+mensajes)
-    callback(mensajes)
-=======
+        })  
+
     }*/
-    
-    
-       
-        
-    
-    
->>>>>>> cliente
     
 }
