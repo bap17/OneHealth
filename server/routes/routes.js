@@ -12,7 +12,6 @@ var webrtc = require('../controllers/webrtcController')
 var kurento = require('../controllers/kurentoController')
 var admin = require('../controllers/adminController')
 
-
 router.get('/',function (pet,resp){
     resp.status(200).send({message: 'Bienvenido'})
 })
@@ -51,6 +50,7 @@ router.get('/usuario/:id/mensaje/enviados', midd.isAuth, mensaje.verMensajesEnvi
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
 
 /**
+<<<<<<< HEAD
  * WebRTC
  */
 router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
@@ -64,6 +64,8 @@ router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
 //router.get('/kurento/init1',kurento.init1)
 
 /**
+=======
+>>>>>>> cliente
  * Admin
  */
 router.post('/admin/:id/medico', midd.isAuth, admin.validarMedico)

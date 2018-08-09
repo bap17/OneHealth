@@ -56,15 +56,20 @@ exports.verMensajesRecibidos=function(pet,resp){
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
                             if(results2.length > 0) {
-                                //var mensajes = new Array()
-                                
-                                    descifrar(results2,function(resul){
-                                        //mensajes.push(resul)
-                                        console.log("3"+resul)
-                                        resp.status(200).send({mensajes:resul})
+                                var mensajes = new Array()
+                                /*results2.forEach(mensaje => {
+                                    descifrar(mensaje,function(resul){
+                                        mensajes.push(resul)
+                                        console.log(mensajes)
                                     })
-                                
-                                
+                                })*/
+                                for(var i=0; i< results2.length;i++){
+                                    descifrar(results2[i],function(resul){
+                                        mensajes.push(resul)
+                                        //console.log(mensajes)
+                                    })
+                                }
+                                return resp.status(200).send({mensajes})
                             } else {
                                 resp.status(404).send({message: "No tienes mensajes"})
                             }
@@ -143,9 +148,15 @@ exports.borrarMensaje=function(pet,resp){
     }
 }
 
+<<<<<<< HEAD
 var descifrar =function(results2,callback){
     var mensajes = new Array()
     results2.forEach(mensaje => {
+=======
+var descifrar =function(mensaje,callback){
+    //var mensajes = new Array()
+    
+>>>>>>> cliente
         connection.query('SELECT * FROM Usuario WHERE id = ?',[mensaje.origen],function (err2, results3) {
             if(err2) {
                 resp.status(500).send({message: "Error en el servidor"})
@@ -153,12 +164,42 @@ var descifrar =function(results2,callback){
                 var resul={
                     "texto":service.decrypt({text:mensaje.texto,clave:results3[0].clave}) 
                 }
+<<<<<<< HEAD
+=======
+                //mensajes.push(resul)
+                console.log(resul)
+                callback(resul)
+            }
+        }) 
+   
+    /*for(var i=0; i<results2.length;i++){
+        
+        connection.query('SELECT * FROM Usuario WHERE id = ?',[results2[i].origen],function (err2, results3) {
+            console.log("mensajes "+results2[i])
+            if(err2) {
+                resp.status(500).send({message: "Error en el servidor"})
+            } else {
+                
+                var resul={
+                    //"texto":service.decrypt({text:results2[i].texto,clave:results3[0].clave}) 
+                }
+>>>>>>> cliente
                 mensajes.push(resul)
                 console.log(mensajes)
             }
         }) 
+<<<<<<< HEAD
     })   
     console.log("2"+mensajes)
     callback(mensajes)
+=======
+    }*/
+    
+    
+       
+        
+    
+    
+>>>>>>> cliente
     
 }
