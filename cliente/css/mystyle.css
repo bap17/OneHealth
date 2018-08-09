@@ -4,6 +4,44 @@ html {
 	font-family: 'Montserrat', sans-serif;
 }
 
+/*  global   */
+.button {
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	padding: 8px;
+	border: 1px solid #cd5252;
+	background-color: #cd5252;
+	color: white;
+	width: 15%;
+}
+
+.button:hover, .button:focus {
+	outline: 0px;
+	color:#cd5252;
+	background-color: white;
+}
+
+
+.input, input[type=text] {
+	width:100%;
+	border: 1px solid #C7C7C7;
+	border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	padding: 5px;
+	margin: 10px 0px;
+}
+.input:focus {
+	outline: 0px;
+	border: 1px solid #7A7A7A;
+}
+
+.color {
+	background-color: #eb4f4f;
+}
+/*  end global  */
+
 
 /* header */
 
@@ -40,15 +78,13 @@ html {
 }
 
 .welcome {
-	color: #D47189;
+	color: #eb4f4f;
 	font-size: 17px;
 }
 
 .mi-cuenta {
 	background: white !important;
 	border: 0px;
-	border-bottom: 2px !important;
-	border-color: #D47189;
 	font-size: 18px;
 }
 .mi-cuenta:focus {
@@ -56,7 +92,7 @@ html {
 }
 .mi-cuenta:hover {
  	outline: 0px !important;
- 	color: #D47189;;
+ 	color: #eb4f4f;
 }
 
 
@@ -70,7 +106,8 @@ html {
 	float: left;
 	padding: 10px;
 	/*background-color: white;*/
-	background-color: #D47189;
+	/*background-color: #D47189;*/
+	background-color: #cd5252;
 	border-style: hidden;
 	/*border: 1px solid  #D47189;*/
 	border: 1px solid  white;
@@ -82,6 +119,27 @@ html {
 }
 
 /* end header */
+
+
+/****** OPT VIDEOLLAMADA COMPROBAR CODIGO *******/
+
+.titulo-comp-cita {
+	font-size: 35px;
+	color: #9d9d9d;
+	text-align: center;
+}
+
+.comprobarCita .form {
+	margin: 0 auto;
+	text-align: center;
+	padding-top: 60px;
+}
+.comprobarCita .form .input{
+	width: 30%;
+
+}
+/**** END  OPT VIDEOLLAMADA COMPROBAR CODIGO ****/
+
 
 /***** OPT VIDEOLLAMADA ******/
 
@@ -165,6 +223,7 @@ html {
 	clear:both;
 }
 
+/*
 .button {
 	border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;
@@ -195,6 +254,8 @@ html {
 	outline: 0px;
 	border: 1px solid #7A7A7A;
 }
+
+*/
 .boxMessages, .boxVideo {
 	float: left;
 	width: 45%;
