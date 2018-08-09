@@ -1,7 +1,10 @@
 import React from 'react'
 
 import Video from './ComponenteInitVideo'
+<<<<<<< HEAD
 import Kurento from './ComponenteKurento'
+=======
+>>>>>>> cliente
 
 class ComponenteInicio extends React.Component {
 
@@ -43,8 +46,7 @@ class ComponenteInicio extends React.Component {
 		            </div>
 
 		            {/* <Video ></Video> */}
-		            <Kurento></Kurento>
-		   
+		            <Kurento></Kurento>		   
 		        </div> 
 
     	} else {

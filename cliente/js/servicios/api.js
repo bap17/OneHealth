@@ -1,9 +1,11 @@
 
-var url = "https://localhost:3000/"
+var url = "https://localhost:8888/"
+var url2 = "https://localhost:3000/"
 
 class Api  {
     constructor() {
-        this.API_URL = url
+        this.API_URL = url,
+        this.URLAPI = url2
     }
 
     //Inicializar
@@ -36,7 +38,31 @@ class Api  {
                       return respuesta.json()
 
                })
-    }  
+    }
+    
+    Login(user) {
+        return fetch(this.URLAPI + 'login', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json'
+                   },
+                   body: JSON.stringify(user)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
+
+    Confirmacion(codigo) {
+        return fetch(this.URLAPI + 'login/codigo', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json'
+                   },
+                   body: JSON.stringify(codigo)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
 }
 
 
