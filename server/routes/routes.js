@@ -8,6 +8,7 @@ var usuario = require('../controllers/usuarioController')
 var consulta = require('../controllers/consultaController')
 var mensaje = require('../controllers/mensajesController')
 var cita = require('../controllers/citaController')
+var admin = require('../controllers/adminController')
 
 router.get('/',function (pet,resp){
     resp.status(200).send({message: 'Bienvenido'})
@@ -27,18 +28,28 @@ router.get('/medico/:id/pacientes',midd.isAuth,medico.listarPacientes)
 router.get('/medico/:idM/historial/:sip',midd.isAuth,historial.verHistorial)
 router.post('/medico/:id/historial/consulta',midd.isAuth,consulta.nuevaConsulta)
 router.get('/medico/:id/citas', midd.isAuth, cita.obtenerCitasMedico)
+router.get('/medico/:id/citas/video', midd.isAuth, cita.obtenerCitasMedicoVideo)
+router.get('/medico/:id/citas/presencial', midd.isAuth, cita.obtenerCitasMedicoPresencial)
 
 /**
  * Usuario generico
  */
 router.post('/usuario/:id/cita', midd.isAuth, cita.crearCita)
 router.get('/usuario/:id/citas', midd.isAuth, cita.obtenerCitasPaciente)
+router.get('/usuario/:id/citas/video', midd.isAuth, cita.obtenerCitasPacienteVideo)
+router.get('/usuario/:id/citas/presencial', midd.isAuth, cita.obtenerCitasPacientePresencial)
 router.put('/usuario/:id/cita/:idCita', midd.isAuth, cita.editarCita)
 router.delete('/usuario/:id/cita/:idCita', midd.isAuth, cita.borrarCita)
 router.put('/usuario/:id', midd.isAuth,usuario.updateUsuario)
 router.put('/usuario/:id/password', midd.isAuth,usuario.updatePassword)
 router.post('/usuario/:id/mensaje', midd.isAuth, mensaje.nuevoMensaje)
-router.get('/usuario/:id/mensaje', midd.isAuth, mensaje.verMensajesRecibidos)
+router.get('/usuario/:id/mensaje/recibidos', midd.isAuth, mensaje.verMensajesRecibidos)
+router.get('/usuario/:id/mensaje/enviados', midd.isAuth, mensaje.verMensajesEnviados)
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
+
+/**
+ * Admin
+ */
+router.post('/admin/:id/medico', midd.isAuth, admin.validarMedico)
 
 module.exports = router
