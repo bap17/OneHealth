@@ -49,12 +49,14 @@ router.get('/usuario/:id/mensaje/recibidos', midd.isAuth, mensaje.verMensajesRec
 router.get('/usuario/:id/mensaje/enviados', midd.isAuth, mensaje.verMensajesEnviados)
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
 
+
+
 /**
-<<<<<<< HEAD
  * WebRTC
  */
 router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
 router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
+router.get('/usuario/:id/comprobarCod/:cod',  webrtc.comprobarCodigo)
 
 /**
  * Kurento
@@ -64,8 +66,6 @@ router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
 //router.get('/kurento/init1',kurento.init1)
 
 /**
-=======
->>>>>>> cliente
  * Admin
  */
 router.post('/admin/:id/medico', midd.isAuth, admin.validarMedico)

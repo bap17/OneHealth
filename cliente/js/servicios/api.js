@@ -63,6 +63,19 @@ class Api  {
                    return respuesta
                })
     }
+
+    comprobarCodigo(codigo, id) {
+      console.log("estoy en api")
+      return fetch(this.URLAPI + 'usuario/'+id+'/comprobarCod/'+codigo, {
+                method: 'GET',
+                headers: {
+                    'Content-type':'application/json'
+                }
+      }).then(function(respuesta) {
+          return respuesta
+      })
+
+    }
 }
 
 
