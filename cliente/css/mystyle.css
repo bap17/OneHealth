@@ -40,6 +40,30 @@ html {
 .color {
 	background-color: #eb4f4f;
 }
+
+.secondary-color {
+	background-color: #b23e3e;
+}
+
+.col2 {
+	width: 50%;
+	float: left;
+	padding: 20px;
+}
+
+.body {
+	padding: 50px;
+}
+
+.titulo-mediano {
+	font-size: 20px;
+	color:#9d9d9d;
+	letter-spacing: 0.5px;
+}
+
+.parrafo {
+	padding: 20px 30px;
+}
 /*  end global  */
 
 
@@ -92,7 +116,7 @@ html {
 }
 .mi-cuenta:hover {
  	outline: 0px !important;
- 	color: #eb4f4f;
+ 	color: #b23e3e;;
 }
 
 
@@ -114,9 +138,11 @@ html {
 	color:white;
 	width: 20%;
 }
-.nav-opt:focus {
+.nav-opt:focus , .nav-opt:hover {
 	outline:0px;
+	background-color: #b23e3e;
 }
+
 
 /* end header */
 
@@ -145,7 +171,7 @@ html {
 
 .banner {
 
-	width:80%;
+	width:100%;
 	margin: 0 auto;
 	text-align: center;
 	padding-top: 20px;
@@ -154,7 +180,7 @@ html {
 
 .img-banner {
 
-	width: 30%;
+	width: 95%;
 
 }
 
@@ -204,6 +230,39 @@ html {
 }
 
 /***** END OPT VIDEOLLAMADA ******/
+
+
+
+/******* INICIO ***************/
+
+.titulo-inicio {
+	font-size: 25px;
+	color: #818181;
+	letter-spacing: 0.5px;
+}
+/********* END INICIO *********/
+
+
+/******** CITA VIDEO ***********/
+.body-cita-videollamada {
+	padding: 50px 100px;
+}
+
+.body-cita-videollamada .content {
+	margin: 0 auto;
+}
+
+.body-cita-videollamada  .col2 {
+	padding: 20px 0px 0px 130px;
+}
+.body-cita-videollamada .label {
+	font-weight: 700;
+}
+
+.button-cita-video .button {
+	width: 40%;
+}
+/******* END CITA VIDEO ********/
 
 /******************** PROVISIONAL WEBRTC **************************/
 

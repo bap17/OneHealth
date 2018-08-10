@@ -1,13 +1,14 @@
 import React from 'react'
 import Api from './servicios/api'
 import Kurento from './ComponenteKurento'
-
+import CitaVideo from './ComponenteCitaVideollamada'
 class ComponenteComprobarCita extends React.Component {
 
-	constructor(props) {
-        super(props)
+	constructor() {
+        super()
         this.state = {
-        	codigoValido: this.props.codigoValido
+        	codigoValido: false,
+        	idCita: 0
 
         }
         this.codigo = this.codigo.bind(this);
@@ -16,7 +17,8 @@ class ComponenteComprobarCita extends React.Component {
     }
 
     codigo() {
-    	this.props.handleCodigo();
+    	//this.props.handleCodigo();
+    	this.setState({codigoValido: true})
     }
 
 
@@ -35,11 +37,12 @@ class ComponenteComprobarCita extends React.Component {
 				})
 				
 			} else {
-				console.log("llego")
 				datos.json().then(function(valor){
-					console.log(valor.respuesta)
-					mythis.codigo()
+					
+					mythis.setState({idCita: valor.id})
+					mythis.setState({codigoValido: true})				
 				})
+
 				
 			}
 		})
@@ -60,7 +63,7 @@ class ComponenteComprobarCita extends React.Component {
 				
 	        </div> 
 	    } else {
-	    	return <Kurento></Kurento>
+	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
 	    }
     }
 }

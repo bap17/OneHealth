@@ -57,6 +57,7 @@ router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
 router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
 router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
 router.get('/usuario/:id/comprobarCod/:cod',  webrtc.comprobarCodigo)
+router.get('/usuario/:id/cita/:idCita', webrtc.verCita)
 
 /**
  * Kurento

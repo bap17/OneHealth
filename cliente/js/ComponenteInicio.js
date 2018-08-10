@@ -24,8 +24,7 @@ class ComponenteInicio extends React.Component {
         this.historial = this.historial.bind(this);
         this.mensajes = this.mensajes.bind(this);
         this.videollamada = this.videollamada.bind(this);
-        this.codigoY = this.codigoY.bind(this);
-        this.codigoN = this.codigoN.bind(this);
+
     }
 
     inicio() {
@@ -83,19 +82,6 @@ class ComponenteInicio extends React.Component {
 
     }
 
-    codigoY() {
-    	console.log("estoy cambiando el codigo")
-    	this.setState({codigoValido: true})
-    }
-
-    codigoN() {
-    	console.log("estoy cambiando el codigo")
-    	this.setState({codigoValido: false})
-    }
-
-
-
-
 
 
     render() {
@@ -124,7 +110,7 @@ class ComponenteInicio extends React.Component {
 
 			            {/* <Video ></Video> */}
 			            <div className="clear"></div>
-			            <ComprobarCita handleCodigo={this.codigoY}></ComprobarCita>		   
+			            <ComprobarCita ></ComprobarCita>		   
 		        	</div> 
 
 		//crearCitas  
@@ -254,8 +240,39 @@ class ComponenteInicio extends React.Component {
 			            <div className="clear"></div>
 
 			            <div className="banner">
-		            		<img className="img-banner" src="./../img/organization.png"></img>
+		            		<img className="img-banner" src="./../img/personas.jpg"></img>
 		            	</div>
+
+		            	<div className="body">						
+			            	<div className="col2">
+			            		<label className="titulo-inicio">España es el penúltimo país desarrollado en comunicación médico-paciente</label>
+
+				            	A los pacientes españoles les cuesta entender las explicaciones "sencillas" de sus médicos. Y es que España es uno de los países de la Organización para la Cooperación y el Desarrollo Económicos (OCDE) donde los ciudadanos tienen mayor dificultad para entender la información acerca de sus dolencias que les transmite su facultativo, según el estudio Entregar servicios de salud de calidad: un imperativo global para la cobertura universal de salud elaborado de forma conjunta por la propia OCDE, la Organización Mundial de la Salud (OMS) y el Banco Mundial.
+
+							</div>
+				            <div className="col2">
+			            		<label className="titulo-inicio">Estas son las tres especialidades médicas más 'envejecidas' en el SNS </label>
+			            		En los próximos diez años se estima que se jubilen en torno a 70.000 médicos en España. Esta situación deriva en un gran número de especialidades 'envejecidas' y que necesitan de un cambio generacional, que debería de llegar a través del incremento de plazas MIR.
+			            		Según el ‘Estudio sobre Demografía Médica’, elaborado por la OMC y CESM, el promedio de edad del médico activo en España en el año 2017 es de 49,2 años. Girona es la provincia con el promedio más elevado (56,8 años) mientras que, por el otro lado, se encuentra a Madrid con el promedio de edad del médico activo más bajo (46,2 años).
+
+								En este sentido, Análisis Clínicos es la especialidad más 'envejecida' con una edad media de sus especialistas de 56,4 años. A esta le sigue Medicina del Trabajo (55,0 años)  y Medicina Legal y Forense (54,8 años). -La especialidad de Estomatología desapareció en 2001 y cuenta con una edad media de 59,7 años
+							</div>
+
+							<div className="col2">
+			            		<label className="titulo-inicio">España es el penúltimo país desarrollado en comunicación médico-paciente</label>
+
+				            	A los pacientes españoles les cuesta entender las explicaciones "sencillas" de sus médicos. Y es que España es uno de los países de la Organización para la Cooperación y el Desarrollo Económicos (OCDE) donde los ciudadanos tienen mayor dificultad para entender la información acerca de sus dolencias que les transmite su facultativo, según el estudio Entregar servicios de salud de calidad: un imperativo global para la cobertura universal de salud elaborado de forma conjunta por la propia OCDE, la Organización Mundial de la Salud (OMS) y el Banco Mundial.
+
+								De acuerdo con este documento, el 37,9 por ciento de los pacientes españoles no entienden las explicaciones sencillas de su doctor, lo que supone que España se sitúa entre los países de la OCDE con un porcentaje más bajo en este sentido, casi 20 puntos por debajo de la media de la OCDE, fijada en un 18,7 por ciento, y a una distancia bastante pronunciada de países de nuestro entorno como Bélgica (4,9 por ciento), Portugal (9,1 por ciento) o Reino Unido (12 por ciento).
+							</div>
+				            <div className="col2">
+			            		<label className="titulo-inicio">Estas son las tres especialidades médicas más 'envejecidas' en el SNS </label>
+			            		En los próximos diez años se estima que se jubilen en torno a 70.000 médicos en España. Esta situación deriva en un gran número de especialidades 'envejecidas' y que necesitan de un cambio generacional, que debería de llegar a través del incremento de plazas MIR.
+			            		Según el ‘Estudio sobre Demografía Médica’, elaborado por la OMC y CESM, el promedio de edad del médico activo en España en el año 2017 es de 49,2 años. Girona es la provincia con el promedio más elevado (56,8 años) mientras que, por el otro lado, se encuentra a Madrid con el promedio de edad del médico activo más bajo (46,2 años).
+
+								En este sentido, Análisis Clínicos es la especialidad más 'envejecida' con una edad media de sus especialistas de 56,4 años. A esta le sigue Medicina del Trabajo (55,0 años)  y Medicina Legal y Forense (54,8 años). -La especialidad de Estomatología desapareció en 2001 y cuenta con una edad media de 59,7 años
+							</div>
+						</div>
 
 			   
 			        </div> 

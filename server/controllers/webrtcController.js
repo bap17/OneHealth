@@ -84,7 +84,87 @@ exports.buscarPaciente = function(req, res) {
     }
 }
 
-//Buscar un paciente
+
+//Ver una cita concreta
+exports.verCita = function(req, res) {
+    var obj = req.params
+    var idCita = obj.idCita
+    if( idCita != null && idCita != "") {
+        connection.query('SELECT * FROM cita as ci where id = ?', [idCita], function(err, results) {
+            if(err) {
+                res.status(500)
+                res.send({error: "Hay un error al buscar la cita"})
+                console.log("Hay un error al buscar la cita")
+            } else {
+                if(results.length > 0) {
+
+                    connection.query('SELECT * FROM usuario as us where id = ?', [results[0].paciente], function(err, results1) {
+                        if(err) {
+                            res.status(500)
+                            res.send({error: "Hay un error al buscar el paciente"})
+                            console.log("Hay un error al buscar el paciente")
+                        } else {
+                            if(results1.length > 0) {
+                                connection.query('SELECT us.nombre, us.apellidos, es.nombre as espe, us.clave FROM usuario as us inner join especialidad as es on us.id = es.medico where us.id = ?', [results[0].medico], function(err, results2) {
+                                    if(err) {
+                                        res.status(500)
+                                        res.send({error: "Hay un error al buscar el paciente"})
+                                        console.log("Hay un error al buscar el paciente")
+                                    } else {
+                                        if(results2.length > 0) {
+                                            var fecha = service.decrypt({text:results[0].fecha,clave:results2[0].clave})
+                                            var hora = service.decrypt({text:results[0].hora,clave:results2[0].clave})
+
+                                            var resu = {
+                                                nombrePac: results1[0].nombre,
+                                                apellidosPac: results1[0].apellidos,
+                                                emailPac: results1[0].email,
+                                                nombreMed: results2[0].nombre,
+                                                apellidosMed: results2[0].apellidos,
+                                                especialidad: results2[0].espe,
+                                                fecha: fecha,
+                                                hora: hora
+
+                                            }
+
+                                            res.status(200)
+                                            res.send(resu)
+
+
+                                        } else {
+                                            res.status(404)
+                                            res.send({error: "No hay medicos con ese id"})
+                                        }
+                                    }
+                                })
+
+
+                            } else {
+                                res.status(404)
+                                res.send({error: "No hay pacientes con ese id"})
+
+                            }
+                        }
+                    })
+                    
+
+                } else {
+                    res.status(404)
+                    res.send({error: "No hay citas con ese id"})
+                }
+            }
+        })
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
+}
+
+
+
+
+
+//Comprobar codigo de cita videollamada
 exports.comprobarCodigo = function(req, res) {
     console.log("estoy en comprobarCodigo")
     var obj = req.params
@@ -146,11 +226,11 @@ exports.comprobarCodigo = function(req, res) {
                                         }
                                         
                                         res.status(status)
-                                        res.send({respuesta: respuesta})
+                                        res.send({respuesta: respuesta,  id: results[0].id}) 
                                         
                                     } else {
                                         res.status(202)
-                                        res.send({respuesta: "No hay cita programada para este día"})
+                                        res.send({respuesta: "No hay cita programada para este día", id: results[0].id})
                                     }
                                }
 
@@ -159,7 +239,7 @@ exports.comprobarCodigo = function(req, res) {
 
                             }else {
                                 res.status(404)
-                                res.send({error: "No hay usuario con ese nombre"})
+                                res.send({error: "No hay medico con ese nombre"})
                             }
                         }
                     })
