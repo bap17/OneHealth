@@ -64,6 +64,18 @@ html {
 .parrafo {
 	padding: 20px 30px;
 }
+
+.button-call{
+	background-color: #72ea63;
+	color: white;
+	border-color: #72ea63;
+}
+.button-call:hover, .button-call:focus {
+	color: #72ea63;
+	background-color: white;
+	border-color: #72ea63;
+}
+
 /*  end global  */
 
 
@@ -263,6 +275,19 @@ html {
 	width: 40%;
 }
 /******* END CITA VIDEO ********/
+
+/******** VER VIDEO ************/
+
+.content-video {
+	width: 100%;
+	margin:0 auto;
+	text-align: center;
+}
+
+video {
+	width: 50%;
+}
+/******** END VER VIDEO *******/
 
 /******************** PROVISIONAL WEBRTC **************************/
 

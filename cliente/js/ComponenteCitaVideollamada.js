@@ -95,7 +95,7 @@ class ComponenteCitaVideollamada extends React.Component {
 			    						<label className="label">Especialidad:</label> <label>{this.state.especialidad}</label><br></br>
 			    					</div>
 			    					<div className="parrafo button-cita-video">
-			    						<button className="button" onClick={this.kurentoState}>Videollamada</button> <br></br> <br></br> 
+			    						<button className="button button-call" onClick={this.kurentoState}>Videollamada</button> <br></br> <br></br> 
 			    						<button className="button">Cancelar Cita</button>
 			    					</div>
 			    				</div>

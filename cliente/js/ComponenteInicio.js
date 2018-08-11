@@ -1,7 +1,8 @@
 import React from 'react'
 
-import Video from './ComponenteInitVideo'
+//import Video from './ComponenteInitVideo'
 import ComprobarCita from './ComponenteComprobarCita'
+import Video from './ComponenteVideo'
 
 
 class ComponenteInicio extends React.Component {
@@ -134,7 +135,7 @@ class ComponenteInicio extends React.Component {
 			            <div className="clear"></div>
 
 			            <div className="banner">
-		            		<img className="img-banner" src="./../img/equipo.jpeg"></img>
+		            		<img className="img-banner" src="./../img/doctor2.png"></img>
 		            	</div>
 
 			   
@@ -160,7 +161,7 @@ class ComponenteInicio extends React.Component {
 			            <div className="clear"></div>
 
 			            <div className="banner">
-		            		<img className="img-banner" src="./../img/equipo.jpeg"></img>
+		            		<img className="img-banner" src="./../img/medicos2.png"></img>
 		            	</div>
 
 			   
@@ -185,9 +186,10 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="clear"></div>
 
-			            <div className="banner">
-		            		<img className="img-banner" src="./../img/doctor.png"></img>
-		            	</div>
+			            {/*<div className="banner">
+		            		<img className="img-banner" src="./../img/medicos.png"></img>
+		            	</div>*/}
+		            	<Video></Video>
 
 			   
 			        </div> 
@@ -214,7 +216,7 @@ class ComponenteInicio extends React.Component {
 			            <div className="clear"></div>
 
 			            <div className="banner">
-		            		<img className="img-banner" src="./../img/doctor.png"></img>
+		            		<img className="img-banner" src="./../img/medico2.png"></img>
 		            	</div>
 
 			   
