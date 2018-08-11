@@ -15,9 +15,11 @@ class ComponenteCitaVideollamada extends React.Component {
         	hora: null,
         	nombreMed:null,
         	apellidosMed: null,
-        	especialidad: null
+        	especialidad: null,
+        	kurento: false
         }
         this.getCita = this.getCita.bind(this);
+        this.kurentoState = this.kurentoState.bind(this);
 
     }
 
@@ -58,43 +60,52 @@ class ComponenteCitaVideollamada extends React.Component {
 
     }
 
+    kurentoState() {
+    	this.setState({kurento: true})
+    }
+
 
 
     render() {
-    	return <div className = "body-cita-videollamada">
-	    				<label className="titulo-comp-cita"> Cita Videollamada </label>
-	    				<div className="clear"></div>
-	    				<div className="content">
-		    				<div className="col2">
 
-		    					<label className="titulo-mediano">Paciente</label>
-		    					<div className="parrafo">
-		    						<label className="label">Nombre:</label> <label>{this.state.nombrePac}</label><br></br>
-		    						<label className="label">Apellidos:</label> <label>{this.state.apellidosPac}</label><br></br>
-		    						<label className="label">Email:</label> <label>{this.state.emailPac}</label><br></br>
-		    					</div>
-		    					<label className="titulo-mediano">Cita</label>
-		    					<div className="parrafo">
-		    						<label className="label">Fecha:</label> <label>{this.state.fecha}</label><br></br>
-		    						<label className="label">Hora:</label> <label>{this.state.hora}</label><br></br>
-		    					</div>
-		    				</div>
-		    				<div className="col2">
-		    					<label className="titulo-mediano">Médico</label>
-		    					<div className="parrafo">
-		    						<label className="label">Nombre:</label> <label>{this.state.nombreMed}</label><br></br>
-		    						<label className="label">Apellidos:</label> <label>{this.state.apellidosMed}</label><br></br>
-		    						<label className="label">Especialidad:</label> <label>{this.state.especialidad}</label><br></br>
-		    					</div>
-		    					<div className="parrafo button-cita-video">
-		    						<button className="button">Videollamada</button> <br></br> <br></br> 
-		    						<button className="button">Cancelar Cita</button>
-		    					</div>
-		    				</div>
+    	if(this.state.kurento == false) {
+	    	return <div className = "body-cita-videollamada">
+		    				<label className="titulo-comp-cita"> Cita Videollamada </label>
+		    				<div className="clear"></div>
+		    				<div className="content">
+			    				<div className="col2">
 
-	    				</div>
-	    				
-	    			</div>
+			    					<label className="titulo-mediano">Paciente</label>
+			    					<div className="parrafo">
+			    						<label className="label">Nombre:</label> <label>{this.state.nombrePac}</label><br></br>
+			    						<label className="label">Apellidos:</label> <label>{this.state.apellidosPac}</label><br></br>
+			    						<label className="label">Email:</label> <label>{this.state.emailPac}</label><br></br>
+			    					</div>
+			    					<label className="titulo-mediano">Cita</label>
+			    					<div className="parrafo">
+			    						<label className="label">Fecha:</label> <label>{this.state.fecha}</label><br></br>
+			    						<label className="label">Hora:</label> <label>{this.state.hora}</label><br></br>
+			    					</div>
+			    				</div>
+			    				<div className="col2">
+			    					<label className="titulo-mediano">Médico</label>
+			    					<div className="parrafo">
+			    						<label className="label">Nombre:</label> <label>{this.state.nombreMed}</label><br></br>
+			    						<label className="label">Apellidos:</label> <label>{this.state.apellidosMed}</label><br></br>
+			    						<label className="label">Especialidad:</label> <label>{this.state.especialidad}</label><br></br>
+			    					</div>
+			    					<div className="parrafo button-cita-video">
+			    						<button className="button" onClick={this.kurentoState}>Videollamada</button> <br></br> <br></br> 
+			    						<button className="button">Cancelar Cita</button>
+			    					</div>
+			    				</div>
+
+		    				</div>
+		    				
+		    			</div>
+		 } else {
+		 	return <Kurento></Kurento>
+		 }
 	}
 }
 

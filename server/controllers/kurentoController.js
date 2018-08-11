@@ -101,7 +101,8 @@ exports.register = function(id, name, io, callback) {
     try {
 
         var response = {id: 'registerResponse', response: 'accepted'}
-        io.sendMessages('messageC', response)
+        //io.sendMessage('messageC', response)
+         io.emit('messageC',response)
 
 
     } catch(exception) {
