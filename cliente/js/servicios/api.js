@@ -63,6 +63,18 @@ class Api  {
                    return respuesta
                })
     }
+
+    RegistroP(user) {
+        return fetch(this.URLAPI + 'registro', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json'
+                   },
+                   body: JSON.stringify(user)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
 }
 
 

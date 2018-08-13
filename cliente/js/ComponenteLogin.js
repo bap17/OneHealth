@@ -61,15 +61,17 @@ class ComponenteLogin extends Component {
     render(){
         if(this.state.registrado){
             return <div>
-                <div class="form-group">
+                <div className="form-group">
                     <label>Email address</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" ref={(campo)=>{this.campoUser=campo}}/>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
+                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
                 </div>
-                <button type="submit" class="btn btn-primary" onClick={this.login}>Submit</button>
+                <button type="submit" className="btn btn-primary" onClick={this.login}>Submit</button>
+                <br></br>
+                <p>¿Nuevo usuario?<a onClick={this.registroNO}><strong>Regístrate</strong></a></p>
             </div>
         }else{
             return <Registro handleRegistroOK={this.registroOK}/>

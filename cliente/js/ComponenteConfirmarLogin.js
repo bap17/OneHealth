@@ -30,7 +30,7 @@ class ComponenteConfirmarLogin extends Component {
               datos.json().then(function(resp){
                 localStorage.setItem('token', resp.token)
                 localStorage.setItem('id', resp.usuario.id) 
-                localStorage.setItem('username', resp.usuario.nombre)
+                localStorage.setItem('username', resp.usuario.username)
                 localStorage.setItem('tipo', resp.usuario.tipo) 
                 aux.handleLoginOK() 
               })   
@@ -48,11 +48,11 @@ class ComponenteConfirmarLogin extends Component {
 
     render(){  
         return <div>
-            <div class="form-group">
+            <div className="form-group">
                 <label>Codigo</label>
-                <input type="email" class="form-control" id="cod" placeholder="Enter codigo" ref={(campo)=>{this.campoCodigo=campo}}/>
+                <input type="email" className="form-control" id="cod" placeholder="Enter codigo" ref={(campo)=>{this.campoCodigo=campo}}/>
             </div>
-            <button type="submit" class="btn btn-primary" onClick={this.confirmacion}>Submit</button>
+            <button type="submit" className="btn btn-primary" onClick={this.confirmacion}>Submit</button>
         </div>
         
     }
