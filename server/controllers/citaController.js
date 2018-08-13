@@ -1,5 +1,7 @@
 var connection = require('./bd')
 var service = require('../services/services')
+var crypto = require('crypto')
+var randomstring = require("randomstring");
 
 exports.crearCita=function (pet,resp){
     var id = pet.params.id
@@ -22,13 +24,19 @@ exports.crearCita=function (pet,resp){
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
+                            //var iv = crypto.randomBytes(8);
+                            //var iv = randomstring.generate(5)
                             var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
                             var horaC = service.encrypt({text:hora,clave:results[0].clave})
-                            connection.query('INSERT INTO Cita (fecha, hora, paciente,medico,origen,tipo) VALUES(?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,id,tipo], function(err2, result2) {
+                            //var codigo = service.encrypt({text:iv,clave:results[0].clave})
+                            var codigo = randomstring.generate(5)
+
+                            connection.query('INSERT INTO Cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,id,tipo,codigo], function(err2, result2) {
+
                                 if(err2) {
                                     resp.status(500).send({message: err2})
                                 } else {
-                                    resp.status(201).send({message:"La cita se ha registrado correctamente"})
+                                    resp.status(201).send({message:"La cita se ha registrado correctamente", codigo: codigo})
                                 }
                             })
                         }

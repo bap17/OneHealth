@@ -148,21 +148,23 @@ exports.borrarMensaje=function(pet,resp){
     }
 }
 
+
 var descifrar =function(mensaje,callback){
     //var mensajes = new Array()
     
-        connection.query('SELECT * FROM Usuario WHERE id = ?',[mensaje.origen],function (err2, results3) {
-            if(err2) {
-                resp.status(500).send({message: "Error en el servidor"})
-            } else {
-                var resul={
-                    "texto":service.decrypt({text:mensaje.texto,clave:results3[0].clave}) 
-                }
-                //mensajes.push(resul)
-                console.log(resul)
-                callback(resul)
+
+    connection.query('SELECT * FROM Usuario WHERE id = ?',[mensaje.origen],function (err2, results3) {
+        if(err2) {
+            resp.status(500).send({message: "Error en el servidor"})
+        } else {
+            var resul={
+                "texto":service.decrypt({text:mensaje.texto,clave:results3[0].clave}) 
             }
-        }) 
+            //mensajes.push(resul)
+            console.log(resul)
+            callback(resul)
+        }
+    }) 
    
     /*for(var i=0; i<results2.length;i++){
         
@@ -178,13 +180,8 @@ var descifrar =function(mensaje,callback){
                 mensajes.push(resul)
                 console.log(mensajes)
             }
-        }) 
+        })  
+
     }*/
-    
-    
-       
-        
-    
-    
     
 }

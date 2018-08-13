@@ -27,7 +27,10 @@ class ComponenteConfirmarLogin extends Component {
               auxStatus=datos.status.toString()
               this.errores()
             }else{
+              console.log("hola estoy en confirmacion")
+
               datos.json().then(function(resp){
+                console.log("hola")
                 localStorage.setItem('token', resp.token)
                 localStorage.setItem('id', resp.usuario.id) 
                 localStorage.setItem('username', resp.usuario.username)

@@ -3,7 +3,10 @@ var dir_js = path.resolve(__dirname, 'js')
 var dir_css = path.resolve(__dirname, 'css')
 module.exports = {
     //archivo "inicial" por el que se empieza a ver las dependencias
-    entry: path.resolve(dir_js,'main.js'),
+    entry: [
+            path.resolve(dir_js,'main.js'),
+            'webpack-dev-server/client?http://localhost:8443'
+            ],
     //bundle construido por webpack, uniendo archivo inicial y dependencias
     output: {
         path: __dirname,

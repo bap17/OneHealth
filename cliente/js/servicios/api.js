@@ -75,6 +75,30 @@ class Api  {
                    return respuesta
                })
     }
+    
+    comprobarCodigo(codigo, id) {
+      return fetch(this.URLAPI + 'usuario/'+id+'/comprobarCod/'+codigo, {
+                method: 'GET',
+                headers: {
+                    'Content-type':'application/json'
+                }
+      }).then(function(respuesta) {
+          return respuesta
+      })
+
+    }
+
+    getCita(idUsu, idCita) {
+      return fetch(this.URLAPI + 'usuario/'+idUsu+'/cita/'+idCita, {
+                method: 'GET',
+                headers: {
+                    'Content-type':'application/json'
+                }
+      }).then(function(respuesta) {
+          return respuesta
+      })
+
+    }
 }
 
 

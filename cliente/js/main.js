@@ -11,4 +11,8 @@ import Index from './ComponenteIndex'
 
 //ReactDOM.render(<Connect />, document.getElementById('componente')); 
 
+
+//ReactDOM.render(<Inicio />, document.getElementById('componente')); 
+
 ReactDOM.render(<Index />, document.getElementById('componente')); 
+

@@ -8,6 +8,8 @@ var usuario = require('../controllers/usuarioController')
 var consulta = require('../controllers/consultaController')
 var mensaje = require('../controllers/mensajesController')
 var cita = require('../controllers/citaController')
+var webrtc = require('../controllers/webrtcController')
+var kurento = require('../controllers/kurentoController')
 var admin = require('../controllers/adminController')
 
 router.get('/',function (pet,resp){
@@ -46,6 +48,23 @@ router.post('/usuario/:id/mensaje', midd.isAuth, mensaje.nuevoMensaje)
 router.get('/usuario/:id/mensaje/recibidos', midd.isAuth, mensaje.verMensajesRecibidos)
 router.get('/usuario/:id/mensaje/enviados', midd.isAuth, mensaje.verMensajesEnviados)
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
+
+
+
+/**
+ * WebRTC
+ */
+router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
+router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
+router.get('/usuario/:id/comprobarCod/:cod',  webrtc.comprobarCodigo)
+router.get('/usuario/:id/cita/:idCita', webrtc.verCita)
+
+/**
+ * Kurento
+ */
+
+//router.get('/kurento/init',kurento.init)
+//router.get('/kurento/init1',kurento.init1)
 
 /**
  * Admin
