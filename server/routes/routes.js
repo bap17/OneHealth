@@ -55,7 +55,8 @@ router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
  * WebRTC
  */
 router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
-router.get('/webrtc/paciente/:nombre',webrtc.buscarPaciente)
+//router.get('/webrtc/paciente/:nombre',webrtc.buscarPacienteNombre)
+router.get('/usuario/:id/paciente/:sip',webrtc.buscarPacienteSip)
 router.get('/usuario/:id/comprobarCod/:cod',  webrtc.comprobarCodigo)
 router.get('/usuario/:id/cita/:idCita', webrtc.verCita)
 router.get('/usuario/:id/paciente', webrtc.listarPaciente)

@@ -111,6 +111,18 @@ class Api  {
       })
 
     }
+
+    buscarSip(idUsu, sip) {
+      return fetch(this.URLAPI + 'usuario/'+idUsu+'/paciente/'+sip, {
+                method: 'GET',
+                headers: {
+                    'Content-type':'application/json'
+                }
+      }).then(function(respuesta) {
+          return respuesta
+      })
+
+    }
 }
 
 

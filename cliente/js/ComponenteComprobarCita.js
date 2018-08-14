@@ -10,7 +10,8 @@ class ComponenteComprobarCita extends React.Component {
         this.state = {
         	codigoValido: false,
         	idCita: 0,
-        	paciente:[]
+        	paciente:[],
+        	search:false
 
         }
         this.codigo = this.codigo.bind(this);
@@ -61,6 +62,23 @@ class ComponenteComprobarCita extends React.Component {
 	}
 
 	buscar() {
+
+		var idUsu = localStorage.getItem('id');
+		var sip = this.sip.value
+		var mythis = this
+		new Api().buscarSip(idUsu, sip).then(function(datos){
+
+			if(datos.status!=200) {
+				datos.json().then(function(valor){
+					console.log(valor.respuesta)
+				})				
+			} else {
+				datos.json().then(function(valor){
+					mythis.setState({paciente: valor.pacientes});	
+
+				})				
+			}
+		})
 
 	}
 
