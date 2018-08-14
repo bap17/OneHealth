@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-html {
-	font-family: 'Montserrat', sans-serif;
+html *{
+	font-family: 'Montserrat', sans-serif !important;
 }
 
 /*  global   */
@@ -91,6 +91,9 @@ select {
     appearance: none;
 }
 
+.input-pequeño {
+	width: 20%;
+}
 /*  end global  */
 
 
@@ -191,7 +194,80 @@ select {
 	width: 30%;
 
 }
+
+.pacientes {
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 1px solid #C7C7C7;
+
+	margin-top: 30px;
+}
+
+.lista-pacientes {
+	list-style: none;
+	padding: 10px;
+}
+
+.lista-pacientes li {
+	padding: 10px 0px;
+	border-bottom: 1px solid #E0E0E0;
+}
+
+.titulo-paciente {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	border-bottom: 1px solid #C7C7C7;
+	padding: 10px 0px;
+}
+
+.input-buscarsip {
+	margin: 0px 10px;
+}
+
 /**** END  OPT VIDEOLLAMADA COMPROBAR CODIGO ****/
+
+
+/************ PACIENTE ****************/
+.lista-pacientes .pos{
+	font-weight: 700;
+	
+	padding: 0px 10px;
+}
+
+
+.lista-pacientes .tab-col1 {
+	position: relative;
+	float: left;
+	width: 10%;
+}
+
+.lista-pacientes .tab-col2 {
+	position: relative;
+	float: left;
+	width: 20%;
+}
+
+.lista-pacientes .tab-col3 {
+	position: relative;
+	float: left;
+	width: 20%;
+
+}
+.lista-pacientes .tab-col4 {
+	position: relative;
+	float: left;
+	width: 40%;
+
+}
+.lista-pacientes .tab-col5 {
+	position: relative;
+	float: left;
+	width: 10%;
+
+}
+/********** END PACIENTE ************/
 
 
 /***** OPT VIDEOLLAMADA ******/

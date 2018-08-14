@@ -2,17 +2,29 @@ import React from 'react'
 import Api from './servicios/api'
 import Kurento from './ComponenteKurento'
 import CitaVideo from './ComponenteCitaVideollamada'
+import Paciente from './ComponentePaciente'
 class ComponenteComprobarCita extends React.Component {
 
 	constructor() {
         super()
         this.state = {
         	codigoValido: false,
-        	idCita: 0
+        	idCita: 0,
+        	paciente:[]
 
         }
         this.codigo = this.codigo.bind(this);
         this.comprobarCodigo = this.comprobarCodigo.bind(this);
+        this.buscar = this.buscar.bind(this);
+        this.listadoPaciente = this.listadoPaciente.bind(this);
+        this.llamar = this.llamar.bind(this);
+    }
+
+    
+
+	componentDidMount() {
+
+ 		this.listadoPaciente();
 
     }
 
@@ -48,8 +60,59 @@ class ComponenteComprobarCita extends React.Component {
 		})
 	}
 
+	buscar() {
+
+	}
+
+	llamar() {
+		console.log("estoy en llamar")
+	}
+
+	listadoPaciente () {
+		var idUsu = localStorage.getItem('id');
+		var mythis = this
+		new Api().litadoPacientes(idUsu).then(function(datos){
+
+			if(datos.status!=200) {
+				datos.json().then(function(valor){
+					console.log(valor.respuesta)
+				})
+				
+			} else {
+				datos.json().then(function(valor){
+					console.log(valor.pacientes)
+					mythis.setState({paciente: valor.pacientes});	
+
+				})
+
+				
+			}
+		})
+	}
+
 
     render() {
+
+    	var prods = []
+		for (var i=0; i<this.state.paciente.length; i++) {
+			var actual = this.state.paciente[i]
+			console.log(actual.nombre)
+			var elemento
+			elemento = <Paciente key={i}
+				pos={i}
+				nombre={actual.nombre}
+				apellidos={actual.apellidos}
+				sip={actual.sip}
+				handlellamar={this.llamar}/>
+			prods.push(elemento)
+
+		}
+
+
+
+	
+
+
     	var tipoUsu = localStorage.getItem('tipo');
     	if(this.state.codigoValido == false && tipoUsu == 'paciente') {
 	        return <div>
@@ -67,36 +130,32 @@ class ComponenteComprobarCita extends React.Component {
 	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
 	    } else if(tipoUsu == 'medico') {
 	    	return <div>
+	    			
     				<div className="clear"></div>
     				<div className="banner">
     					<img className="img-banner" src="../img/worldhealth.png"></img>
     				</div>
+    				<div className = "body-cita-videollamada">
+    				<label className="titulo-comp-cita">Videollamada </label>
+	    				<div className="form">	    					
+		    				<div className="filtros">
+		    					<label>Buscar por SIP: </label>
+		    					<input id="sip" className="input input-pequeño input-buscarsip" ref={(campo)=>{this.sip=campo}} placeholder="Ingresa la sip del paciente"></input> 
+		    					<button id="buscar" onClick={this.buscar} className="button">Buscar</button>  <br></br> <br></br>
+		    					
+		    				</div>
 
-    				<div className="form">
-	    				<div className="filtros">
-	    					<label>Especialidad</label>
-	    					<select className="form-control select ">
-							  <option>Familia</option>
-							  <option>Pediatra</option>
-							  <option>Geriatria</option>
-							  <option>Ofttalmología</option>
-							</select>
-	    				</div>
+		    				<div className="clear"></div>
 
-	    				<div className="clear"></div>
+		    				<div className="pacientes">
+		    					<label className="titulo-paciente">Listado de Pacientes</label>
 
-	    				<div className="medicos">
-	    					<label className="titulo-medico">Listado de Médicos</label>
+		    					<ul className="lista-pacientes" >
+		    						{prods}
+		    					</ul>
 
-	    					<ul className="lista-medicos" >
-	    						<li>Médico 1</li>
-	    						<li>Médico 2</li>
-	    						<li>Médico 3</li>
-	    						<li>Médico 4</li>
-	    						<li>Médico 5</li>
-	    					</ul>
-
-	    				</div>
+		    				</div>
+		    			</div>
 	    			</div>
 		   
 		        </div> 

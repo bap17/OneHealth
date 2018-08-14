@@ -99,6 +99,18 @@ class Api  {
       })
 
     }
+
+    litadoPacientes(idUsu) {
+      return fetch(this.URLAPI + 'usuario/'+idUsu+'/paciente', {
+                method: 'GET',
+                headers: {
+                    'Content-type':'application/json'
+                }
+      }).then(function(respuesta) {
+          return respuesta
+      })
+
+    }
 }
 
 

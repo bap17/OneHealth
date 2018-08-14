@@ -84,6 +84,40 @@ exports.buscarPaciente = function(req, res) {
     }
 }
 
+//Buscar un paciente
+exports.listarPaciente = function(req, res) {
+        connection.query('SELECT * FROM paciente as pa inner join usuario as us on us.id = pa.id ', [], function(err, results) {
+            if(err) {
+                res.status(500)
+                res.send({error: "Hay un error al buscar los pacientes"})
+                console.log("Hay un error al buscar los pacientes")
+            } else {
+                if(results.length > 0) {
+                    var pacientes = new Array()
+                                               
+                    for(var i = 0;  i < results.length; i++) {                                        
+                        var paciente = {
+                            "nombre" : results[i].nombre,
+                            "apellidos": results[i].apellidos,
+                            "sip": results[i].sip
+                        }
+                        pacientes.push(paciente)
+                    }
+
+                    var resultado ={"pacientes": pacientes}
+                                   
+                    res.status(200)                       
+                    res.send(resultado) 
+
+                    /////////////////////////////       
+                } else {
+                    res.status(404)
+                    res.send({error: "No hay pacientes con ese nombre"})
+                }
+            }
+        })
+}
+
 
 //Ver una cita concreta
 exports.verCita = function(req, res) {
