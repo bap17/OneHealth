@@ -64,6 +64,18 @@ class Api  {
                })
     }
 
+    RegistroP(user) {
+        return fetch(this.URLAPI + 'registro', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json'
+                   },
+                   body: JSON.stringify(user)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
+    
     comprobarCodigo(codigo, id) {
       return fetch(this.URLAPI + 'usuario/'+id+'/comprobarCod/'+codigo, {
                 method: 'GET',

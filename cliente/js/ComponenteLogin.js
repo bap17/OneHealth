@@ -70,6 +70,8 @@ class ComponenteLogin extends Component {
                     <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={this.login}>Submit</button>
+                <br></br>
+                <p>¿Nuevo usuario?<a onClick={this.registroNO}><strong>Regístrate</strong></a></p>
             </div>
         }else{
             return <Registro handleRegistroOK={this.registroOK}/>
