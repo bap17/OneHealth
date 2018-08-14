@@ -50,7 +50,8 @@ class ComponenteComprobarCita extends React.Component {
 
 
     render() {
-    	if(this.state.codigoValido == false) {
+    	var tipoUsu = localStorage.getItem('tipo');
+    	if(this.state.codigoValido == false && tipoUsu == 'paciente') {
 	        return <div>
 	            <div className="comprobarCita">
 	            	
@@ -62,8 +63,45 @@ class ComponenteComprobarCita extends React.Component {
 				</div>
 				
 	        </div> 
-	    } else {
+	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente'){
 	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
+	    } else if(tipoUsu == 'medico') {
+	    	return <div>
+    				<div className="clear"></div>
+    				<div className="banner">
+    					<img className="img-banner" src="../img/worldhealth.png"></img>
+    				</div>
+
+    				<div className="form">
+	    				<div className="filtros">
+	    					<label>Especialidad</label>
+	    					<select className="form-control select ">
+							  <option>Familia</option>
+							  <option>Pediatra</option>
+							  <option>Geriatria</option>
+							  <option>Ofttalmología</option>
+							</select>
+	    				</div>
+
+	    				<div className="clear"></div>
+
+	    				<div className="medicos">
+	    					<label className="titulo-medico">Listado de Médicos</label>
+
+	    					<ul className="lista-medicos" >
+	    						<li>Médico 1</li>
+	    						<li>Médico 2</li>
+	    						<li>Médico 3</li>
+	    						<li>Médico 4</li>
+	    						<li>Médico 5</li>
+	    					</ul>
+
+	    				</div>
+	    			</div>
+		   
+		        </div> 
+
+
 	    }
     }
 }

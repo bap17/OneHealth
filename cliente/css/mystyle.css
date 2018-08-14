@@ -75,6 +75,21 @@ html {
 	background-color: white;
 	border-color: #72ea63;
 }
+select {
+   width: 635px !important;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 5px;
+    height: 34px;
+    background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat #ddd;
+    -webkit-appearance: none;
+    background-position-x: 600px;
+    background-position-y: 10px;
+    -moz-appearance: none;
+    appearance: none;
+}
 
 /*  end global  */
 
@@ -201,7 +216,7 @@ html {
 	margin:0 auto;
 	margin-top: 60px;
 }
-
+/*
 .filtros label, .filtros select {
 	float: left;
 }
@@ -215,7 +230,7 @@ html {
 .select:focus {
 	box-shadow: none;
 }
-
+*/
 .medicos {
 	border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;
