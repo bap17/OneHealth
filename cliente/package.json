@@ -25,9 +25,14 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.2",
+    "@fortawesome/free-solid-svg-icons": "^5.2.0",
+    "@fortawesome/react-fontawesome": "^0.1.2",
     "css-loader": "^0.28.11",
+    "i": "^0.3.6",
     "jquery": "^3.3.1",
     "kurento-utils": "^6.7.0",
+    "npm": "^6.3.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-native-kurento-utils-js": "^6.6.2",

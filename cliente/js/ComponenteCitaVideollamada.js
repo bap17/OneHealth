@@ -2,6 +2,7 @@ import React from 'react'
 import Api from './servicios/api'
 import Kurento from './ComponenteKurento'
 
+
 class ComponenteCitaVideollamada extends React.Component {
 
 	constructor(props) {

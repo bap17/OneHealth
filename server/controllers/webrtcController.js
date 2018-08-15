@@ -88,7 +88,7 @@ exports.buscarPacienteSip = function(req, res) {
     var sip = obj.sip
 
     if( sip != null && sip != "") {
-        connection.query('SELECT * FROM paciente as pa inner join usuario as us on us.id = pa.id where pa.sip like ?', [sip], function(err, results) {
+        connection.query('SELECT * FROM paciente as pa inner join usuario as us on us.id = pa.id where pa.sip like ? and us.disponible = 1', ['%'+sip+'%'], function(err, results) {
             if(err) {
                 res.status(500)
                 res.send({error: "Hay un error al buscar los pacientes"})
@@ -126,7 +126,7 @@ exports.buscarPacienteSip = function(req, res) {
 
 //Listar pacientes
 exports.listarPaciente = function(req, res) {
-        connection.query('SELECT * FROM paciente as pa inner join usuario as us on us.id = pa.id ', [], function(err, results) {
+        connection.query('SELECT * FROM paciente as pa inner join usuario as us on us.id = pa.id where us.disponible = 1', [], function(err, results) {
             if(err) {
                 res.status(500)
                 res.send({error: "Hay un error al buscar los pacientes"})
@@ -326,6 +326,33 @@ exports.comprobarCodigo = function(req, res) {
         res.status(400)
         res.send({error: "Alguno de los campos es invalido"})
     }
+}
+
+
+//Cambiar estado
+exports.cambiarEstado = function(req, res) {
+    var obj = req.params
+    var disponible = req.body.disponible
+    var idUsu = obj.id
+    console.log(disponible)
+    console.log(idUsu)
+    var dis = parseInt(disponible)
+    if( idUsu != null && idUsu != "" && disponible != null && (disponible == 1 || disponible == 0) ) {
+        connection.query('UPDATE Usuario SET disponible = ? WHERE id = ?', [disponible, idUsu], function(err, results) {
+            if(err) {
+                res.status(500)
+                res.send({error: "Hay un error al modificar al usuario"})
+                console.log("Hay un error al modificar al usuario")
+            } else {   
+                res.status(204)  
+                res.send("Se ha actualizado correctamente")       
+            }
+        })
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
+
 }
 
 

@@ -61,6 +61,8 @@ router.get('/usuario/:id/comprobarCod/:cod',  webrtc.comprobarCodigo)
 router.get('/usuario/:id/cita/:idCita', webrtc.verCita)
 router.get('/usuario/:id/paciente', webrtc.listarPaciente)
 
+router.put('/usuario/:id/disponibilidad', webrtc.cambiarEstado)
+
 /**
  * Kurento
  */

@@ -226,6 +226,27 @@ select {
 	margin: 0px 10px;
 }
 
+.reload {
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	padding: 12px;
+	border: 1px solid #9d9d9d;
+	background-color: white;
+	color: #9d9d9d;
+	width: 5%;
+}
+
+.reload:hover,  .reload:focus{
+	border: 1px solid #9d9d9d;
+	background-color: #9d9d9d;
+	color: white;
+	width: 5%;
+}
+
+
+
+
 /**** END  OPT VIDEOLLAMADA COMPROBAR CODIGO ****/
 
 
@@ -233,7 +254,8 @@ select {
 .lista-pacientes .pos{
 	font-weight: 700;
 	
-	padding: 0px 10px;
+	padding: 5px 20px;
+	font-size:12px;
 }
 
 
@@ -265,8 +287,22 @@ select {
 	position: relative;
 	float: left;
 	width: 10%;
+	text-align: center;
 
 }
+
+.button-phone {
+	font-size: 25px;
+	color: black;
+}
+
+.connect {
+	color: #2cc200;
+	border:0.5px solid #2cc200;
+	border-radius:10px;
+
+}
+
 /********** END PACIENTE ************/
 
 

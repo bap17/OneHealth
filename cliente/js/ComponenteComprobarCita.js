@@ -3,6 +3,7 @@ import Api from './servicios/api'
 import Kurento from './ComponenteKurento'
 import CitaVideo from './ComponenteCitaVideollamada'
 import Paciente from './ComponentePaciente'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class ComponenteComprobarCita extends React.Component {
 
 	constructor() {
@@ -159,7 +160,7 @@ class ComponenteComprobarCita extends React.Component {
 		    				<div className="filtros">
 		    					<label>Buscar por SIP: </label>
 		    					<input id="sip" className="input input-pequeño input-buscarsip" ref={(campo)=>{this.sip=campo}} placeholder="Ingresa la sip del paciente"></input> 
-		    					<button id="buscar" onClick={this.buscar} className="button">Buscar</button>  <br></br> <br></br>
+		    					<button id="buscar" onClick={this.buscar} className="button">Buscar</button> <button className="reload" onClick={this.listadoPaciente} > <FontAwesomeIcon icon="sync-alt" /></button> <br></br> <br></br>
 		    					
 		    				</div>
 

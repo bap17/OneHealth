@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import Inicio from './ComponenteInicio'
 import Login from './ComponenteLogin'
 import Confirmar from './ComponenteConfirmarLogin'
+import Api from './servicios/api'
 
 class ComponenteIndex extends Component {
   constructor() {
@@ -15,11 +16,14 @@ class ComponenteIndex extends Component {
     this.logoutOK= this.logoutOK.bind(this)
     this.confirmacion=this.confirmacion.bind(this)
     this.confirmacionNO=this.confirmacionNO.bind(this)
+    this.cambiarEstado=this.cambiarEstado.bind(this)
     
   }
 
   loginOK() {
+    this.cambiarEstado()
     this.setState({logged:true})
+   
   }
 
   logoutOK() {
@@ -32,7 +36,26 @@ class ComponenteIndex extends Component {
 
   confirmacionNO(){
     this.setState({confirmado:false})
-}
+  }
+
+  cambiarEstado() {
+    var idUsu = localStorage.getItem('id')
+    var disp = {"disponible": 1}
+    new Api().hola(disp, idUsu).then(function(datos){
+
+      if(datos.status!=204) {
+        datos.json().then(function(valor){
+          console.log(valor.respuesta)
+        })
+        
+      } else {
+        console.log("El estado ha cambiado")
+
+        
+      }
+    })
+
+  }
 
   render() { 
     var token = localStorage.getItem('token')

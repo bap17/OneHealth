@@ -123,6 +123,20 @@ class Api  {
       })
 
     }
+
+    hola(disp, idUsu) {
+      console.log("dispoini")
+      return fetch(this.URLAPI + 'usuario/'+idUsu+'/disponibilidad', {
+                method: 'PUT',
+                headers: {
+                    'Content-type':'application/json'
+                },
+                body: JSON.stringify(disp)
+      }).then(function(respuesta) {
+          return respuesta
+      })
+
+    }
 }
 
 

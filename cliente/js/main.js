@@ -1,9 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'  
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSyncAlt, faPhone, faCircle } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSyncAlt)
+library.add(faPhone)
+library.add(faCircle)
+
 
 import Connect from './ComponenteConnect'
 import Inicio from './ComponenteInicio'
 import Index from './ComponenteIndex'
+
 
 
 /*ReactDOM.render(<Saludo nombre="Pepe"/>
