@@ -43,7 +43,8 @@ class ComponenteComprobarCita extends React.Component {
 		var idUsu = localStorage.getItem('id');
 		var mythis = this
 
-		new Api().comprobarCodigo(codigo, idUsu).then(function(datos){
+		var token = localStorage.getItem('token');
+		new Api().comprobarCodigo(codigo, idUsu ,token).then(function(datos){
 
 			if(datos.status!=200) {
 				datos.json().then(function(valor){
@@ -65,9 +66,10 @@ class ComponenteComprobarCita extends React.Component {
 	buscar() {
 
 		var idUsu = localStorage.getItem('id');
+		var token = localStorage.getItem('token');
 		var sip = this.sip.value
 		var mythis = this
-		new Api().buscarSip(idUsu, sip).then(function(datos){
+		new Api().buscarSip(idUsu, sip, token).then(function(datos){
 
 			if(datos.status!=200) {
 				datos.json().then(function(valor){
@@ -89,8 +91,9 @@ class ComponenteComprobarCita extends React.Component {
 
 	listadoPaciente () {
 		var idUsu = localStorage.getItem('id');
+		var token = localStorage.getItem('token');
 		var mythis = this
-		new Api().litadoPacientes(idUsu).then(function(datos){
+		new Api().litadoPacientes(idUsu, token).then(function(datos){
 
 			if(datos.status!=200) {
 				datos.json().then(function(valor){
@@ -99,7 +102,7 @@ class ComponenteComprobarCita extends React.Component {
 				
 			} else {
 				datos.json().then(function(valor){
-					console.log(valor.pacientes)
+					//console.log(valor.pacientes)
 					mythis.setState({paciente: valor.pacientes});	
 
 				})

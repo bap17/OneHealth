@@ -56,12 +56,12 @@ router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
  */
 router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
 //router.get('/webrtc/paciente/:nombre',webrtc.buscarPacienteNombre)
-router.get('/usuario/:id/paciente/:sip',webrtc.buscarPacienteSip)
-router.get('/usuario/:id/comprobarCod/:cod',  webrtc.comprobarCodigo)
-router.get('/usuario/:id/cita/:idCita', webrtc.verCita)
-router.get('/usuario/:id/paciente', webrtc.listarPaciente)
+router.get('/usuario/:id/paciente/:sip',midd.isAuth, webrtc.buscarPacienteSip)
+router.get('/usuario/:id/comprobarCod/:cod', midd.isAuth, webrtc.comprobarCodigo)
+router.get('/usuario/:id/cita/:idCita', midd.isAuth, webrtc.verCita)
+router.get('/usuario/:id/paciente',midd.isAuth, webrtc.listarPaciente)
 
-router.put('/usuario/:id/disponibilidad', webrtc.cambiarEstado)
+router.put('/usuario/:id/disponibilidad',midd.isAuth, webrtc.cambiarEstado)
 
 /**
  * Kurento

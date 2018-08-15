@@ -76,11 +76,12 @@ class Api  {
                })
     }
     
-    comprobarCodigo(codigo, id) {
+    comprobarCodigo(codigo, id, token) {
       return fetch(this.URLAPI + 'usuario/'+id+'/comprobarCod/'+codigo, {
                 method: 'GET',
                 headers: {
-                    'Content-type':'application/json'
+                    'Content-type':'application/json',
+                    'Authorization': token
                 }
       }).then(function(respuesta) {
           return respuesta
@@ -88,11 +89,12 @@ class Api  {
 
     }
 
-    getCita(idUsu, idCita) {
+    getCita(idUsu, idCita, token) {
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/cita/'+idCita, {
                 method: 'GET',
                 headers: {
-                    'Content-type':'application/json'
+                    'Content-type':'application/json',
+                    'Authorization': token
                 }
       }).then(function(respuesta) {
           return respuesta
@@ -100,11 +102,12 @@ class Api  {
 
     }
 
-    litadoPacientes(idUsu) {
+    litadoPacientes(idUsu, token) {
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/paciente', {
                 method: 'GET',
                 headers: {
-                    'Content-type':'application/json'
+                    'Content-type':'application/json',
+                    'Authorization': token
                 }
       }).then(function(respuesta) {
           return respuesta
@@ -112,11 +115,12 @@ class Api  {
 
     }
 
-    buscarSip(idUsu, sip) {
+    buscarSip(idUsu, sip, token) {
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/paciente/'+sip, {
                 method: 'GET',
                 headers: {
-                    'Content-type':'application/json'
+                    'Content-type':'application/json',
+                    'Authorization': token
                 }
       }).then(function(respuesta) {
           return respuesta
@@ -124,12 +128,13 @@ class Api  {
 
     }
 
-    hola(disp, idUsu) {
+    disponible(disp, idUsu, token) {
       console.log("dispoini")
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/disponibilidad', {
                 method: 'PUT',
                 headers: {
-                    'Content-type':'application/json'
+                    'Content-type':'application/json',
+                    'Authorization': token
                 },
                 body: JSON.stringify(disp)
       }).then(function(respuesta) {

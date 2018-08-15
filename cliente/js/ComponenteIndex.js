@@ -40,8 +40,9 @@ class ComponenteIndex extends Component {
 
   cambiarEstado() {
     var idUsu = localStorage.getItem('id')
+    var token = localStorage.getItem('token')
     var disp = {"disponible": 1}
-    new Api().hola(disp, idUsu).then(function(datos){
+    new Api().disponible(disp, idUsu, token).then(function(datos){
 
       if(datos.status!=204) {
         datos.json().then(function(valor){

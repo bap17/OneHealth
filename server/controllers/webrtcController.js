@@ -260,7 +260,6 @@ exports.comprobarCodigo = function(req, res) {
                         } else {
                             if(results1.length > 0) {
 
-
                                 var fecha = service.decrypt({text:results[0].fecha,clave:results1[0].clave})
                                 var hora = service.decrypt({text:results[0].hora,clave:results1[0].clave})
                                 //var cod = service.decrypt({text:results[0].codigo,clave:results1[0].clave})
