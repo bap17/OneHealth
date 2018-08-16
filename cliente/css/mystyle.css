@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-html {
-	font-family: 'Montserrat', sans-serif;
+html *{
+	font-family: 'Montserrat', sans-serif !important;
 }
 
 /*  global   */
@@ -75,7 +75,25 @@ html {
 	background-color: white;
 	border-color: #72ea63;
 }
+select {
+   width: 635px !important;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 5px;
+    height: 34px;
+    background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat #ddd;
+    -webkit-appearance: none;
+    background-position-x: 600px;
+    background-position-y: 10px;
+    -moz-appearance: none;
+    appearance: none;
+}
 
+.input-pequeño {
+	width: 20%;
+}
 /*  end global  */
 
 
@@ -176,7 +194,116 @@ html {
 	width: 30%;
 
 }
+
+.pacientes {
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	border: 1px solid #C7C7C7;
+
+	margin-top: 30px;
+}
+
+.lista-pacientes {
+	list-style: none;
+	padding: 10px;
+}
+
+.lista-pacientes li {
+	padding: 10px 0px;
+	border-bottom: 1px solid #E0E0E0;
+}
+
+.titulo-paciente {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	border-bottom: 1px solid #C7C7C7;
+	padding: 10px 0px;
+}
+
+.input-buscarsip {
+	margin: 0px 10px;
+}
+
+.reload {
+	border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	padding: 12px;
+	border: 1px solid #9d9d9d;
+	background-color: white;
+	color: #9d9d9d;
+	width: 5%;
+}
+
+.reload:hover,  .reload:focus{
+	border: 1px solid #9d9d9d;
+	background-color: #9d9d9d;
+	color: white;
+	width: 5%;
+}
+
+
+
+
 /**** END  OPT VIDEOLLAMADA COMPROBAR CODIGO ****/
+
+
+/************ PACIENTE ****************/
+.lista-pacientes .pos{
+	font-weight: 700;
+	
+	padding: 5px 20px;
+	font-size:12px;
+}
+
+
+.lista-pacientes .tab-col1 {
+	position: relative;
+	float: left;
+	width: 10%;
+}
+
+.lista-pacientes .tab-col2 {
+	position: relative;
+	float: left;
+	width: 20%;
+}
+
+.lista-pacientes .tab-col3 {
+	position: relative;
+	float: left;
+	width: 20%;
+
+}
+.lista-pacientes .tab-col4 {
+	position: relative;
+	float: left;
+	width: 40%;
+
+}
+.lista-pacientes .tab-col5 {
+	position: relative;
+	float: left;
+	width: 10%;
+	text-align: center;
+
+}
+
+.button-phone {
+	font-size: 25px;
+	color: black;
+}
+
+.connect {
+	color: #2cc200;
+	border:0.5px solid #2cc200;
+	border-radius:10px;
+
+}
+
+/********** END PACIENTE ************/
 
 
 /***** OPT VIDEOLLAMADA ******/
@@ -201,7 +328,7 @@ html {
 	margin:0 auto;
 	margin-top: 60px;
 }
-
+/*
 .filtros label, .filtros select {
 	float: left;
 }
@@ -215,7 +342,7 @@ html {
 .select:focus {
 	box-shadow: none;
 }
-
+*/
 .medicos {
 	border-radius: 10px 10px 10px 10px;
 	-moz-border-radius: 10px 10px 10px 10px;

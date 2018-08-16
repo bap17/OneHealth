@@ -43,8 +43,8 @@ exports.buscarMedico = function(req, res) {
     }
 }
 
-//Buscar un paciente
-exports.buscarPaciente = function(req, res) {
+//Buscar un paciente por nombre
+exports.buscarPacienteNombre = function(req, res) {
     var obj = req.params
     var nombre = obj.nombre
     console.log(nombre)
@@ -69,9 +69,7 @@ exports.buscarPaciente = function(req, res) {
                     }
                                    
                     res.status(200)                       
-                    res.send(pacientes) 
-
-                    /////////////////////////////       
+                    res.send(pacientes)        
                 } else {
                     res.status(404)
                     res.send({error: "No hay pacientes con ese nombre"})
@@ -82,6 +80,80 @@ exports.buscarPaciente = function(req, res) {
         res.status(400)
         res.send({error: "Alguno de los campos es invalido"})
     }
+}
+
+//Buscar un paciente por sip
+exports.buscarPacienteSip = function(req, res) {
+    var obj = req.params
+    var sip = obj.sip
+
+    if( sip != null && sip != "") {
+        connection.query('SELECT * FROM paciente as pa inner join usuario as us on us.id = pa.id where pa.sip like ? and us.disponible = 1', ['%'+sip+'%'], function(err, results) {
+            if(err) {
+                res.status(500)
+                res.send({error: "Hay un error al buscar los pacientes"})
+                console.log("Hay un error al buscar los pacientes")
+            } else {
+                if(results.length > 0) {
+                    var pacientes = new Array()
+                                               
+                    for(var i = 0;  i < results.length; i++) {                                        
+                        var paciente = {
+                            "nombre" : results[i].nombre,
+                            "apellidos": results[i].apellidos,
+                            "sip": results[i].sip
+                        }
+                        pacientes.push(paciente)
+                    }
+
+                    var resultado ={"pacientes": pacientes}
+                                   
+                    res.status(200)                       
+                    res.send(resultado)  
+                } else {
+                    res.status(404)
+                    res.send({error: "No hay pacientes con ese nombre"})
+                }
+            }
+        })
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
+}
+
+
+
+//Listar pacientes
+exports.listarPaciente = function(req, res) {
+        connection.query('SELECT * FROM paciente as pa inner join usuario as us on us.id = pa.id where us.disponible = 1', [], function(err, results) {
+            if(err) {
+                res.status(500)
+                res.send({error: "Hay un error al buscar los pacientes"})
+                console.log("Hay un error al buscar los pacientes")
+            } else {
+                if(results.length > 0) {
+                    var pacientes = new Array()
+                                               
+                    for(var i = 0;  i < results.length; i++) {                                        
+                        var paciente = {
+                            "nombre" : results[i].nombre,
+                            "apellidos": results[i].apellidos,
+                            "sip": results[i].sip
+                        }
+                        pacientes.push(paciente)
+                    }
+
+                    var resultado ={"pacientes": pacientes}
+                                   
+                    res.status(200)                       
+                    res.send(resultado)   
+                } else {
+                    res.status(404)
+                    res.send({error: "No hay pacientes con ese nombre"})
+                }
+            }
+        })
 }
 
 
@@ -188,7 +260,6 @@ exports.comprobarCodigo = function(req, res) {
                         } else {
                             if(results1.length > 0) {
 
-
                                 var fecha = service.decrypt({text:results[0].fecha,clave:results1[0].clave})
                                 var hora = service.decrypt({text:results[0].hora,clave:results1[0].clave})
                                 //var cod = service.decrypt({text:results[0].codigo,clave:results1[0].clave})
@@ -254,6 +325,33 @@ exports.comprobarCodigo = function(req, res) {
         res.status(400)
         res.send({error: "Alguno de los campos es invalido"})
     }
+}
+
+
+//Cambiar estado
+exports.cambiarEstado = function(req, res) {
+    var obj = req.params
+    var disponible = req.body.disponible
+    var idUsu = obj.id
+    console.log(disponible)
+    console.log(idUsu)
+    var dis = parseInt(disponible)
+    if( idUsu != null && idUsu != "" && disponible != null && (disponible == 1 || disponible == 0) ) {
+        connection.query('UPDATE Usuario SET disponible = ? WHERE id = ?', [disponible, idUsu], function(err, results) {
+            if(err) {
+                res.status(500)
+                res.send({error: "Hay un error al modificar al usuario"})
+                console.log("Hay un error al modificar al usuario")
+            } else {   
+                res.status(204)  
+                res.send("Se ha actualizado correctamente")       
+            }
+        })
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
+
 }
 
 
