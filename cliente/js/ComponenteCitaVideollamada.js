@@ -34,9 +34,6 @@ class ComponenteCitaVideollamada extends React.Component {
     	var mythis = this;
     	var idUsu = localStorage.getItem('id');
 		var token = localStorage.getItem('token');
-    	console.log("id cita: ")
-    	console.log(this.props.idCita)
-    	console.log(this.state.id)
     	new Api().getCita(idUsu, this.state.id, token).then(function(datos){
 			if(datos.status!=200) {
 				datos.json().then(function(valor){

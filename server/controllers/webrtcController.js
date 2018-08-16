@@ -310,20 +310,20 @@ exports.comprobarCodigo = function(req, res) {
 
                             }else {
                                 res.status(404)
-                                res.send({error: "No hay medico con ese nombre"})
+                                res.send({respuesta: "No hay medico con ese nombre"})
                             }
                         }
                     })
                                      
                 } else {
                     res.status(404)
-                    res.send({error: "No hay pacientes con ese nombre"})
+                    res.send({respuesta: "No hay ningun código igual"})
                 }
             }
         })
     } else {
         res.status(400)
-        res.send({error: "Alguno de los campos es invalido"})
+        res.send({respuesta: "Alguno de los campos es invalido"})
     }
 }
 

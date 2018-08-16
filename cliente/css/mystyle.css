@@ -99,6 +99,15 @@ a:hover, a:focus {
  	outline: 0px !important;
 	color: #b23e3e !important;
 }
+
+.error {
+	color: #eb4f4f;
+	background-color: white;
+	border: 0px;
+	outline: 0px;
+	height: 24px;
+	padding: 10px;
+}	
 /*  end global  */
 
 

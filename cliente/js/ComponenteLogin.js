@@ -67,7 +67,7 @@ class ComponenteLogin extends Component {
                 <div className="form-login">
                     <div className="form-group">
                         <label>Nombre de usuario</label>
-                        <input type="email" className="input" id="exampleInputEmail1"  placeholder="Nombre de usuario" ref={(campo)=>{this.campoUser=campo}}/>
+                        <input  className="input" id="exampleInputEmail1"  placeholder="Nombre de usuario" ref={(campo)=>{this.campoUser=campo}}/>
                     </div>
                     <div className="form-group">
                         <label>Contraseña</label>

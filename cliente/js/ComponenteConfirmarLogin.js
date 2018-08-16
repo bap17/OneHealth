@@ -55,7 +55,7 @@ class ComponenteConfirmarLogin extends Component {
             <label className="texto-confirmar">Se te acaba de enviar un correo con un código de confirmación</label>
             <div className="form-codigo">
                 <label>Código</label>
-                <input type="email" className="input" id="cod" placeholder="Introduce el código" ref={(campo)=>{this.campoCodigo=campo}}/>
+                <input className="input" id="cod" placeholder="Introduce el código" ref={(campo)=>{this.campoCodigo=campo}}/>
             </div>
             <button type="submit" className="button" onClick={this.confirmacion}>Comprobar</button>
         </div>
