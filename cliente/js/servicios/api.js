@@ -102,6 +102,17 @@ class Api  {
 
     }
 
+    VerHistorial(id,sip, token) {
+        return fetch(this.URLAPI + 'medico/'+ id + '/historial/' + sip, {
+                   method: 'GET',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
     litadoPacientes(idUsu, token) {
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/paciente', {
                 method: 'GET',

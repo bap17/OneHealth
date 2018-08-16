@@ -47,12 +47,17 @@ class ComponenteConfirmarLogin extends Component {
     }
 
     render(){  
-        return <div>
-            <div className="form-group">
-                <label>Codigo</label>
-                <input type="email" className="form-control" id="cod" placeholder="Enter codigo" ref={(campo)=>{this.campoCodigo=campo}}/>
+        return <div className="confirmar">
+            <img src="./../img/logo.png"></img>
+            <br></br>
+            <label className="titulo-login">Verificación en dos pasos</label>
+            <br></br>
+            <label className="texto-confirmar">Se te acaba de enviar un correo con un código de confirmación</label>
+            <div className="form-codigo">
+                <label>Código</label>
+                <input type="email" className="input" id="cod" placeholder="Introduce el código" ref={(campo)=>{this.campoCodigo=campo}}/>
             </div>
-            <button type="submit" className="btn btn-primary" onClick={this.confirmacion}>Submit</button>
+            <button type="submit" className="button" onClick={this.confirmacion}>Comprobar</button>
         </div>
         
     }

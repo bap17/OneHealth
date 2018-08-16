@@ -60,18 +60,23 @@ class ComponenteLogin extends Component {
 
     render(){
         if(this.state.registrado){
-            return <div>
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" ref={(campo)=>{this.campoUser=campo}}/>
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={this.login}>Submit</button>
+            return <div className= "login">
+                <img src="./../img/logo.png"></img>
                 <br></br>
-                <p>¿Nuevo usuario?<a onClick={this.registroNO}><strong>Regístrate</strong></a></p>
+                <label className="titulo-login">Iniciar sesión</label>
+                <div className="form-login">
+                    <div className="form-group">
+                        <label>Nombre de usuario</label>
+                        <input type="email" className="input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre de usuario" ref={(campo)=>{this.campoUser=campo}}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" className="input" id="exampleInputPassword1" placeholder="Contraseña" ref={(campo)=>{this.campoPassword=campo}}/>
+                    </div>
+                </div>
+                <button type="submit" className="button" onClick={this.login}>Iniciar sesión</button>
+                <br></br>
+                <p className="p-registro">¿Nuevo usuario?&nbsp;<a onClick={this.registroNO}>Regístrate</a></p>
             </div>
         }else{
             return <Registro handleRegistroOK={this.registroOK}/>

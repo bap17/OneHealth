@@ -3,6 +3,7 @@ import React from 'react'
 //import Video from './ComponenteInitVideo'
 import ComprobarCita from './ComponenteComprobarCita'
 import Video from './ComponenteVideo'
+import Historial from './ComponenteHistorial'
 
 
 class ComponenteInicio extends React.Component {
@@ -189,7 +190,9 @@ class ComponenteInicio extends React.Component {
 			            {/*<div className="banner">
 		            		<img className="img-banner" src="./../img/medicos.png"></img>
 		            	</div>*/}
-		            	<Video></Video>
+						{/*<Video></Video>*/}
+						<Historial></Historial>
+						
 
 			   
 			        </div> 

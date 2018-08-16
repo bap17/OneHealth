@@ -76,7 +76,7 @@ html *{
 	border-color: #72ea63;
 }
 select {
-   width: 635px !important;
+   width: 100% !important;
     padding: 5px;
     font-size: 16px;
     line-height: 1;
@@ -85,7 +85,7 @@ select {
     height: 34px;
     background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat #ddd;
     -webkit-appearance: none;
-    background-position-x: 600px;
+    background-position-x: 97%;
     background-position-y: 10px;
     -moz-appearance: none;
     appearance: none;
@@ -93,6 +93,11 @@ select {
 
 .input-pequeño {
 	width: 20%;
+}
+
+a:hover, a:focus {
+ 	outline: 0px !important;
+	color: #b23e3e !important;
 }
 /*  end global  */
 
@@ -415,6 +420,89 @@ video {
 	width: 50%;
 }
 /******** END VER VIDEO *******/
+
+/******** LOGIN *******/
+.login{
+	margin: 20px auto;
+	text-align: center;
+	width: 50%;
+}
+
+.login img{
+	width: 40%;
+	margin: 20px;
+}
+
+.form-login{
+	text-align: left;
+    width: 70%;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.p-registro{
+	margin: 25px;
+}
+
+.titulo-login{
+	font-size: 23px;
+	color: #9d9d9d;
+}
+
+.login .button{
+	width: 20%;
+}
+/******** END LOGIN *******/
+
+/******** CONFIRMAR LOGIN *******/
+.confirmar{
+	margin: 20px auto;
+	text-align: center;
+	width: 50%;
+}
+
+.confirmar img{
+	width: 40%;
+	margin: 20px;
+}
+
+.form-codigo{
+	text-align: left;
+    width: 62%;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.confirmar .titulo-login{
+	margin: 10px 0px 30px 0px;
+}
+.texto-confirmar{
+	width: 53%;
+}
+
+.confirmar .button{
+	width: 20%;
+	margin-top: 15px;
+}
+/******** ENDCONFIRMAR LOGIN *******/
+
+/******** REGISTRO *******/
+.registro{
+	margin: 20px auto;
+	text-align: center;
+	width: 50%;
+}
+
+.registro img{
+	width: 40%;
+	margin: 20px;
+}
+
+.registro .button{
+	width: 20%;
+    margin-bottom: 20px;
+}
+/******** END REGISTRO *******/
 
 /******************** PROVISIONAL WEBRTC **************************/
 
