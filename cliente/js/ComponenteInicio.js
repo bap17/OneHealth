@@ -245,13 +245,22 @@ class ComponenteInicio extends React.Component {
 		            		<img className="img-banner" src="./../img/personas.jpg"></img>
 		            	</div>
 
-		            	<div className="body">						
+		            	<div className="body">		
+
+		            		{/*<div className="col2">
+		            		 <div class="tumblr-post" data-href="https://embed.tumblr.com/embed/post/KiBYEnmyXDZwvI54OqkLNA/156134830236" data-did="da39a3ee5e6b4b0d3255bfef95601890afd80709"><a href="https://equipo.tumblr.com/post/156134830236"></a></div> 				
+			            	</div>
+			            	 <div className="col2">
+			            	 <div class="tumblr-post" data-href="https://embed.tumblr.com/embed/post/B4Lx_b2m0KJ3EZSaE8FhfA/141487923528" data-did="7d65340aa45472fff844822c255eb2e212a9ff04"><a href="https://vidachistosa.tumblr.com/post/141487923528/lo-divertido-de-tener-apoyo-moral"></a></div> 
+			            	</div>*/}
 			            	<div className="col2">
 			            		<label className="titulo-inicio">España es el penúltimo país desarrollado en comunicación médico-paciente</label>
 
 				            	A los pacientes españoles les cuesta entender las explicaciones "sencillas" de sus médicos. Y es que España es uno de los países de la Organización para la Cooperación y el Desarrollo Económicos (OCDE) donde los ciudadanos tienen mayor dificultad para entender la información acerca de sus dolencias que les transmite su facultativo, según el estudio Entregar servicios de salud de calidad: un imperativo global para la cobertura universal de salud elaborado de forma conjunta por la propia OCDE, la Organización Mundial de la Salud (OMS) y el Banco Mundial.
 
 							</div>
+
+
 				            <div className="col2">
 			            		<label className="titulo-inicio">Estas son las tres especialidades médicas más 'envejecidas' en el SNS </label>
 			            		En los próximos diez años se estima que se jubilen en torno a 70.000 médicos en España. Esta situación deriva en un gran número de especialidades 'envejecidas' y que necesitan de un cambio generacional, que debería de llegar a través del incremento de plazas MIR.
