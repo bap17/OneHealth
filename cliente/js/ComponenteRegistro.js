@@ -76,62 +76,74 @@ class ComponenteRegistro extends Component {
 
     render(){
         if(!this.state.tipo){
-            return <div>
-                <div className="form-group">
-                    <label>Tipo</label>
-                    <select className="form-control" onChange={this.tipoMedico} ref={(campo)=>{this.campoTipo=campo}}>
-                        <option>Usuario</option>
-                        <option>Médico</option>
-                    </select>
+            return <div className="registro">
+                <img src="./../img/logo.png"></img>
+                <br></br>
+                <label className="titulo-login">Registro</label>
+                <div className="form-login">
+                    <div className="form-group">
+                        <label>Tipo</label>
+                        <select className="form-control" onChange={this.tipoMedico} ref={(campo)=>{this.campoTipo=campo}}>
+                            <option>Usuario</option>
+                            <option>Médico</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input type="email" className="input" placeholder="Enter email" ref={(campo)=>{this.campoEmail=campo}}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Nombre de usuario</label>
+                        <input type="email" className="input" placeholder="Enter username" ref={(campo)=>{this.campoLogin=campo}}/>
+                    </div>
+                    <div className="form-group">
+                        <label>SIP</label>
+                        <input type="email" className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input type="password" className="input" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="email" className="form-control" placeholder="Enter email" ref={(campo)=>{this.campoEmail=campo}}/>
-                </div>
-                <div className="form-group">
-                    <label>Nombre de usuario</label>
-                    <input type="email" className="form-control" placeholder="Enter username" ref={(campo)=>{this.campoLogin=campo}}/>
-                </div>
-                <div className="form-group">
-                    <label>SIP</label>
-                    <input type="email" className="form-control" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
-                </div>
+                <button type="submit" className="button" onClick={this.registro}>Registrarme</button>
+                <br></br>
                 <a onClick={this.returnLogin}>Iniciar sesión</a>
-                <button type="submit" className="btn btn-primary" onClick={this.registro}>Registrarme</button>
             </div>
         }else{
-            return <div>
-                <div className="form-group">
-                    <label>Tipo</label>
-                    <select className="form-control" onChange={this.tipoPaciente} ref={(campo)=>{this.campoTipo=campo}}>
-                        <option >Usuario</option>
-                        <option>Médico</option>
-                    </select>
+            return <div className="registro">
+                <img src="./../img/logo.png"></img>
+                <br></br>
+                <label className="titulo-login">Registro</label>
+                <div className="form-login">
+                    <div className="form-group">
+                        <label>Tipo</label>
+                        <select className="form-control" onChange={this.tipoPaciente} ref={(campo)=>{this.campoTipo=campo}}>
+                            <option>Usuario</option>
+                            <option selected>Médico</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input type="email" className="input" placeholder="Enter email" ref={(campo)=>{this.campoEmail=campo}}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Nombre de usuario</label>
+                        <input type="email" className="input" placeholder="Enter username" ref={(campo)=>{this.campoLogin=campo}}/>
+                    </div>
+                    <div className="form-group">
+                        <label>Especialidad</label>
+                        <select className="form-control" ref={(campo)=>{this.campoEspecialidad=campo}}>
+                            <option>Cirujano</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input type="password" className="input" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="email" className="form-control" placeholder="Enter email" ref={(campo)=>{this.campoEmail=campo}}/>
-                </div>
-                <div className="form-group">
-                    <label>Nombre de usuario</label>
-                    <input type="email" className="form-control" placeholder="Enter username" ref={(campo)=>{this.campoLogin=campo}}/>
-                </div>
-                <div className="form-group">
-                    <label>Especialidad</label>
-                    <select className="form-control" ref={(campo)=>{this.campoEspecialidad=campo}}>
-                        <option>Cirujano</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Password" ref={(campo)=>{this.campoPassword=campo}}/>
-                </div>
+                <button type="submit" className="button" onClick={this.registro}>Registrarme</button>
+                <br></br>
                 <a onClick={this.returnLogin}>Iniciar sesión</a>
-                <button type="submit" className="btn btn-primary" onClick={this.registro}>Registrarme</button>
             </div>
         }
     }
