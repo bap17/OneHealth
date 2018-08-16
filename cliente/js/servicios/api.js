@@ -153,6 +153,20 @@ class Api  {
       })
 
     }
+
+
+    cancelarCita(idUsu, cita, token) {
+      return fetch(this.URLAPI + 'usuario/'+idUsu+'/cita/'+cita, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type':'application/json',
+                    'Authorization': token
+                }
+      }).then(function(respuesta) {
+          return respuesta
+      })
+
+    }
 }
 
 

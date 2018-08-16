@@ -21,6 +21,7 @@ class ComponenteCitaVideollamada extends React.Component {
         }
         this.getCita = this.getCita.bind(this);
         this.kurentoState = this.kurentoState.bind(this);
+        this.cancelarCita = this.cancelarCita.bind(this);
 
     }
 
@@ -66,6 +67,25 @@ class ComponenteCitaVideollamada extends React.Component {
     	this.setState({kurento: true})
     }
 
+    cancelarCita() {
+    	var cita = this.state.id
+    	var idUsu = localStorage.getItem('id');
+		var token = localStorage.getItem('token');
+    	new Api().cancelarCita(idUsu, cita, token).then(function(datos){
+			if(datos.status!=200) {
+				datos.json().then(function(valor){
+					console.log(valor)
+				})
+				
+			} else {
+				datos.json().then(function(valor){
+					console.log(valor)
+					
+				})
+			}
+		})
+    }
+
 
 
     render() {
@@ -98,7 +118,7 @@ class ComponenteCitaVideollamada extends React.Component {
 			    					</div>
 			    					<div className="parrafo button-cita-video">
 			    						<button className="button button-call" onClick={this.kurentoState}>Videollamada</button> <br></br> <br></br> 
-			    						<button className="button">Cancelar Cita</button>
+			    						<button className="button" onClick={this.cancelarCita}>Cancelar Cita</button>
 			    					</div>
 			    				</div>
 
