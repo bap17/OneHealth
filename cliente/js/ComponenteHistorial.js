@@ -12,11 +12,16 @@ class ComponenteHistorial extends Component {
           consultas: consultas,
           historial: historial,
           busqueda: false,
-          sinConsultas: false
+          sinConsultas: false,
+          consulta: undefined,
+          detalle: false
         };
         this.errores = this.errores.bind(this)
         this.verHistorial = this.verHistorial.bind(this)
         this.verBusqueda=this.verBusqueda.bind(this)
+        this.detalleConsulta = this.detalleConsulta.bind(this)
+        this.ocultarDetalles= this.ocultarDetalles.bind(this)
+        this.verVideo= this.verVideo.bind(this)
     }
 
     errores(){
@@ -25,6 +30,19 @@ class ComponenteHistorial extends Component {
 
     verBusqueda(){
         this.setState({busqueda:true})
+    }
+
+    detalleConsulta(consul){
+        this.setState({consulta:consul})
+        this.setState({detalle:true})
+    }
+
+    ocultarDetalles(){
+        this.setState({detalle:false})
+    }
+
+    verVideo(){
+        this.props.verVideo()
     }
 
     verHistorial(){
@@ -70,16 +88,17 @@ class ComponenteHistorial extends Component {
     }
 
     render(){
-        if(this.state.busqueda){
+        if(this.state.busqueda && !this.state.detalle){
             var tipo = localStorage.getItem('tipo')
-            return <div className="col-lg-6">
-                <div className="input-group">
-                    <input type="text" className="form-control" placeholder="SIP..." ref={(campo)=>{this.campoSip=campo}}/>
-                    <span className="input-group-btn">
-                        <button className="btn btn-default" type="button" onClick={this.verHistorial}>Buscar</button>
-                    </span>
+            return <div className="historial">
+                <label className="titulo-comp-cita">Historial clínico y consultas </label>
+                <div className="">
+                    <input type="text" className="input input-pequeño input-buscarsip" placeholder="SIP..." ref={(campo)=>{this.campoSip=campo}}/>
+                    <button className="button" type="button" onClick={this.verHistorial}>Buscar</button>  
                 </div>
+                <div className="col2">
                 <div className= "card">
+                    <div className="card-header">Historial clínico</div>
                     <div className="card-body">
                         <p>Nombre: {this.state.historial.nombre}</p>
                         <p>NIF: {this.state.historial.nif}</p>
@@ -96,15 +115,44 @@ class ComponenteHistorial extends Component {
                         <p>SIP: {this.state.historial.sip}</p>
                     </div>
                 </div>
-                { this.state.sinConsultas ? <div><p>No tiene consultas registradas</p></div> : <ListarConsul consultas={this.state.consultas}/>} 
+                </div>
+                <div className= "col2">
+                { this.state.sinConsultas ? <div className="card">
+                    <div className="card-header">Consultas</div>
+                    <div className="card-body">
+                    <ul className="list-group"> No tiene consultas registradas </ul>
+                    </div>
+                </div> : <ListarConsul handleDetalle={this.detalleConsulta} consultas={this.state.consultas}/>} 
+                        </div>
             </div>
+        }else if(this.state.busqueda && this.state.detalle){
+            return <div className="consulta">
+                <label className="titulo-comp-cita">Consulta </label>
+                <br></br>
+                <a onClick={this.ocultarDetalles}>Historial </a><label> > Consulta</label>
+                <div className="form-consulta">
+                    <label>Paciente: </label>&nbsp;
+                    <input disabled className="input input-pequeño" value={this.state.historial.nombre}></input>
+                    <a onClick={this.verVideo}>Ver video consulta</a>
+                </div>
+                <div className="datos-consulta">
+                    <label>Motivo:</label>
+                    <textarea disabled className="textarea" rows="3" value={this.state.consulta.motivo}></textarea>
+                    <label>Enfermedad:</label>
+                    <textarea disabled className="textarea" rows="3" value={this.state.consulta.enfermedad_actual}></textarea>
+                    <label>Diagnóstico:</label>
+                    <textarea disabled className="textarea" rows="3" value={this.state.consulta.diagnostico}></textarea>
+                    <label>Tratamiento:</label>
+                    <textarea disabled className="textarea" rows="3" value={this.state.consulta.tratamiento}></textarea>
+                </div>
+            </div>
+
         }else{
-            return <div className="col-lg-6">
-                <div className="input-group">
-                    <input type="text" className="form-control" placeholder="SIP..." ref={(campo)=>{this.campoSip=campo}}/>
-                    <span className="input-group-btn">
-                        <button className="btn btn-default" type="button" onClick={this.verHistorial}>Buscar</button>
-                    </span>
+            return <div className="historial">
+                <label className="titulo-comp-cita">Historial clínico y consultas </label>
+                <div className="">
+                    <input type="text" className="input input-pequeño input-buscarsip" placeholder="SIP..." ref={(campo)=>{this.campoSip=campo}}/>
+                    <button className="button" type="button" onClick={this.verHistorial}>Buscar</button>
                 </div>
             </div>
         }

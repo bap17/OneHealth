@@ -99,6 +99,16 @@ a:hover, a:focus {
  	outline: 0px !important;
 	color: #b23e3e !important;
 }
+
+.textarea{
+	width:100%;
+	border: 1px solid #C7C7C7;
+	border-radius: 4px 4px 4px 4px;
+	-moz-border-radius: 4px 4px 4px 4px;
+	-webkit-border-radius: 4px 4px 4px 4px;
+	padding: 5px;
+	margin: 10px 0px;
+}
 /*  end global  */
 
 
@@ -503,6 +513,69 @@ video {
     margin-bottom: 20px;
 }
 /******** END REGISTRO *******/
+
+/******** HISTORIAL Y CONSULTA*******/
+.historial{
+	padding: 50px 100px;
+}
+
+.historial .titulo-comp-cita{
+	font-size: 30px;
+}
+
+.historial .input{
+	width: 20%;
+}
+
+.historial .button{
+	width: 10%;
+	padding: 7px;
+	margin-left: 10px;
+}
+
+.historial .card{
+	margin: 20px 0px 0px 0px;
+}
+
+.historial .item{
+	margin-bottom: 10px;
+}
+
+.historial .col2{
+	padding: 20px 20px 20px 0px;
+}
+
+.historial .card .button{
+	width: 20%;
+    padding: 7px;
+    margin-left: 45%;
+}
+
+.consulta{
+	padding: 50px 100px;
+}
+
+.consulta .textarea{
+	margin-top: 0px;
+}
+
+.consulta .form-consulta a{
+	margin-left: 57%;
+}
+
+.consulta .input{
+	margin-left: 10px;
+}
+
+.form-consulta label{
+	font-weight:bold !important;
+}
+
+.datos-consulta label{
+	font-weight:bold !important;
+}
+
+/******** END HISTORIAL *******/
 
 /******************** PROVISIONAL WEBRTC **************************/
 

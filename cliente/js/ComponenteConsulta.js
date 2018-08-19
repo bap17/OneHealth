@@ -8,19 +8,25 @@ class ComponenteConsulta extends Component {
           error: false
         };
         this.errores = this.errores.bind(this)
+        this.verConsulta = this.verConsulta.bind(this)
     }
 
     errores(){
         this.setState({error:true})
     }
 
+    verConsulta(){
+        this.props.handleVer(this.props.consulta)
+    }
+
     render(){
+
         return <div className="item">
-            <span> <li className="list-group-item">Fecha: {this.props.consulta.fecha}</li> </span>
-            <div className="btn-group" role="group" aria-label="...">
-                <button type="button" className="btn btn-default" >Detalles</button>
-            </div>
+            <li className="list-group-item">Consulta: {this.props.consulta.fecha}
+            <button type="button" className="button" onClick={this.verConsulta} >Ver</button> </li> 
         </div>
+        
+        
     }
 }
 
