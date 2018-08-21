@@ -4,6 +4,7 @@ import Peer from 'simple-peer'
 import $ from 'jquery'
 import css from '../css/mystyle.css';
 import Webcam from 'react-webcam';
+import io from 'socket.io-client';
 
 var peer = null
 var initiator = null
@@ -13,14 +14,17 @@ var signal_input = null
 class ComponenteWebRTCSimple extends React.Component {
 
 
-	constructor() {
-        super()
+	constructor(props) {
+        super(props)
         this.state = {
             myID:"",
             messages: "",
             stream: null,
             videoSrc:null,
-            videoRemoteSrc:null
+            videoRemoteSrc:null,
+            idPac: this.props.idPaciente,
+            TypeUser: this.props.user,
+            aux: this.props.infoAux
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -29,34 +33,111 @@ class ComponenteWebRTCSimple extends React.Component {
         this.send = this.send.bind(this);
         this.handleVideo = this.handleVideo.bind(this);
         this.videoError = this.videoError.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
     }
 
     componentDidMount() {
     	var mythis = this
+    	var connectionOptions = {
+			"force new connection": true,
+			"reconnectionAttempts": "Infinity",
+			"timeout": 10000,
+			"transports": ["websocket"]
+		}
+		
+    	
     	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 	    if (navigator.getUserMedia) {
 	        navigator.getUserMedia({video: true},this.handleVideo, this.videoError);
 	    }
+	    var idUsu = localStorage.getItem('id');
+		this.socket = io.connect("https://localhost:3000", connectionOptions);
+		this.socket.on('connect', function() {
+			mythis.socket.on('Response'+ idUsu, function(message) {
+				console.log('Estoy en la vuelta: ')
+				console.log(message) ;
+				mythis.setState({aux: message})
+				mythis.connect()
+			})
+		})
+
+	    if(this.state.TypeUser == "Response") {
+	    	this.connect()
+	    }
+
+
     }
 
+	sendMessage(msg) {
+		console.log("estoy enviando cosas al servidor con la info ")
+		console.log(msg)
+		this.socket.emit("message", msg);
+	}
+
     initiater() {
+    	var idUsu = localStorage.getItem('id');
+    	var username = localStorage.getItem('username');
+    	var mythis = this
     	peer = Peer({trickle: false, initiator: true, stream: this.state.stream})
 
 		peer.on('signal', (data) => {
 		  console.log('peer signal', data)
-		  this.setState({myID:JSON.stringify(data)})
+		  mythis.setState({myID:JSON.stringify(data)})
+		 
+		  	var message = {
+			  	"id": "userToken",
+			  	"name": username,
+			  	"iniciador": idUsu,
+			  	"userRemote": mythis.state.idPac,
+			  	"token": mythis.state.myID
+			  }
+
+		  
+		  
+		  mythis.sendMessage(message)
+		 
 		})
     }
 
     connect() {
+    	var idUsu = localStorage.getItem('id');
+    	var username = localStorage.getItem('username');
+    	var mythis = this
+    	var message = null
+    	var auxID
     	if (peer === null) {
 		    peer = Peer({trickle: false, stream: this.state.stream})
 		    peer.on('signal', (data) => {
-		      console.log('peer signal', data)
-		      this.setState({myID:JSON.stringify(data)})
+		      //console.log('peer signal', data)
+		      auxID = JSON.stringify(data)
+
+		      mythis.setState({myID:JSON.stringify(data)})
+
+		      if(mythis.state.TypeUser == "Response") {
+
+			      	message = {
+					  	"id": "reponseToken",
+					  	"name": username,
+					  	"iniciador": mythis.state.aux.iniciador,
+					  	"userRemote": idUsu,
+					  	"token": mythis.state.myID
+					}
+
+					mythis.sendMessage(message)
+					 
+			    }
+
 		    })
+		    	
+		    
 		}
-		var data = this.campoOtherID.value
+		console.log("Este es el aux ID")
+		console.log(auxID)
+		//var data = this.campoOtherID.value
+		console.log("info llamada: ")
+		//console.log(this.state.aux)
+		var data = this.state.aux.token
+		console.log(data)
 		peer.signal(data)
 
 		peer.on('connect', () => {
@@ -77,6 +158,9 @@ class ComponenteWebRTCSimple extends React.Component {
 		peer.on('close', () => {
 			console.log('peer connection closed')
 		})
+
+		
+		
     }
 
     send() {
@@ -107,7 +191,7 @@ class ComponenteWebRTCSimple extends React.Component {
         			<div className="boxMyID">
 	        			<span>Mi ID: </span>
 	        			<div className="containerMyID"><p id="myId"  ref={(campo)=>{this.campoMyID=campo}} className="myID">{this.state.myID}</p><div className="clear"></div></div>
-						<button id="getID" onClick={this.initiater} className="button">Obtener my ID</button> <br></br>  <br></br>
+						<button id="getID" onClick={this.initiater} className="button button-call">Llamar</button> <br></br>  <br></br>
 					</div>
 					<div className="boxYourId">
 						<span>Otra ID:</span>  <br></br>

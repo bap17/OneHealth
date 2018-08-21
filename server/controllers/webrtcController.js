@@ -137,6 +137,7 @@ exports.listarPaciente = function(req, res) {
                                                
                     for(var i = 0;  i < results.length; i++) {                                        
                         var paciente = {
+                            "id": results[i].id,
                             "nombre" : results[i].nombre,
                             "apellidos": results[i].apellidos,
                             "sip": results[i].sip

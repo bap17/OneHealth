@@ -4,6 +4,8 @@ import React from 'react'
 import ComprobarCita from './ComponenteComprobarCita'
 import Video from './ComponenteVideo'
 import Historial from './ComponenteHistorial'
+import io from 'socket.io-client';
+import WebRTCSimple from './ComponenteWebRTCSimple'
 
 
 class ComponenteInicio extends React.Component {
@@ -18,7 +20,9 @@ class ComponenteInicio extends React.Component {
             listarCitas: false,
             mensajes: false,
             videollamada: false,
-            codigoValido: false
+            codigoValido: false,
+            llamando: false,
+            info: ""
         }
         this.inicio = this.inicio.bind(this);
         this.crearCitas = this.crearCitas.bind(this);
@@ -26,6 +30,7 @@ class ComponenteInicio extends React.Component {
         this.historial = this.historial.bind(this);
         this.mensajes = this.mensajes.bind(this);
         this.videollamada = this.videollamada.bind(this);
+        this.vistaVideo = this.vistaVideo.bind(this);
 
     }
 
@@ -36,6 +41,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: false})
     	this.setState({mensajes: false})
     	this.setState({videollamada: false})
+    	this.setState({llamando: false})
     }
 
     crearCitas() {
@@ -45,6 +51,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: false})
     	this.setState({mensajes: false})
     	this.setState({videollamada: false})
+    	this.setState({llamando: false})
     }
 
     listarCitas() {
@@ -54,6 +61,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: false})
     	this.setState({mensajes: false})
     	this.setState({videollamada: false})
+    	this.setState({llamando: false})
    	}
 
    	historial() {
@@ -63,6 +71,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: true})
     	this.setState({mensajes: false})
     	this.setState({videollamada: false})
+    	this.setState({llamando: false})
    	}
 
     mensajes() {
@@ -72,6 +81,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: false})
     	this.setState({mensajes: true})
     	this.setState({videollamada: false})
+    	this.setState({llamando: false})
     }
 
     videollamada() {
@@ -81,9 +91,46 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: false})
     	this.setState({mensajes: false})
     	this.setState({videollamada: true})
+    	this.setState({llamando: false})
 
     }
 
+    vistaVideo(message) {
+    	//console.log("Esto es el json")
+    	//console.log(message)
+    	this.setState({info: message})
+    	this.setState({inicio: false})
+    	this.setState({crearCitas: false})
+    	this.setState({listarCitas: false})
+    	this.setState({historial: false})
+    	this.setState({mensajes: false})
+    	this.setState({videollamada: false})
+    	this.setState({llamando: true})
+    	
+    }
+
+    componentDidMount() {
+    	var connectionOptions = {
+			"force new connection": true,
+			"reconnectionAttempts": "Infinity",
+			"timeout": 10000,
+			"transports": ["websocket"]
+		}
+		var mythis = this
+		var idUsu = localStorage.getItem('id');
+		this.socket = io.connect("https://localhost:3000", connectionOptions);
+		this.socket.on('connect', function() {
+			mythis.socket.on('User'+ idUsu, function(message) {
+				console.log('Received message: ')
+				if (confirm('El usuario' + message.name
+				+ ' te esta llamando. ¿Quieres aceptar la llamada?')) {
+					mythis.vistaVideo(message)
+
+
+				}
+			})
+		})
+    }
 
 
     render() {
@@ -91,7 +138,7 @@ class ComponenteInicio extends React.Component {
     	var login = localStorage.getItem('username');
 
     	//Comprobar codigo
-    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false) {
+    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false) {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -116,7 +163,7 @@ class ComponenteInicio extends React.Component {
 		        	</div> 
 
 		//crearCitas  
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == true && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == true && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -142,7 +189,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//listarCitas
-		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == true && this.state.historial == false && this.state.mensajes == false){
+		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == true && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -168,7 +215,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//historial
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false && this.state.llamando == false){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -199,7 +246,7 @@ class ComponenteInicio extends React.Component {
 
 
 		//mensajes
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == true){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == true && this.state.llamando == false){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -224,8 +271,17 @@ class ComponenteInicio extends React.Component {
 
 			   
 			        </div> 
+
+		//Llamando
+		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == true) {
+
+			return <WebRTCSimple user="Response" infoAux={this.state.info}></WebRTCSimple>
+
+
+
 		//inicio
     	} else {
+    		console.log("Entro aqui")
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>

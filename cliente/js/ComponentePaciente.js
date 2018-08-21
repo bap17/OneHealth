@@ -11,7 +11,7 @@ class ComponentePaciente extends React.Component {
 	}
 
 	llamar() {
-		this.props.handleVerDetalles(this.props.pos)
+		this.props.handlellamar(this.props.id)
 	}
 
 
@@ -23,7 +23,7 @@ class ComponentePaciente extends React.Component {
 					<span className="sip tab-col2">{this.props.sip}</span> 
 					<span className="nombre tab-col3">{this.props.nombre}</span> 
 					<span className="apellidos tab-col4">{this.props.apellidos}</span>
-					<a className=" tab-col5"><FontAwesomeIcon icon="phone" className="button-phone"/></a>
+					<a className=" tab-col5"><FontAwesomeIcon icon="phone" className="button-phone" onClick={this.llamar}/></a>
 					<div className="clear"></div>
 				</li>
 	}

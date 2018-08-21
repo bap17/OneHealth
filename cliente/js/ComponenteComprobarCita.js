@@ -14,7 +14,9 @@ class ComponenteComprobarCita extends React.Component {
         	idCita: 0,
         	paciente:[],
         	search:false,
-        	error: false
+        	error: false,
+        	llamada: false,
+        	idPaciente: 0
 
         }
         this.codigo = this.codigo.bind(this);
@@ -96,8 +98,9 @@ class ComponenteComprobarCita extends React.Component {
 
 	}
 
-	llamar() {
-		console.log("estoy en llamar")
+	llamar(id) {
+		this.setState({llamada: true})
+		this.setState({idPaciente: id})
 	}
 
 	listadoPaciente () {
@@ -132,6 +135,7 @@ class ComponenteComprobarCita extends React.Component {
 			var elemento
 			elemento = <Paciente key={i}
 				pos={i}
+				id={actual.id}
 				nombre={actual.nombre}
 				apellidos={actual.apellidos}
 				sip={actual.sip}
@@ -146,7 +150,7 @@ class ComponenteComprobarCita extends React.Component {
 
 
     	var tipoUsu = localStorage.getItem('tipo');
-    	if(this.state.codigoValido == false && tipoUsu == 'paciente') {
+    	if(this.state.codigoValido == false && tipoUsu == 'paciente' && this.state.llamada == false) {
 	        return <WebRTCSimple></WebRTCSimple>
 
 	        {/*<div>
@@ -167,9 +171,9 @@ class ComponenteComprobarCita extends React.Component {
 				</div>
 				
 	        </div> */}
-	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente'){
+	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente' && this.state.llamada == false){
 	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
-	    } else if(tipoUsu == 'medico') {
+	    } else if(tipoUsu == 'medico' && this.state.llamada == false) {
 	    	return <div>
 	    			
     				<div className="clear"></div>
@@ -202,6 +206,8 @@ class ComponenteComprobarCita extends React.Component {
 		        </div> 
 
 
+	    } else if(tipoUsu == 'medico' && this.state.llamada == true) {
+	    	return <WebRTCSimple  idPaciente={this.state.idPaciente}></WebRTCSimple>
 	    }
     }
 }

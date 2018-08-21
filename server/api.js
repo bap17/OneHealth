@@ -78,6 +78,12 @@ io.on('connection', function(socket){
         case 'stop':
             kurento.stop(sessionId, io);
             break;
+        case 'userToken':
+            getToken(message);
+            break;
+        case 'reponseToken':
+            resposeToken(message);
+            break;
         default:
            var error = {
                 id : 'error',
@@ -100,6 +106,25 @@ exports.sendMessages = function(destino, message) {
 
 }
 
+function getToken(message) {
+
+    console.log(message)
+    var idUser = message.userRemote
+    console.log(idUser)
+
+    io.emit('User'+ idUser, message)
+
+}
+
+function resposeToken(message) {
+
+    console.log(message)
+    var idUser = message.iniciador
+    console.log(idUser)
+
+    io.emit('Response'+ idUser, message)
+
+}
 
 exports.getServer = function() {return server}
 
