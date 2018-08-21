@@ -3,6 +3,7 @@ import Api from './servicios/api.js'
 import Peer from 'simple-peer'
 import $ from 'jquery'
 import css from '../css/mystyle.css';
+import Webcam from 'react-webcam';
 
 var peer = null
 var initiator = null
@@ -19,7 +20,7 @@ class ComponenteWebRTCSimple extends React.Component {
             messages: "",
             stream: null,
             videoSrc:null,
-            videoStream:null
+            videoRemoteSrc:null
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -68,7 +69,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		})
 		peer.on('stream', (stream) => {
 			console.log("Send stream")
-			handleVideo(stream)
+			this.handleVideoRemote(stream)
 		})
 		peer.on('error', (error) => {
 			console.error('peer error', error)
@@ -84,6 +85,12 @@ class ComponenteWebRTCSimple extends React.Component {
     	peer.send(mesg)
     	$('#yourMessage').val('');
     }
+
+    handleVideoRemote(str) {	
+
+    	this.setState({ videoRemoteSrc: window.URL.createObjectURL(str) });
+    }
+
 
     handleVideo(str) {	
     	this.setState({ stream: str });
@@ -109,7 +116,7 @@ class ComponenteWebRTCSimple extends React.Component {
 					</div>
 					<div className="boxVideo">
 						<video src={this.state.videoSrc} autoPlay="true" />
-						<video src={this.state.videoStream} autoPlay="true" />
+						<video src={this.state.videoRemoteSrc} autoPlay="true" />
 					</div>
 					<div className="boxMessages">
 						<span> Mensajes: </span> <br></br>
