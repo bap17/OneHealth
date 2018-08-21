@@ -337,7 +337,7 @@ exports.cambiarEstado = function(req, res) {
     console.log(idUsu)
     var dis = parseInt(disponible)
     if( idUsu != null && idUsu != "" && disponible != null && (disponible == 1 || disponible == 0) ) {
-        connection.query('UPDATE Usuario SET disponible = ? WHERE id = ?', [disponible, idUsu], function(err, results) {
+        connection.query('UPDATE usuario SET disponible = ? WHERE id = ?', [disponible, idUsu], function(err, results) {
             if(err) {
                 res.status(500)
                 res.send({error: "Hay un error al modificar al usuario"})

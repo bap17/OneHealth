@@ -43,7 +43,7 @@ exports.emailSignup = function(pet, resp) {
                     var key = crypto.randomBytes(24).toString('base64')
                     crypto.pbkdf2(pass, salt, PBKDF2ITERATIONS, HASHBYTES, 'sha512', (err, derivedKey) => {
                         if (err) throw err
-                        connection.query('INSERT INTO Usuario (username, email, password, salt, clave) VALUES(?,?,?,?,?)', [nombre,email,derivedKey,salt,key], function(err2, result) {
+                        connection.query('INSERT INTO usuario (username, email, password, salt, clave) VALUES(?,?,?,?,?)', [nombre,email,derivedKey,salt,key], function(err2, result) {
                             if(err2) {
                                 resp.status(500).send({message: err2})
                             } else {
@@ -51,7 +51,7 @@ exports.emailSignup = function(pet, resp) {
                                     if(sip==undefined) {
                                         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
                                     }else{
-                                        connection.query('INSERT INTO Paciente (id,sip) VALUES(?,?)', [result.insertId,sip], function(err3, result2) {
+                                        connection.query('INSERT INTO paciente (id,sip) VALUES(?,?)', [result.insertId,sip], function(err3, result2) {
                                             if(err3) {
                                                 resp.status(500).send({message: err3})
                                             } else {
@@ -63,11 +63,11 @@ exports.emailSignup = function(pet, resp) {
                                     if(esp==undefined){
                                         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
                                     }else{
-                                        connection.query('INSERT INTO Medico (id) VALUES(?)', [result.insertId], function(err3, result2) {
+                                        connection.query('INSERT INTO medico (id) VALUES(?)', [result.insertId], function(err3, result2) {
                                             if(err3) {
                                                 resp.status(500).send({message: "Error en el servidor4"})
                                             } else {
-                                                connection.query('INSERT INTO Especialidad (medico,nombre) VALUES(?,?)', [result.insertId,esp], function(err4, result3) {
+                                                connection.query('INSERT INTO especialidad (medico,nombre) VALUES(?,?)', [result.insertId,esp], function(err4, result3) {
                                                     if(err4) {
                                                         resp.status(500).send({message: err4})
                                                     } else {
@@ -101,7 +101,7 @@ exports.emailLogin = function(pet, resp) {
             } else {
                 if(results.length > 0) {
                     var resultado
-                    connection.query('SELECT * FROM Medico WHERE id = ?', [results[0].id],function (error2, results2) {
+                    connection.query('SELECT * FROM medico WHERE id = ?', [results[0].id],function (error2, results2) {
                         if(error2) {
                             resp.status(500).send({message: "Error en el servidor"})
                         }else{
