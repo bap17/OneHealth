@@ -3,6 +3,7 @@ import Api from './servicios/api'
 import Kurento from './ComponenteKurento'
 import CitaVideo from './ComponenteCitaVideollamada'
 import Paciente from './ComponentePaciente'
+import WebRTCSimple from './ComponenteWebRTCSimple'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class ComponenteComprobarCita extends React.Component {
 
@@ -146,7 +147,9 @@ class ComponenteComprobarCita extends React.Component {
 
     	var tipoUsu = localStorage.getItem('tipo');
     	if(this.state.codigoValido == false && tipoUsu == 'paciente') {
-	        return <div>
+	        return <WebRTCSimple></WebRTCSimple>
+
+	        {/*<div>
 	            <div className="comprobarCita">
 	            	
 	            	<div className="form">
@@ -163,7 +166,7 @@ class ComponenteComprobarCita extends React.Component {
 					</div>
 				</div>
 				
-	        </div> 
+	        </div> */}
 	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente'){
 	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
 	    } else if(tipoUsu == 'medico') {
