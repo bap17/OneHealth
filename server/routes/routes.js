@@ -48,7 +48,7 @@ router.post('/usuario/:id/mensaje', midd.isAuth, mensaje.nuevoMensaje)
 router.get('/usuario/:id/mensaje/recibidos', midd.isAuth, mensaje.verMensajesRecibidos)
 router.get('/usuario/:id/mensaje/enviados', midd.isAuth, mensaje.verMensajesEnviados)
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
-
+router.get('/usuario/:id/medicos', midd.isAuth, medico.listarMedicos)
 
 
 /**

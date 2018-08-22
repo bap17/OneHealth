@@ -25,6 +25,11 @@ module.exports = {
             {
                 test: dir_css,
                 use: [ 'style-loader', 'css-loader' ]
+            },
+            {
+                test: /\.css$/,
+                include: /node_modules/,
+                use: ['style-loader', 'css-loader'],
             }
         ]
     },

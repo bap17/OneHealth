@@ -15,12 +15,12 @@ exports.crearCita=function (pet,resp){
     if(fecha==undefined || hora==undefined || medico==undefined || sip==undefined){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM Usuario WHERE id = ?', [id],function (error, results) {
+        connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
             if(error) {
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT * FROM Paciente WHERE sip = ?', [sip], function(err, result) {
+                    connection.query('SELECT * FROM paciente WHERE sip = ?', [sip], function(err, result) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
@@ -31,7 +31,7 @@ exports.crearCita=function (pet,resp){
                             //var codigo = service.encrypt({text:iv,clave:results[0].clave})
                             var codigo = randomstring.generate(5)
 
-                            connection.query('INSERT INTO Cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,id,tipo,codigo], function(err2, result2) {
+                            connection.query('INSERT INTO cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,id,tipo,codigo], function(err2, result2) {
 
                                 if(err2) {
                                     resp.status(500).send({message: err2})

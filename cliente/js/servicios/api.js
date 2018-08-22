@@ -153,6 +153,32 @@ class Api  {
       })
 
     }
+
+    ListadoMedicos(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/medicos', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CrearCita(id,cita, token) {
+        return fetch(this.URLAPI + 'usuario/'+ id + '/cita', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+                   body: JSON.stringify(cita)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
 }
 
 

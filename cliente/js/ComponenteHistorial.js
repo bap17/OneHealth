@@ -55,7 +55,7 @@ class ComponenteHistorial extends Component {
 
         new API().VerHistorial(id,sip,token).then(datos=>{
             if(datos.status!=200){
-                console.log(datos)
+                //console.log(datos)
                 auxStatus=datos.status.toString()
                 auxMensaje=datos.message.toString()
                 this.errores()

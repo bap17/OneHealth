@@ -4,6 +4,7 @@ import React from 'react'
 import ComprobarCita from './ComponenteComprobarCita'
 import Video from './ComponenteVideo'
 import Historial from './ComponenteHistorial'
+import Cita from './ComponenteCita'
 
 
 class ComponenteInicio extends React.Component {
@@ -156,6 +157,7 @@ class ComponenteInicio extends React.Component {
 			            <div className="banner">
 		            		<img className="img-banner" src="./../img/doctor2.png"></img>
 		            	</div>
+						<Cita></Cita>
 
 			   
 			        </div> 
