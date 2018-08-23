@@ -28,7 +28,7 @@ class ComponenteCita extends Component {
             hora: this.campoHora.value,
             medico: this.campoMedico.value,
             tipo: this.campoTipo.value,
-            sip: this.campoSip.value
+            paciente: this.campoSip.value
         }
        
         var aux =this.props
@@ -39,18 +39,22 @@ class ComponenteCita extends Component {
 
         new API().CrearCita(id,nuevaCita,token).then(datos=>{
             if(datos.status!=201){
+                console.log(nuevaCita)
+                console.log(datos)
                 auxStatus=datos.status.toString()
-                auxMensaje=datos.message.toString()
+                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
                     //this.setState({medicos:resp.medicos})
+                    console.log(resp.message)
                 })
                
             }             
         }).then(function(){
             if(auxStatus=="400"){
                 console.log(auxMensaje)
+                console.log(auxStatus)
                 //document.getElementById('error').value="Hay errores en el formulario"
             }else if(auxStatus=="403"){
                 //document.getElementById("error").value="No tienes autorización para ésta función"
@@ -116,11 +120,15 @@ class ComponenteCita extends Component {
         return <div className="nueva-cita">
         <label className="titulo-comp-cita">Nueva cita </label>
         <div className="form-cita">
+            <div className="body-cita">
             <label>SIP</label>
+            <br></br>
             <input className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>
             <div className="fecha-hora">
                 <label>Fecha</label>
+                <br></br>
                 <DayPickerInput format={format} onDayChange={this.handleDayChange} />
+                <br></br>
                 <label>Hora</label>
                 <select className="form-control" ref={(campo)=>{this.campoHora=campo}}>
                     <option>8:00</option>
@@ -164,6 +172,7 @@ class ComponenteCita extends Component {
             </div>
         </div>
         <button type="submit" className="button" onClick={this.crearCita}>Crear</button>
+        </div>
         </div>
     }
 }

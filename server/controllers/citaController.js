@@ -7,7 +7,7 @@ exports.crearCita=function (pet,resp){
     var id = pet.params.id
     var fecha = pet.body.fecha
     var hora = pet.body.hora
-    var medico = pet.body.medico//verificar si es necesario
+    var medico = pet.body.medico
     var sip = pet.body.paciente
     var tipo = pet.body.tipo
 

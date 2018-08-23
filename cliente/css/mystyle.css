@@ -581,6 +581,23 @@ video {
 	padding: 50px 100px;
 }
 
+.form-cita{
+	margin: 20px auto;
+	text-align: center;
+	width: 50%;
+}
+
+.body-cita{
+	text-align: left;
+    width: 70%;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.body-cita select{
+	margin:  10px 0px;
+}
+
 /******** END CITA *******/
 
 /******************** PROVISIONAL WEBRTC **************************/
