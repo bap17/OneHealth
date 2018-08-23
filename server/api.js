@@ -108,9 +108,9 @@ exports.sendMessages = function(destino, message) {
 
 function getToken(message) {
 
-    console.log(message)
+   // console.log(message)
     var idUser = message.userRemote
-    console.log(idUser)
+    //console.log(idUser)
 
     io.emit('User'+ idUser, message)
 
@@ -118,9 +118,9 @@ function getToken(message) {
 
 function resposeToken(message) {
 
-    console.log(message)
+    //console.log(message)
     var idUser = message.iniciador
-    console.log(idUser)
+    //console.log(idUser)
 
     io.emit('Response'+ idUser, message)
 

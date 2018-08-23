@@ -22,7 +22,8 @@ class ComponenteInicio extends React.Component {
             videollamada: false,
             codigoValido: false,
             llamando: false,
-            info: ""
+            info: "",
+            confirmacionLlamada: false
         }
         this.inicio = this.inicio.bind(this);
         this.crearCitas = this.crearCitas.bind(this);
@@ -105,7 +106,9 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: false})
     	this.setState({mensajes: false})
     	this.setState({videollamada: false})
+    	this.setState({confirmacionLlamada: true})
     	this.setState({llamando: true})
+
     	
     }
 
@@ -121,13 +124,17 @@ class ComponenteInicio extends React.Component {
 		this.socket = io.connect("https://localhost:3000", connectionOptions);
 		this.socket.on('connect', function() {
 			mythis.socket.on('User'+ idUsu, function(message) {
-				console.log('Received message: ')
-				if (confirm('El usuario' + message.name
-				+ ' te esta llamando. ¿Quieres aceptar la llamada?')) {
-					mythis.vistaVideo(message)
+				if(mythis.state.confirmacionLlamada == false) {
+					console.log("\n\n ESTOY EN EL MENSAJE HORRIBLE\N\N")
+					console.log('Received message: ')
+					if (confirm('El usuario' + message.name
+					+ ' te esta llamando. ¿Quieres aceptar la llamada?')) {
+						mythis.vistaVideo(message)
 
 
+					}
 				}
+				
 			})
 		})
     }

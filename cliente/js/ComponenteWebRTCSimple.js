@@ -49,6 +49,7 @@ class ComponenteWebRTCSimple extends React.Component {
     	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 	    if (navigator.getUserMedia) {
 	        navigator.getUserMedia({video: true},this.handleVideo, this.videoError);
+	        
 	    }
 	    var idUsu = localStorage.getItem('id');
 		this.socket = io.connect("https://localhost:3000", connectionOptions);
@@ -61,9 +62,7 @@ class ComponenteWebRTCSimple extends React.Component {
 			})
 		})
 
-	    if(this.state.TypeUser == "Response") {
-	    	this.connect()
-	    }
+	   
 
 
     }
@@ -109,11 +108,12 @@ class ComponenteWebRTCSimple extends React.Component {
 		    peer = Peer({trickle: false, stream: this.state.stream})
 		    peer.on('signal', (data) => {
 		      //console.log('peer signal', data)
-		      auxID = JSON.stringify(data)
-
-		      mythis.setState({myID:JSON.stringify(data)})
-
 		      if(mythis.state.TypeUser == "Response") {
+		      	auxID = JSON.stringify(data)
+
+		      	mythis.setState({myID:JSON.stringify(data)})
+
+		      
 
 			      	message = {
 					  	"id": "reponseToken",
@@ -124,6 +124,7 @@ class ComponenteWebRTCSimple extends React.Component {
 					}
 
 					mythis.sendMessage(message)
+					//console.log(message)
 					 
 			    }
 
@@ -131,15 +132,11 @@ class ComponenteWebRTCSimple extends React.Component {
 		    	
 		    
 		}
-		console.log("Este es el aux ID")
-		console.log(auxID)
-		//var data = this.campoOtherID.value
-		console.log("info llamada: ")
-		//console.log(this.state.aux)
-		var data = this.state.aux.token
-		console.log(data)
+		var data = mythis.state.aux.token
+		 
+		//console.log(data)
 		peer.signal(data)
-
+		//console.log("Estoy dentro de connect")
 		peer.on('connect', () => {
 			console.log('peer connected')
 		})
@@ -180,6 +177,9 @@ class ComponenteWebRTCSimple extends React.Component {
     	this.setState({ stream: str });
 
     	this.setState({ videoSrc: window.URL.createObjectURL(str) });
+    	if(this.state.TypeUser == "Response") {
+		    	this.connect()
+		}
     }
 
     videoError() {
