@@ -45,6 +45,12 @@ class ComponenteWebRTCSimple extends React.Component {
         this.stopRecording = this.stopRecording.bind(this);
         this.download = this.download.bind(this);
         this.handleSourceOpen = this.handleSourceOpen.bind(this);
+        this.handleStop = this.handleStop.bind(this);
+        this.handleDataAvailable = this.handleDataAvailable.bind(this);
+        this.play = this.play.bind(this);
+
+
+        
     }
 
     componentDidMount() {
@@ -80,6 +86,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		this.recordButton = document.querySelector('button#record');
 		this.playButton = document.querySelector('button#play');
 		this.downloadButton = document.querySelector('button#download');
+
 
 
     }
@@ -225,10 +232,10 @@ class ComponenteWebRTCSimple extends React.Component {
     startRecording() {
 
 		this.recordedBlobs = [];
-		let options = {mimeType: 'video/webm;codecs=vp9'};
+		let options = {mimeType: 'video/webm,codecs=vp9'};
 		if (!MediaRecorder.isTypeSupported(options.mimeType)) {
 			console.log(options.mimeType + ' is not Supported');
-			options = {mimeType: 'video/webm;codecs=vp8'};
+			options = {mimeType: 'video/webm'};
 			if (!MediaRecorder.isTypeSupported(options.mimeType)) {
 				console.log(options.mimeType + ' is not Supported');
 				options = {mimeType: 'video/webm'};
@@ -239,9 +246,10 @@ class ComponenteWebRTCSimple extends React.Component {
 			}
 		}
 		try {
-			this.mediaRecorder = new MediaRecorder(this.state.videoRemoteSrc, options);
+			console.log(options)
+			this.mediaRecorder = new MediaRecorder(this.state.stream, options);
 		} catch (e) {
-			console.error(`Exception while creating MediaRecorder: ${e}`);
+			console.error(e);
 			alert(`Exception while creating MediaRecorder: ${e}. mimeType: ${options.mimeType}`);
 			return;
 		}
@@ -249,18 +257,39 @@ class ComponenteWebRTCSimple extends React.Component {
 		this.recordButton.textContent = 'Stop Recording';
 		this.playButton.disabled = true;
 		this.downloadButton.disabled = true;
-		mediaRecorder.onstop = handleStop;
-		mediaRecorder.ondataavailable = handleDataAvailable;
-		mediaRecorder.start(10); // collect 10ms of data
-		console.log('MediaRecorder started', mediaRecorder);
+		this.mediaRecorder.onstop = this.handleStop;
+		this.mediaRecorder.ondataavailable = this.handleDataAvailable;
+		this.mediaRecorder.start(10); // collect 10ms of data
+		console.log('MediaRecorder started', this.mediaRecorder);
 
     }
 
     stopRecording() {
+    	this.mediaRecorder.stop();
+ 		console.log('Recorded Blobs: ', this.recordedBlobs);
+  		this.recordedVideo.controls = true;
 
     }
 
     download() {
+		const blob = new Blob(this.recordedBlobs, {type: 'video/webm'});
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.style.display = 'none';
+		a.href = url;
+		a.download = 'test.webm';
+		document.body.appendChild(a);
+		a.click();
+		setTimeout(() => {
+		document.body.removeChild(a);
+		window.URL.revokeObjectURL(url);
+		}, 100);
+
+
+    }
+
+    handleStop(event) {
+    	console.log('Recorder stopped: ', event);
 
     }
 
@@ -269,6 +298,35 @@ class ComponenteWebRTCSimple extends React.Component {
 		this.sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
 		console.log('Source buffer: ', sourceBuffer);
 	}
+
+	handleDataAvailable(event) {
+	  if (event.data && event.data.size > 0) {
+	    this.recordedBlobs.push(event.data);
+	  }
+	}
+
+	play() {
+		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/webm'});
+		this.recordedVideo.src = window.URL.createObjectURL(superBuffer);
+		// workaround for non-seekable video taken from
+		// https://bugs.chromium.org/p/chromium/issues/detail?id=642012#c23
+		this.recordedVideo.addEventListener('loadedmetadata', () => {
+		if (this.recordedVideo.duration === Infinity) {
+		  this.recordedVideo.currentTime = 1e101;
+		  this.recordedVideo.ontimeupdate = function() {
+		    this.recordedVideo.currentTime = 0;
+		    this.recordedVideo.ontimeupdate = function() {
+		      delete this.recordedVideo.ontimeupdate;
+		      this.recordedVideo.play();
+		    };
+		  };
+		} else {
+		  this.recordedVideo.play();
+		}
+		});
+
+	}
+
 
     /**GRABACION**/
 
@@ -286,7 +344,8 @@ class ComponenteWebRTCSimple extends React.Component {
 					</div>
 					<div className="boxVideo">
 						<video src={this.state.videoSrc} autoPlay="true" />
-						<video id="recorded"src={this.state.videoRemoteSrc} autoPlay="true" />
+						<video id="gum"src={this.state.videoRemoteSrc} autoPlay="true" />
+						<video id="recorded" controls ></video>
 					</div>
 					<div className="boxMessages">
 						<span> Mensajes: </span> <br></br>
@@ -295,7 +354,7 @@ class ComponenteWebRTCSimple extends React.Component {
 						<button id="send" onClick={this.send} className="button">Enviar</button> &nbsp;
 						<button id="record" onClick={this.record} className="button">Start Recording</button> &nbsp;
 						<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
-						<button id="download" onClick={this.send} className="button">Download</button><br></br>
+						<button id="download" onClick={this.download} className="button">Download</button><br></br>
 					</div>
 					
 					
