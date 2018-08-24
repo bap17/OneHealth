@@ -63,7 +63,9 @@ class ComponenteWebRTCSimple extends React.Component {
 			"transports": ["websocket"]
 		}
 		
-    	
+    	document.getElementById("gum").poster = "./../img/medicoAzul.png"; 
+    	document.getElementById("video1").poster = "./../img/medicoRojo.png"; 
+
     	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 	    if (navigator.getUserMedia) {
 	        navigator.getUserMedia({video: true},this.handleVideo, this.videoError);
@@ -87,6 +89,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		this.recordButton = document.querySelector('button#record');
 		this.playButton = document.querySelector('button#play');
 		this.downloadButton = document.querySelector('button#download');
+
 
 
 
@@ -351,7 +354,6 @@ class ComponenteWebRTCSimple extends React.Component {
 		  this.recordedVideo.play();
 		}
 		});
-
 	}
 
 
@@ -359,21 +361,27 @@ class ComponenteWebRTCSimple extends React.Component {
 
     render() {
         return <div>
-        			<div className="boxMyID">
+        			<div className="boxVideo">
+						<video id="gum" className=" video videoStream" src={this.state.videoRemoteSrc} autoPlay="true" />
+						<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" />
+						<video id="recorded" className="hiden" controls ></video>
+						
+					</div>
+					<div className="buttons">
+						<button id="getID" onClick={this.initiater} className="button button-call">Llamar</button> 
+						<button id="colgar" onClick={this.colgarLlamada} className="button">Colgar</button><br></br>
+					</div>
+
+        			<div className="boxMyID hiden">
 	        			<span>Mi ID: </span>
 	        			<div className="containerMyID"><p id="myId"  ref={(campo)=>{this.campoMyID=campo}} className="myID">{this.state.myID}</p><div className="clear"></div></div>
-						<button id="getID" onClick={this.initiater} className="button button-call">Llamar</button> <br></br>  <br></br>
 					</div>
-					<div className="boxYourId">
+					<div className="boxYourId hiden">
 						<span>Otra ID:</span>  <br></br>
 						<input id="otherId" className="input" ref={(campo)=>{this.campoOtherID=campo}}></input> <br></br>
 						<button id="connect" onClick={this.connect} className="button">Conectar</button>  <br></br> <br></br>
 					</div>
-					<div className="boxVideo">
-						<video id="video1" src={this.state.videoSrc} autoPlay="true" />
-						<video id="gum" src={this.state.videoRemoteSrc} autoPlay="true" />
-						<video id="recorded" controls ></video>
-					</div>
+					
 					<div className="boxMessages">
 						<span> Mensajes: </span> <br></br>
 						<pre id="messages" >{this.state.messages}</pre>
@@ -382,7 +390,7 @@ class ComponenteWebRTCSimple extends React.Component {
 						<button id="record" onClick={this.record} className="button">Start Recording</button> &nbsp;
 						<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
 						<button id="download" onClick={this.download} className="button">Download</button><br></br>
-						<button id="colgar" onClick={this.colgarLlamada} className="button">Colgar</button><br></br>
+						
 					</div>
 					
 					

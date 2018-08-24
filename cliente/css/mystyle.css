@@ -107,7 +107,16 @@ a:hover, a:focus {
 	outline: 0px;
 	height: 24px;
 	padding: 10px;
-}	
+}
+
+.clear {
+	clear:both;
+}
+
+.hiden {
+	display: none !important;
+}
+
 /*  end global  */
 
 
@@ -319,6 +328,36 @@ a:hover, a:focus {
 
 /********** END PACIENTE ************/
 
+/********** VIDEOLLAMADA ************/
+.boxMyID, .boxYourId, .boxMessages{
+	border: 1px solid #C7C7C7;
+	border-radius: 46px 46px 46px 46px;
+	-moz-border-radius: 46px 46px 46px 46px;
+	-webkit-border-radius: 46px 46px 46px 46px;
+	padding: 25px;
+	margin:10px;
+}
+
+.video {
+	width: 50%;
+	padding: 10px 30px;
+}
+.buttons  {
+	margin: 20px auto;
+	text-align: center;
+}
+
+.buttons .button {
+	margin: 0px 20px;
+}
+
+.boxMessages, .boxVideo {
+	float: left;
+	width: 100%;
+}
+
+/********** END VIDEOLLAMADA ************/
+
 
 /***** OPT VIDEOLLAMADA ******/
 
@@ -515,7 +554,7 @@ video {
 
 /******************** PROVISIONAL WEBRTC **************************/
 
-
+/*
 .boxMyID, .boxYourId, .boxMessages, .boxVideo {
 	border: 1px solid #C7C7C7;
 	border-radius: 46px 46px 46px 46px;
@@ -523,12 +562,9 @@ video {
 	-webkit-border-radius: 46px 46px 46px 46px;
 	padding: 25px;
 	margin:10px;
-}
+}*/
 .containerMyID {
 	background-color: #F5F5F5;
-}
-.clear {
-	clear:both;
 }
 
 /*
@@ -564,10 +600,7 @@ video {
 }
 
 */
-.boxMessages, .boxVideo {
-	float: left;
-	width: 45%;
-}
+
 
 /******************** END PROVISIONAL WEBRTC **************************/
 
