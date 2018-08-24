@@ -74,5 +74,6 @@ router.put('/usuario/:id/disponibilidad',midd.isAuth, webrtc.cambiarEstado)
  * Admin
  */
 router.post('/admin/:id/medico', midd.isAuth, admin.validarMedico)
+router.post('/admin/:id/historial', midd.isAuth, admin.nuevoHistorial)
 
 module.exports = router

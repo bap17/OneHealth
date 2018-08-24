@@ -106,8 +106,16 @@ exports.decrypt=function(pet) {
 exports.encrypt=function (input) {
 	try {
 		var iv = crypto.randomBytes(16);
-		//console.info('iv',iv);
-		var data = new Buffer(input.text).toString('binary');
+        //console.info('iv',iv);
+        var num
+        var data
+        if(typeof input.text == 'number'){
+            num = input.text.toString()
+            data = new Buffer(num).toString('binary');
+        }else{
+            data = new Buffer(input.text).toString('binary');
+        }
+		
 		//console.info('data',data);
 		
 		key = new Buffer(input.clave);
