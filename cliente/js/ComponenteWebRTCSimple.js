@@ -11,6 +11,11 @@ var initiator = null
 var connect = null
 var signal_input = null
 
+var mediaRecorder = null
+var recordedBlobs = null
+var sourceBuffer = null
+
+
 class ComponenteWebRTCSimple extends React.Component {
 
 
@@ -34,6 +39,12 @@ class ComponenteWebRTCSimple extends React.Component {
         this.handleVideo = this.handleVideo.bind(this);
         this.videoError = this.videoError.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
+
+        this.record = this.record.bind(this);
+        this.startRecording = this.startRecording.bind(this);
+        this.stopRecording = this.stopRecording.bind(this);
+        this.download = this.download.bind(this);
+        this.handleSourceOpen = this.handleSourceOpen.bind(this);
     }
 
     componentDidMount() {
@@ -62,7 +73,13 @@ class ComponenteWebRTCSimple extends React.Component {
 			})
 		})
 
-	   
+
+		this.mediaSource = new MediaSource();
+		this.mediaSource.addEventListener('sourceopen', this.handleSourceOpen, false);   
+		this.recordedVideo = document.querySelector('video#recorded');
+		this.recordButton = document.querySelector('button#record');
+		this.playButton = document.querySelector('button#play');
+		this.downloadButton = document.querySelector('button#download');
 
 
     }
@@ -186,6 +203,75 @@ class ComponenteWebRTCSimple extends React.Component {
 
     }
 
+
+
+
+
+
+    /**GRABACION*/
+
+    record() {
+    	
+		if (this.recordButton.textContent === 'Start Recording') {
+			this.startRecording();
+		} else {
+			this.stopRecording();
+			this.recordButton.textContent = 'Start Recording';
+			this.playButton.disabled = false;
+			this.downloadButton.disabled = false;
+		}
+    }
+
+    startRecording() {
+
+		this.recordedBlobs = [];
+		let options = {mimeType: 'video/webm;codecs=vp9'};
+		if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+			console.log(options.mimeType + ' is not Supported');
+			options = {mimeType: 'video/webm;codecs=vp8'};
+			if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+				console.log(options.mimeType + ' is not Supported');
+				options = {mimeType: 'video/webm'};
+				if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+					console.log(options.mimeType + ' is not Supported');
+					options = {mimeType: ''};
+				}
+			}
+		}
+		try {
+			this.mediaRecorder = new MediaRecorder(this.state.videoRemoteSrc, options);
+		} catch (e) {
+			console.error(`Exception while creating MediaRecorder: ${e}`);
+			alert(`Exception while creating MediaRecorder: ${e}. mimeType: ${options.mimeType}`);
+			return;
+		}
+		console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
+		this.recordButton.textContent = 'Stop Recording';
+		this.playButton.disabled = true;
+		this.downloadButton.disabled = true;
+		mediaRecorder.onstop = handleStop;
+		mediaRecorder.ondataavailable = handleDataAvailable;
+		mediaRecorder.start(10); // collect 10ms of data
+		console.log('MediaRecorder started', mediaRecorder);
+
+    }
+
+    stopRecording() {
+
+    }
+
+    download() {
+
+    }
+
+    handleSourceOpen(event) {
+		console.log('MediaSource opened');
+		this.sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
+		console.log('Source buffer: ', sourceBuffer);
+	}
+
+    /**GRABACION**/
+
     render() {
         return <div>
         			<div className="boxMyID">
@@ -200,13 +286,16 @@ class ComponenteWebRTCSimple extends React.Component {
 					</div>
 					<div className="boxVideo">
 						<video src={this.state.videoSrc} autoPlay="true" />
-						<video src={this.state.videoRemoteSrc} autoPlay="true" />
+						<video id="recorded"src={this.state.videoRemoteSrc} autoPlay="true" />
 					</div>
 					<div className="boxMessages">
 						<span> Mensajes: </span> <br></br>
 						<pre id="messages" >{this.state.messages}</pre>
 						<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" ></input> <br></br>
-						<button id="send" onClick={this.send} className="button">Enviar</button> <br></br>
+						<button id="send" onClick={this.send} className="button">Enviar</button> &nbsp;
+						<button id="record" onClick={this.record} className="button">Start Recording</button> &nbsp;
+						<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
+						<button id="download" onClick={this.send} className="button">Download</button><br></br>
 					</div>
 					
 					
