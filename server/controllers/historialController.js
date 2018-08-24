@@ -1,4 +1,5 @@
 var connection = require('./bd')
+var service = require('../services/services')
 
 exports.verHistorial=function(pet,resp){
     var idM = pet.params.idM
@@ -18,7 +19,7 @@ exports.verHistorial=function(pet,resp){
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
                             if(results2.length > 0) {
-                                connection.query('SELECT * FROM historial_clinico h INNER JOIN Paciente p ON h.id = p.id WHERE h.id=?',[results2[0].id],function (err2, results3) {
+                                connection.query('SELECT * FROM historial_clinico h INNER JOIN paciente p ON h.id = p.id WHERE h.id=?',[results2[0].id],function (err2, results3) {
                                     if(err2) {
                                         resp.status(500).send({message: err2})
                                     } else {
@@ -28,9 +29,18 @@ exports.verHistorial=function(pet,resp){
                                                     resp.status(500).send({message: "Error en el servidor"})
                                                 } else {
                                                     if(results4.length > 0) {
-                                                        var consultas ={
-                                                            "consultas": results4
-                                                        }
+                                                        var consultas = new Array()
+                                                        results4.forEach(consulta => {
+                                                            var resul ={
+                                                                "fecha": service.decrypt({text:consulta.fecha,clave:consulta.clave_origen}),
+                                                                "motivo": service.decrypt({text:consulta.motivo,clave:consulta.clave_origen}),
+                                                                "enfermedad_actual": service.decrypt({text:consulta.enfermedad_actual,clave:consulta.clave_origen}),
+                                                                "diagnostico": service.decrypt({text:consulta.diagnostico,clave:consulta.clave_origen}),
+                                                                "tratamiento": service.decrypt({text:consulta.tratamiento,clave:consulta.clave_origen}),
+                                                            }
+                                                            consultas.push(resul)
+                                                        })
+                                                        
                                                         var resultado ={
                                                             "historial": results3[0],
                                                             "consultas anteriores": consultas
@@ -56,7 +66,7 @@ exports.verHistorial=function(pet,resp){
                         }
                     })
                 } else {
-                    resp.status(403).send({message: "No tienes autorizacion para ésta función"})
+                    resp.status(404).send({message: "No se ha encontrado al usuario"})
                 }
             }
         })
