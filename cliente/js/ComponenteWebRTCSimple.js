@@ -39,6 +39,7 @@ class ComponenteWebRTCSimple extends React.Component {
         this.handleVideo = this.handleVideo.bind(this);
         this.videoError = this.videoError.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
+        this.colgarLlamada = this.colgarLlamada.bind(this);
 
         this.record = this.record.bind(this);
         this.startRecording = this.startRecording.bind(this);
@@ -178,6 +179,17 @@ class ComponenteWebRTCSimple extends React.Component {
 		})
 		peer.on('close', () => {
 			console.log('peer connection closed')
+			document.getElementById("gum").poster = "./../img/medicoAzul.png"; 
+	    	document.getElementById("video1").poster = "./../img/medicoRojo.png"; 
+	    	document.getElementById("gum").src = null;
+	    	document.getElementById("video1").src = null;
+	    	//this.setState({ videoSrc: null });
+	    	//this.setState({ videoRemoteSrc: null });
+	    	this.state.stream.getTracks().forEach( (track) => {
+				track.stop();
+			});
+	    	peer.destroy()
+
 		})
 
 		
@@ -210,6 +222,21 @@ class ComponenteWebRTCSimple extends React.Component {
 
     }
 
+    colgarLlamada() {
+    	//this.mediaSource.endOfStream();
+    	document.getElementById("gum").poster = "./../img/medicoAzul.png"; 
+    	document.getElementById("video1").poster = "./../img/medicoRojo.png"; 
+    	document.getElementById("gum").src = null;
+    	document.getElementById("video1").src = null;
+    	//this.setState({ videoSrc: null });
+    	//this.setState({ videoRemoteSrc: null });
+    	this.state.stream.getTracks().forEach( (track) => {
+			track.stop();
+		});
+    	peer.destroy()
+
+
+    }
 
 
 
@@ -343,8 +370,8 @@ class ComponenteWebRTCSimple extends React.Component {
 						<button id="connect" onClick={this.connect} className="button">Conectar</button>  <br></br> <br></br>
 					</div>
 					<div className="boxVideo">
-						<video src={this.state.videoSrc} autoPlay="true" />
-						<video id="gum"src={this.state.videoRemoteSrc} autoPlay="true" />
+						<video id="video1" src={this.state.videoSrc} autoPlay="true" />
+						<video id="gum" src={this.state.videoRemoteSrc} autoPlay="true" />
 						<video id="recorded" controls ></video>
 					</div>
 					<div className="boxMessages">
@@ -355,6 +382,7 @@ class ComponenteWebRTCSimple extends React.Component {
 						<button id="record" onClick={this.record} className="button">Start Recording</button> &nbsp;
 						<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
 						<button id="download" onClick={this.download} className="button">Download</button><br></br>
+						<button id="colgar" onClick={this.colgarLlamada} className="button">Colgar</button><br></br>
 					</div>
 					
 					
