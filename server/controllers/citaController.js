@@ -102,7 +102,7 @@ exports.obtenerCitasPaciente=function (pet,resp){
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT * FROM cita WHERE Paciente = ?', [id], function(err, results2) {
+                    connection.query('SELECT * FROM cita WHERE paciente = ?', [id], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
@@ -226,7 +226,7 @@ exports.obtenerCitasPacienteVideo=function (pet,resp){
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT * FROM cita WHERE Paciente = ? AND tipo = 1', [id], function(err, results2) {
+                    connection.query('SELECT * FROM cita WHERE paciente = ? AND tipo = 1', [id], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
@@ -308,23 +308,23 @@ exports.borrarCita=function (pet,resp){
     if(id==undefined){
         resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM Usuario WHERE id = ?', [id],function (error, results) {
+        connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
             if(error) {
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT * FROM Cita WHERE id = ?', [cita], function(err, results2) {
+                    connection.query('SELECT * FROM cita WHERE id = ?', [cita], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
                             if(results2.length > 0){
                                 if(results2[0].medico==id){
-                                    connection.query('SELECT * FROM Medico WHERE id = ?', [id],function (error2, results3) {
+                                    connection.query('SELECT * FROM medico WHERE id = ?', [id],function (error2, results3) {
                                         if(error2) {
                                             resp.status(500).send({message: "Error en el servidor"})
                                         } else {
                                             if(results3.length > 0 && results3[0].validado) {
-                                                connection.query('DELETE FROM Cita WHERE id=?',[cita],function (err2, results4) {
+                                                connection.query('DELETE FROM cita WHERE id=?',[cita],function (err2, results4) {
                                                     if(err2) {
                                                         resp.status(500).send({message: err2})
                                                     } else {
@@ -338,7 +338,7 @@ exports.borrarCita=function (pet,resp){
                                         }
                                     })
                                 }else if(results2[0].paciente==id){
-                                    connection.query('DELETE FROM Cita WHERE id=?',[cita],function (err2, results4) {
+                                    connection.query('DELETE FROM cita WHERE id=?',[cita],function (err2, results4) {
                                         if(err2) {
                                             resp.status(500).send({message: err2})
                                         } else {
@@ -372,25 +372,25 @@ exports.editarCita=function (pet,resp){
     if(id==undefined || (fecha==undefined && hora==undefined)){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM Usuario WHERE id = ?', [id],function (error, results) {
+        connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
             if(error) {
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT * FROM Cita WHERE id = ?', [cita], function(err, results2) {
+                    connection.query('SELECT * FROM cita WHERE id = ?', [cita], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
                             if(results2.length > 0){
                                 if(results2[0].medico==id){
-                                    connection.query('SELECT * FROM Medico WHERE id = ?', [id],function (error2, results3) {
+                                    connection.query('SELECT * FROM medico WHERE id = ?', [id],function (error2, results3) {
                                         if(error2) {
                                             resp.status(500).send({message: "Error en el servidor"})
                                         } else {
                                             if(results3.length > 0 && results3[0].validado) {
                                                 var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
                                                 var horaC = service.encrypt({text:hora,clave:results[0].clave})
-                                                connection.query('UPDATE Cita SET fecha = ?, hora=?, origen=? WHERE id=?',[fechaC,horaC,id,cita],function (err2, results4) {
+                                                connection.query('UPDATE cita SET fecha = ?, hora=?, origen=? WHERE id=?',[fechaC,horaC,results[0].clave,cita],function (err2, results4) {
                                                     if(err2) {
                                                         resp.status(500).send({message: err2})
                                                     } else {
@@ -406,7 +406,7 @@ exports.editarCita=function (pet,resp){
                                 }else if(results2[0].paciente==id){
                                     var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
                                     var horaC = service.encrypt({text:hora,clave:results[0].clave})
-                                    connection.query('UPDATE Cita SET fecha = ?, hora=?, origen=? WHERE id=?',[fechaC,horaC,id,cita],function (err2, results4) {
+                                    connection.query('UPDATE cita SET fecha = ?, hora=?, origen=? WHERE id=?',[fechaC,horaC,results[0].clave,cita],function (err2, results4) {
                                         if(err2) {
                                             resp.status(500).send({message: err2})
                                         } else {
