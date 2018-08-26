@@ -33,6 +33,7 @@ class ComponenteInicio extends React.Component {
         this.videollamada = this.videollamada.bind(this);
         this.vistaVideo = this.vistaVideo.bind(this);
 
+
     }
 
     inicio() {
@@ -112,6 +113,8 @@ class ComponenteInicio extends React.Component {
     	
     }
 
+
+
     componentDidMount() {
     	var connectionOptions = {
 			"force new connection": true,
@@ -145,7 +148,7 @@ class ComponenteInicio extends React.Component {
     	var login = localStorage.getItem('username');
 
     	//Comprobar codigo
-    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false) {
+    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && this.state.confirmacionLlamada==false) {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -166,7 +169,7 @@ class ComponenteInicio extends React.Component {
 
 			            {/* <Video ></Video> */}
 			            <div className="clear"></div>
-			            <ComprobarCita ></ComprobarCita>		   
+			            <ComprobarCita socket={this.socket} ></ComprobarCita>		   
 		        	</div> 
 
 		//crearCitas  
@@ -282,7 +285,26 @@ class ComponenteInicio extends React.Component {
 		//Llamando
 		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == true) {
 
-			return <WebRTCSimple user="Response" infoAux={this.state.info}></WebRTCSimple>
+			return <div>
+	        			<div className="header">
+			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
+			                <div className="options-top">
+			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <button className="mi-cuenta" >Mi cuenta</button>
+			                </div>
+			                
+			            </div>
+			            <div className="top-nav">
+			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
+			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
+			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
+			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
+			            </div>
+			            <div className="clear"></div>
+
+			 			<WebRTCSimple user="Response" infoAux={this.state.info} socket={this.socket}></WebRTCSimple>
+			 		</div>
 
 
 

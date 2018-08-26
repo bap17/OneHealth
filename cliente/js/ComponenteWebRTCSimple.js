@@ -29,7 +29,8 @@ class ComponenteWebRTCSimple extends React.Component {
             videoRemoteSrc:null,
             idPac: this.props.idPaciente,
             TypeUser: this.props.user,
-            aux: this.props.infoAux
+            aux: this.props.infoAux,
+            socket: this.props.socket
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -55,6 +56,7 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     componentDidMount() {
+
     	var mythis = this
     	var connectionOptions = {
 			"force new connection": true,
@@ -72,14 +74,11 @@ class ComponenteWebRTCSimple extends React.Component {
 	        
 	    }
 	    var idUsu = localStorage.getItem('id');
-		this.socket = io.connect("https://localhost:3000", connectionOptions);
-		this.socket.on('connect', function() {
-			mythis.socket.on('Response'+ idUsu, function(message) {
-				console.log('Estoy en la vuelta: ')
-				console.log(message) ;
-				mythis.setState({aux: message})
-				mythis.connect()
-			})
+		this.state.socket.on('Response'+ idUsu, function(message) {
+			console.log('Estoy en la vuelta: ')
+			console.log(message) ;
+			mythis.setState({aux: message})
+			mythis.connect()
 		})
 
 
@@ -96,9 +95,10 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
 	sendMessage(msg) {
-		console.log("estoy enviando cosas al servidor con la info ")
-		console.log(msg)
-		this.socket.emit("message", msg);
+		//console.log("estoy enviando cosas al servidor con la info ")
+		//console.log(msg)
+		//this.socket.emit("message", msg);
+		this.state.socket.emit("message", msg)
 	}
 
     initiater() {
@@ -171,7 +171,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		peer.on('data', (data) => {
 			const message = data.toString('utf-8')
 			console.log('peer received', message)
-			this.setState({messages: this.state.messages.concat("\n USERX:"+message)})
+			this.setState({messages: this.state.messages.concat("\n"+this.state.aux.name+message)})
 		})
 		peer.on('stream', (stream) => {
 			console.log("Send stream")
@@ -200,8 +200,9 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     send() {
+    	var username = localStorage.getItem('username');
     	var mesg = this.campoMessage.value
-    	this.setState({messages: this.state.messages.concat("\n \t USERX: "+mesg)})
+    	this.setState({messages: this.state.messages.concat("\n \t"+username+":"+mesg)})
     	peer.send(mesg)
     	$('#yourMessage').val('');
     }
@@ -265,13 +266,13 @@ class ComponenteWebRTCSimple extends React.Component {
 		let options = {mimeType: 'video/webm,codecs=vp9'};
 		if (!MediaRecorder.isTypeSupported(options.mimeType)) {
 			console.log(options.mimeType + ' is not Supported');
-			options = {mimeType: 'video/webm'};
+			options = {mimeType: 'video/h264'};
 			if (!MediaRecorder.isTypeSupported(options.mimeType)) {
 				console.log(options.mimeType + ' is not Supported');
-				options = {mimeType: 'video/webm'};
+				options = {mimeType: 'video/mp4'};
 				if (!MediaRecorder.isTypeSupported(options.mimeType)) {
 					console.log(options.mimeType + ' is not Supported');
-					options = {mimeType: ''};
+					options = {mimeType: 'video/webm'};
 				}
 			}
 		}
@@ -302,12 +303,13 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     download() {
-		const blob = new Blob(this.recordedBlobs, {type: 'video/webm'});
+		const blob = new Blob(this.recordedBlobs, {type: 'video/mp4'});
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.style.display = 'none';
 		a.href = url;
-		a.download = 'test.webm';
+		var date = Date.now();
+		a.download = 'OneHealth'+date+'.mp4';
 		document.body.appendChild(a);
 		a.click();
 		setTimeout(() => {
@@ -325,7 +327,7 @@ class ComponenteWebRTCSimple extends React.Component {
 
     handleSourceOpen(event) {
 		console.log('MediaSource opened');
-		this.sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vp8"');
+		this.sourceBuffer = mediaSource.addSourceBuffer('video/mp4;');
 		console.log('Source buffer: ', sourceBuffer);
 	}
 
@@ -336,7 +338,7 @@ class ComponenteWebRTCSimple extends React.Component {
 	}
 
 	play() {
-		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/webm'});
+		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/mp4'});
 		this.recordedVideo.src = window.URL.createObjectURL(superBuffer);
 		// workaround for non-seekable video taken from
 		// https://bugs.chromium.org/p/chromium/issues/detail?id=642012#c23

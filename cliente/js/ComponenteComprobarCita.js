@@ -7,8 +7,8 @@ import WebRTCSimple from './ComponenteWebRTCSimple'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class ComponenteComprobarCita extends React.Component {
 
-	constructor() {
-        super()
+	constructor(props) {
+        super(props)
         this.state = {
         	codigoValido: false,
         	idCita: 0,
@@ -16,7 +16,8 @@ class ComponenteComprobarCita extends React.Component {
         	search:false,
         	error: false,
         	llamada: false,
-        	idPaciente: 0
+        	idPaciente: 0,
+        	socket:this.props.socket
 
         }
         this.codigo = this.codigo.bind(this);
@@ -29,6 +30,7 @@ class ComponenteComprobarCita extends React.Component {
     
 
 	componentDidMount() {
+
 
  		this.listadoPaciente();
 
@@ -151,26 +153,24 @@ class ComponenteComprobarCita extends React.Component {
 
     	var tipoUsu = localStorage.getItem('tipo');
     	if(this.state.codigoValido == false && tipoUsu == 'paciente' && this.state.llamada == false) {
-	        return <WebRTCSimple></WebRTCSimple>
+	        return <div>
+			            <div className="comprobarCita">
+			            	
+			            	<div className="form">
+								<span className="titulo-comp-cita">Número de cita </span>  <br></br>
+								{this.state.error ?
 
-	        {/*<div>
-	            <div className="comprobarCita">
-	            	
-	            	<div className="form">
-						<span className="titulo-comp-cita">Número de cita </span>  <br></br>
-						{this.state.error ?
-
-							<p id="error" className="error"></p>: 
-							<p className="error"></p>
-						}
+									<p id="error" className="error"></p>: 
+									<p className="error"></p>
+								}
+								
+								<br></br>
+								<input id="codcita" className="input" ref={(campo)=>{this.codigo=campo}} placeholder="Ingresa el código cita ..."></input> <br></br><br></br><br></br><br></br>
+								<button id="comprobar" onClick={this.comprobarCodigo} className="button">Comprobar</button>  <br></br> <br></br>
+							</div>
+						</div>
 						
-						<br></br>
-						<input id="codcita" className="input" ref={(campo)=>{this.codigo=campo}} placeholder="Ingresa el código cita ..."></input> <br></br><br></br><br></br><br></br>
-						<button id="comprobar" onClick={this.comprobarCodigo} className="button">Comprobar</button>  <br></br> <br></br>
-					</div>
-				</div>
-				
-	        </div> */}
+			        </div> 
 	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente' && this.state.llamada == false){
 	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
 	    } else if(tipoUsu == 'medico' && this.state.llamada == false) {
@@ -207,7 +207,7 @@ class ComponenteComprobarCita extends React.Component {
 
 
 	    } else if(tipoUsu == 'medico' && this.state.llamada == true) {
-	    	return <WebRTCSimple  idPaciente={this.state.idPaciente}></WebRTCSimple>
+	    	return <WebRTCSimple  idPaciente={this.state.idPaciente} socket={this.state.socket} ></WebRTCSimple>
 	    }
     }
 }
