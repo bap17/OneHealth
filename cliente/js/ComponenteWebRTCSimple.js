@@ -5,6 +5,7 @@ import $ from 'jquery'
 import css from '../css/mystyle.css';
 import Webcam from 'react-webcam';
 import io from 'socket.io-client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 var peer = null
 var initiator = null
@@ -124,6 +125,9 @@ class ComponenteWebRTCSimple extends React.Component {
 		  mythis.sendMessage(message)
 		 
 		})
+
+		$('#call').addClass('hiden')
+		$('#colgar').removeClass('hiden')
     }
 
     connect() {
@@ -228,6 +232,8 @@ class ComponenteWebRTCSimple extends React.Component {
 
     colgarLlamada() {
     	//this.mediaSource.endOfStream();
+    	$('#call').removeClass('hiden')
+		$('#colgar').addClass('hiden')
     	document.getElementById("gum").poster = "./../img/medicoAzul.png"; 
     	document.getElementById("video1").poster = "./../img/medicoRojo.png"; 
     	document.getElementById("gum").src = null;
@@ -238,6 +244,8 @@ class ComponenteWebRTCSimple extends React.Component {
 			track.stop();
 		});
     	peer.destroy()
+
+    	
 
 
     }
@@ -362,7 +370,7 @@ class ComponenteWebRTCSimple extends React.Component {
     /**GRABACION**/
 
     render() {
-        return <div>
+        return <div className="body-videollamada">
         			<div className="boxVideo">
 						<video id="gum" className=" video videoStream" src={this.state.videoRemoteSrc} autoPlay="true" />
 						<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" />
@@ -370,8 +378,8 @@ class ComponenteWebRTCSimple extends React.Component {
 						
 					</div>
 					<div className="buttons">
-						<button id="getID" onClick={this.initiater} className="button button-call">Llamar</button> 
-						<button id="colgar" onClick={this.colgarLlamada} className="button">Colgar</button><br></br>
+						<button id="call" onClick={this.initiater} className="button button-call circle-button"><FontAwesomeIcon className="iconCall" icon="phone" /></button> 
+						<button id="colgar" onClick={this.colgarLlamada} className="button circle-button hiden hangup"><FontAwesomeIcon className="iconCall" icon="phone-slash" /></button><br></br>
 					</div>
 
         			<div className="boxMyID hiden">
@@ -385,15 +393,20 @@ class ComponenteWebRTCSimple extends React.Component {
 					</div>
 					
 					<div className="boxMessages">
-						<span> Mensajes: </span> <br></br>
-						<pre id="messages" >{this.state.messages}</pre>
-						<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" ></input> <br></br>
-						<button id="send" onClick={this.send} className="button">Enviar</button> &nbsp;
-						<button id="record" onClick={this.record} className="button">Start Recording</button> &nbsp;
-						<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
-						<button id="download" onClick={this.download} className="button">Download</button><br></br>
+						<span className="titulo-conversacion">Conversación</span> <br></br>
+						<div className="conversacion">
+							<pre id="messages" >{this.state.messages}</pre>
+						</div>
+						<div className="chat">
+							<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" placeholder="Introduce el mensaje ..."></input> 
+							<button id="send" onClick={this.send} className="button send"><FontAwesomeIcon className="iconCall" icon="angle-double-right" /></button>
+						</div>
+						<button id="record" onClick={this.record} className="button hiden">Start Recording</button> &nbsp;
+						<button id="play" onClick={this.play} className="button hiden">Play</button> &nbsp;
+						<button id="download" onClick={this.download} className="button hiden">Download</button><br></br>
 						
 					</div>
+					<div className="clear"></div>
 					
 					
 				</div>

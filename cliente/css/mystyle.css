@@ -117,6 +117,31 @@ a:hover, a:focus {
 	display: none !important;
 }
 
+.circle-button {
+	-webkit-border-radius: 122px;
+	-moz-border-radius: 122px;
+	border-radius: 122px;
+}
+
+
+/* SCROLL
+body::-webkit-scrollbar, conversacion::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+body::-webkit-scrollbar-track, conversacion::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0.1,0.1);
+}
+ 
+body::-webkit-scrollbar-thumb , conversacion::-webkit-scrollbar-thumb {
+ 	 background-color: #D8D8D8;
+  	outline: 1px solid slategrey;
+  	-webkit-border-radius: 59px;
+	-moz-border-radius: 59px;
+	border-radius: 59px;
+}
+*/
+
 /*  end global  */
 
 
@@ -328,38 +353,8 @@ a:hover, a:focus {
 
 /********** END PACIENTE ************/
 
-/********** VIDEOLLAMADA ************/
-.boxMyID, .boxYourId, .boxMessages{
-	border: 1px solid #C7C7C7;
-	border-radius: 46px 46px 46px 46px;
-	-moz-border-radius: 46px 46px 46px 46px;
-	-webkit-border-radius: 46px 46px 46px 46px;
-	padding: 25px;
-	margin:10px;
-}
 
-.video {
-	width: 50%;
-	padding: 10px 30px;
-}
-.buttons  {
-	margin: 20px auto;
-	text-align: center;
-}
-
-.buttons .button {
-	margin: 0px 20px;
-}
-
-.boxMessages, .boxVideo {
-	float: left;
-	width: 100%;
-}
-
-/********** END VIDEOLLAMADA ************/
-
-
-/***** OPT VIDEOLLAMADA ******/
+/***** OPT VIDEOLLAMADA MEDICO ******/
 
 .banner {
 
@@ -421,8 +416,81 @@ a:hover, a:focus {
 	border-bottom: 1px solid #E0E0E0;
 }
 
+
 /***** END OPT VIDEOLLAMADA ******/
 
+
+
+/*
+.boxMyID, .boxYourId, .boxMessages{
+	border: 1px solid #C7C7C7;
+	border-radius: 46px 46px 46px 46px;
+	-moz-border-radius: 46px 46px 46px 46px;
+	-webkit-border-radius: 46px 46px 46px 46px;
+	padding: 25px;
+	margin:10px;
+}*/
+
+.video {
+	width: 50%;
+	padding: 10px 30px;
+	-webkit-border-radius: 122px;
+	-moz-border-radius: 122px;
+	border-radius: 122px;
+}
+.video:focus {
+	outline:0px;
+}
+.buttons  {
+	margin: 20px auto;
+	text-align: center;
+}
+
+.buttons .button {
+	margin: 0px 20px;
+}
+
+.boxMessages, .boxVideo {
+	float: left;
+	width: 100%;
+	padding: 0px 30px;
+}
+.iconCall {
+	font-size: 30px;
+}
+.chat {
+	width: 95%;
+	margin: 0 auto;
+}
+.chat .input {
+	border: 0px;
+	border-bottom: 1px solid #7A7A7A;
+	width: 93%;
+	float: left;
+}
+
+.send {
+	width: 5%;
+	padding: 5px;
+	float: right;
+}
+
+.conversacion {
+	height: 210px;
+	max-height: 210px;
+	overflow-y: scroll;
+	padding: 20px;
+}
+
+.titulo-conversacion {
+	padding: 40px;
+	font-size: 25px;
+	color: #9d9d9d;
+}
+
+
+
+/********** END VIDEOLLAMADA ************/
 
 
 /******* INICIO ***************/
@@ -601,15 +669,4 @@ video {
 
 */
 
-
-/******************** END PROVISIONAL WEBRTC **************************/
-
-.videoBig {
-	width: 50%;
-}
-.videoSmall {
-	width: 50%;
-}
-
-/******************** END PROVISIONAL WEBRTC **************************/
 
