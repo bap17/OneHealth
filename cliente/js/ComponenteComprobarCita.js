@@ -172,7 +172,7 @@ class ComponenteComprobarCita extends React.Component {
 						
 			        </div> 
 	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente' && this.state.llamada == false){
-	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
+	    	return <CitaVideo idCita={this.state.idCita} socket={this.state.socket}></CitaVideo>
 	    } else if(tipoUsu == 'medico' && this.state.llamada == false) {
 	    	return <div>
 	    			

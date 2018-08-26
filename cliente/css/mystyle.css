@@ -436,7 +436,7 @@ body::-webkit-scrollbar-thumb , conversacion::-webkit-scrollbar-thumb {
 	padding: 10px 30px;
 	-webkit-border-radius: 122px;
 	-moz-border-radius: 122px;
-	border-radius: 122px;
+	border-radius: 57px;
 }
 .video:focus {
 	outline:0px;

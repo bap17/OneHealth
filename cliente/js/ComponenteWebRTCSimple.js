@@ -131,6 +131,8 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     connect() {
+    	$('#call').addClass('hiden')
+		$('#colgar').removeClass('hiden')
     	var idUsu = localStorage.getItem('id');
     	var username = localStorage.getItem('username');
     	var mythis = this

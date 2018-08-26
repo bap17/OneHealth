@@ -178,7 +178,7 @@ exports.verCita = function(req, res) {
                             console.log("Hay un error al buscar el paciente")
                         } else {
                             if(results1.length > 0) {
-                                connection.query('SELECT us.nombre, us.apellidos, es.nombre as espe, us.clave FROM usuario as us inner join especialidad as es on us.id = es.medico where us.id = ?', [results[0].medico], function(err, results2) {
+                                connection.query('SELECT us.nombre, us.apellidos, es.nombre as espe, us.clave, us.id FROM usuario as us inner join especialidad as es on us.id = es.medico where us.id = ?', [results[0].medico], function(err, results2) {
                                     if(err) {
                                         res.status(500)
                                         res.send({error: "Hay un error al buscar el paciente"})
@@ -195,6 +195,7 @@ exports.verCita = function(req, res) {
                                                 nombreMed: results2[0].nombre,
                                                 apellidosMed: results2[0].apellidos,
                                                 especialidad: results2[0].espe,
+                                                idMedico: results2[0].id,
                                                 fecha: fecha,
                                                 hora: hora
 

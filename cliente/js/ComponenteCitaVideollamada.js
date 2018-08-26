@@ -1,6 +1,7 @@
 import React from 'react'
 import Api from './servicios/api'
 import Kurento from './ComponenteKurento'
+import WebRTCSimple from './ComponenteWebRTCSimple'
 
 
 class ComponenteCitaVideollamada extends React.Component {
@@ -17,10 +18,12 @@ class ComponenteCitaVideollamada extends React.Component {
         	nombreMed:null,
         	apellidosMed: null,
         	especialidad: null,
-        	kurento: false
+        	idMedico: 0,
+        	llamada: false,
+        	socket: this.props.socket
         }
         this.getCita = this.getCita.bind(this);
-        this.kurentoState = this.kurentoState.bind(this);
+        this.llamadaState = this.llamadaState.bind(this);
         this.cancelarCita = this.cancelarCita.bind(this);
 
     }
@@ -52,6 +55,7 @@ class ComponenteCitaVideollamada extends React.Component {
 					mythis.setState({nombreMed: valor.nombreMed})
 					mythis.setState({apellidosMed: valor.apellidosMed})
 					mythis.setState({especialidad: valor.especialidad})
+					mythis.setState({idMedico: valor.idMedico})
 				})
 
 				
@@ -60,8 +64,8 @@ class ComponenteCitaVideollamada extends React.Component {
 
     }
 
-    kurentoState() {
-    	this.setState({kurento: true})
+    llamadaState() {
+    	this.setState({llamada: true})
     }
 
     cancelarCita() {
@@ -87,7 +91,7 @@ class ComponenteCitaVideollamada extends React.Component {
 
     render() {
 
-    	if(this.state.kurento == false) {
+    	if(this.state.llamada == false) {
 	    	return <div className = "body-cita-videollamada">
 		    				<label className="titulo-comp-cita"> Cita Videollamada </label>
 		    				<div className="clear"></div>
@@ -114,7 +118,7 @@ class ComponenteCitaVideollamada extends React.Component {
 			    						<label className="label">Especialidad:</label> <label>{this.state.especialidad}</label><br></br>
 			    					</div>
 			    					<div className="parrafo button-cita-video">
-			    						<button className="button button-call" onClick={this.kurentoState}>Videollamada</button> <br></br> <br></br> 
+			    						<button className="button button-call" onClick={this.llamadaState}>Videollamada</button> <br></br> <br></br> 
 			    						<button className="button" onClick={this.cancelarCita}>Cancelar Cita</button>
 			    					</div>
 			    				</div>
@@ -123,7 +127,7 @@ class ComponenteCitaVideollamada extends React.Component {
 		    				
 		    			</div>
 		 } else {
-		 	return <Kurento></Kurento>
+		 	return  <WebRTCSimple  idPaciente={this.state.idMedico} socket={this.state.socket} ></WebRTCSimple>
 		 }
 	}
 }
