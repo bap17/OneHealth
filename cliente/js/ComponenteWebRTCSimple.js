@@ -96,13 +96,14 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
 	sendMessage(msg) {
-		//console.log("estoy enviando cosas al servidor con la info ")
-		//console.log(msg)
+		console.log("estoy enviando cosas al servidor con la info ")
+		console.log(msg)
 		//this.socket.emit("message", msg);
 		this.state.socket.emit("message", msg)
 	}
 
     initiater() {
+    	console.log("estoy en initiater")
     	var idUsu = localStorage.getItem('id');
     	var username = localStorage.getItem('username');
     	var mythis = this
@@ -143,7 +144,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		    peer.on('signal', (data) => {
 		      //console.log('peer signal', data)
 		      if(mythis.state.TypeUser == "Response") {
-		      	auxID = JSON.stringify(data)
+		      //	auxID = JSON.stringify(data)
 
 		      	mythis.setState({myID:JSON.stringify(data)})
 
@@ -156,8 +157,11 @@ class ComponenteWebRTCSimple extends React.Component {
 					  	"userRemote": idUsu,
 					  	"token": mythis.state.myID
 					}
+					if(mythis.state.myID != "{\"renegotiate\":true}") {
+						mythis.sendMessage(message)
+					}
 
-					mythis.sendMessage(message)
+					
 					//console.log(message)
 					 
 			    }
@@ -166,10 +170,13 @@ class ComponenteWebRTCSimple extends React.Component {
 		    	
 		    
 		}
+
 		var data = mythis.state.aux.token
 		 
 		//console.log(data)
+		
 		peer.signal(data)
+		
 		//console.log("Estoy dentro de connect")
 		peer.on('connect', () => {
 			console.log('peer connected')
@@ -177,7 +184,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		peer.on('data', (data) => {
 			const message = data.toString('utf-8')
 			console.log('peer received', message)
-			this.setState({messages: this.state.messages.concat("\n"+this.state.aux.name+message)})
+			this.setState({messages: this.state.messages.concat("\n"+this.state.aux.name+" "+message)})
 		})
 		peer.on('stream', (stream) => {
 			console.log("Send stream")
@@ -206,11 +213,15 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     send() {
+
     	var username = localStorage.getItem('username');
     	var mesg = this.campoMessage.value
-    	this.setState({messages: this.state.messages.concat("\n \t"+username+":"+mesg)})
-    	peer.send(mesg)
-    	$('#yourMessage').val('');
+    	if(mesg != "") {
+    		this.setState({messages: this.state.messages.concat("\n \t"+username+": "+mesg)})
+	    	peer.send(mesg)
+	    	$('#yourMessage').val('');
+    	}
+    	
     }
 
     handleVideoRemote(str) {	
