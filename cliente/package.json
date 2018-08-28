@@ -22,7 +22,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "webpack": "^3.8.0",
-    "webpack-dev-server": "^2.9.4"
+    "webpack-dev-server": "^2.10.4"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
