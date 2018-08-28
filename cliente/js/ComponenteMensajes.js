@@ -82,7 +82,7 @@ class ComponenteMensajes extends Component{
 
         new API().VerEnviados(id,token).then(datos=>{
             if(datos.status!=200){
-                auxStatus=datos.status.toString()
+                //auxStatus=datos.status.toString()
                 //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
