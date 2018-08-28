@@ -32,7 +32,7 @@ exports.emailSignup = function(pet, resp) {
     }else if(!service.isValidEmail(email)){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM Usuario WHERE username = ?', [nombre], function(err, results) {
+        connection.query('SELECT * FROM usuario WHERE username = ?', [nombre], function(err, results) {
             if(err) {
                 resp.status(500).send({message: "Error en el servidor1"})
             } else {

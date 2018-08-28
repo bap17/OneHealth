@@ -14,12 +14,12 @@ exports.nuevaConsulta=function(pet,resp){
     if(id==undefined || sip==undefined){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM Medico m INNER JOIN Usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
+        connection.query('SELECT * FROM medico m INNER JOIN usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
             if(error) {
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT * FROM Paciente p INNER JOIN Historial_Clinico c ON p.id=c.id WHERE p.sip=?',[sip],function (err, results2) {
+                    connection.query('SELECT * FROM paciente p INNER JOIN historial_clinico c ON p.id=c.id WHERE p.sip=?',[sip],function (err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
@@ -29,7 +29,7 @@ exports.nuevaConsulta=function(pet,resp){
                                 var enfC = service.encrypt({text:enf,clave:results[0].clave})
                                 var diagC = service.encrypt({text:diag,clave:results[0].clave})
                                 var tratC = service.encrypt({text:trat,clave:results[0].clave})
-                                connection.query('INSERT INTO Consulta (historial,fecha,motivo,enfermedad_actual,diagnostico,tratamiento) VALUES(?,?,?,?,?,?)',[results2[0].id,fechaC,motivoC,enfC,diagC,tratC],function (err2, results3) {
+                                connection.query('INSERT INTO consulta (historial,fecha,motivo,enfermedad_actual,diagnostico,tratamiento,clave_origen) VALUES(?,?,?,?,?,?,?)',[results2[0].id,fechaC,motivoC,enfC,diagC,tratC,results[0].clave],function (err2, results3) {
                                     if(err2) {
                                         resp.status(500).send({message: err2})
                                     } else {

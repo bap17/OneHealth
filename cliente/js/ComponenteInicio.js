@@ -6,6 +6,8 @@ import Video from './ComponenteVideo'
 import Historial from './ComponenteHistorial'
 import io from 'socket.io-client';
 import WebRTCSimple from './ComponenteWebRTCSimple'
+import Cita from './ComponenteCita'
+import Mensajes from './ComponenteMensajes'
 
 
 class ComponenteInicio extends React.Component {
@@ -20,15 +22,16 @@ class ComponenteInicio extends React.Component {
             listarCitas: false,
             mensajes: false,
             videollamada: false,
-            codigoValido: false,
             llamando: false,
             info: "",
             confirmacionLlamada: false
+			video:false
         }
         this.inicio = this.inicio.bind(this);
         this.crearCitas = this.crearCitas.bind(this);
         this.listarCitas = this.listarCitas.bind(this);
-        this.historial = this.historial.bind(this);
+		this.historial = this.historial.bind(this);
+		this.historialVideo = this.historialVideo.bind(this);
         this.mensajes = this.mensajes.bind(this);
         this.videollamada = this.videollamada.bind(this);
         this.vistaVideo = this.vistaVideo.bind(this);
@@ -44,6 +47,8 @@ class ComponenteInicio extends React.Component {
     	this.setState({mensajes: false})
     	this.setState({videollamada: false})
     	this.setState({llamando: false})
+		this.setState({video: false})
+
     }
 
     crearCitas() {
@@ -54,6 +59,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({mensajes: false})
     	this.setState({videollamada: false})
     	this.setState({llamando: false})
+		this.setState({video: false})
     }
 
     listarCitas() {
@@ -62,8 +68,9 @@ class ComponenteInicio extends React.Component {
     	this.setState({listarCitas: true})
     	this.setState({historial: false})
     	this.setState({mensajes: false})
-    	this.setState({videollamada: false})
     	this.setState({llamando: false})
+		this.setState({videollamada: false})
+		this.setState({video: false})
    	}
 
    	historial() {
@@ -72,8 +79,19 @@ class ComponenteInicio extends React.Component {
     	this.setState({listarCitas: false})
     	this.setState({historial: true})
     	this.setState({mensajes: false})
-    	this.setState({videollamada: false})
     	this.setState({llamando: false})
+    	this.setState({videollamada: false})
+		this.setState({video: false})
+	}
+	   
+	historialVideo() {
+    	this.setState({inicio: false})
+    	this.setState({crearCitas: false})
+    	this.setState({listarCitas: false})
+    	this.setState({historial: false})
+    	this.setState({mensajes: false})
+		this.setState({videollamada: false})
+		this.setState({video: true})
    	}
 
     mensajes() {
@@ -82,8 +100,9 @@ class ComponenteInicio extends React.Component {
     	this.setState({listarCitas: false})
     	this.setState({historial: false})
     	this.setState({mensajes: true})
-    	this.setState({videollamada: false})
     	this.setState({llamando: false})
+		this.setState({videollamada: false})
+		this.setState({video: false})
     }
 
     videollamada() {
@@ -109,7 +128,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({videollamada: false})
     	this.setState({confirmacionLlamada: true})
     	this.setState({llamando: true})
-
+		this.setState({video: false})
     	
     }
 
@@ -148,7 +167,7 @@ class ComponenteInicio extends React.Component {
     	var login = localStorage.getItem('username');
 
     	//Comprobar codigo
-    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && this.state.confirmacionLlamada==false) {
+    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && this.state.confirmacionLlamada==false && !this.state.video) {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -173,7 +192,7 @@ class ComponenteInicio extends React.Component {
 		        	</div> 
 
 		//crearCitas  
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == true && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == true && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && !this.state.video){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -195,11 +214,12 @@ class ComponenteInicio extends React.Component {
 			            <div className="banner">
 		            		<img className="img-banner" src="./../img/doctor2.png"></img>
 		            	</div>
+						<Cita></Cita>
 
 			   
 			        </div> 
 		//listarCitas
-		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == true && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false){
+		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == true && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && !this.state.video){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -225,7 +245,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//historial
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false && this.state.llamando == false){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false && this.state.llamando == false !this.state.video){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -248,15 +268,41 @@ class ComponenteInicio extends React.Component {
 		            		<img className="img-banner" src="./../img/medicos.png"></img>
 		            	</div>*/}
 						{/*<Video></Video>*/}
-						<Historial></Historial>
+						{<Historial verVideo={this.historialVideo}></Historial>}
 						
 
 			   
 			        </div> 
+		//video
+		}else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.video){
+			return <div>
+	        			<div className="header">
+			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
+			                <div className="options-top">
+			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <button className="mi-cuenta" >Mi cuenta</button>
+			                </div>
+			                
+			            </div>
+			            <div className="top-nav">
+			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
+			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
+			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
+			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
+			            </div>
+			            <div className="clear"></div>
 
+			            {/*<div className="banner">
+		            		<img className="img-banner" src="./../img/medicos.png"></img>
+		            	</div>*/}
+						{<Video></Video>}
+						
 
+			   
+			        </div> 
 		//mensajes
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == true && this.state.llamando == false){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == true && this.state.llamando == false && !this.state.video){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -275,11 +321,11 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="clear"></div>
 
-			            <div className="banner">
+			            {/*<div className="banner">
 		            		<img className="img-banner" src="./../img/medico2.png"></img>
-		            	</div>
+						</div>*/}
+						{<Mensajes></Mensajes>}
 
-			   
 			        </div> 
 
 		//Llamando

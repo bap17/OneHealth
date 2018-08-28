@@ -52,7 +52,7 @@ class ComponenteConfirmarLogin extends Component {
             <br></br>
             <label className="titulo-login">Verificación en dos pasos</label>
             <br></br>
-            <label className="texto-confirmar">Se te acaba de enviar un correo con un código de confirmación</label>
+            <label className="texto-confirmar">Te hemos enviado un correo con un código de confirmación</label>
             <div className="form-codigo">
                 <label>Código</label>
                 <input className="input" id="cod" placeholder="Introduce el código" ref={(campo)=>{this.campoCodigo=campo}}/>

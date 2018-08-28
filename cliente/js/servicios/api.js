@@ -154,7 +154,6 @@ class Api  {
 
     }
 
-
     cancelarCita(idUsu, cita, token) {
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/cita/'+cita, {
                 method: 'DELETE',
@@ -165,7 +164,83 @@ class Api  {
       }).then(function(respuesta) {
           return respuesta
       })
+    }
 
+    ListadoMedicos(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/medicos', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CrearCita(id,cita, token) {
+        return fetch(this.URLAPI + 'usuario/'+ id + '/cita', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+                   body: JSON.stringify(cita)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
+
+    VerRecibidos(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/mensaje/recibidos', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    VerEnviados(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/mensaje/enviados', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    NuevoMensaje(id,mensaje, token) {
+        return fetch(this.URLAPI + 'usuario/'+ id + '/mensaje', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+                   body: JSON.stringify(mensaje)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
+
+    BorrarMensaje(id,mensaje,token){
+        return fetch(this.URLAPI + 'usuario/'+ id + '/mensaje/' + mensaje, {
+            method: 'DELETE',
+            headers: {
+                'Content-type':'application/json',
+                'Authorization': token
+            }
+        }).then(function (respuesta) {
+            return respuesta
+        })
     }
 }
 
