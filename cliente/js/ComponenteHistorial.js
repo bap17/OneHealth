@@ -66,7 +66,7 @@ class ComponenteHistorial extends Component {
                         this.setState({sinConsultas: true})
                     }
                     else{
-                        this.setState({consultas:resp['consultas anteriores'].consultas})
+                        this.setState({consultas:resp['consultas anteriores']})
                     }
                     this.verBusqueda()
                 })
@@ -97,24 +97,24 @@ class ComponenteHistorial extends Component {
                     <button className="button" type="button" onClick={this.verHistorial}>Buscar</button>  
                 </div>
                 <div className="col2">
-                <div className= "card">
-                    <div className="card-header">Historial clínico</div>
-                    <div className="card-body">
-                        <p>Nombre: {this.state.historial.nombre}</p>
-                        <p>NIF: {this.state.historial.nif}</p>
-                        <p>Edad: {this.state.historial.edad}</p>
-                        <p>Sexo: {this.state.historial.sexo}</p>
-                        <p>Nacionalidad: {this.state.historial.nacionalidad}</p>
-                        <p>Estado civil: {this.state.historial['estado civil']}</p>
-                        <p>Ocupación: {this.state.historial.ocupacion}</p>
-                        <p>Lugar de origen: {this.state.historial['lugar de origen']}</p>
-                        <p>Domicilio: {this.state.historial.domicilio}</p>
-                        <p>Alergias: {this.state.historial.alergias}</p>
-                        <p>Peso: {this.state.historial.peso} kg.</p>
-                        <p>Altura: {this.state.historial.altura}</p>
-                        <p>SIP: {this.state.historial.sip}</p>
+                    <div className= "card">
+                        <div className="card-header">Historial clínico</div>
+                        <div className="card-body">
+                            <p>Nombre: {this.state.historial.nombre}</p>
+                            <p>NIF: {this.state.historial.nif}</p>
+                            <p>Edad: {this.state.historial.edad}</p>
+                            <p>Sexo: {this.state.historial.sexo}</p>
+                            <p>Nacionalidad: {this.state.historial.nacionalidad}</p>
+                            <p>Estado civil: {this.state.historial['estado civil']}</p>
+                            <p>Ocupación: {this.state.historial.ocupacion}</p>
+                            <p>Lugar de origen: {this.state.historial['lugar de origen']}</p>
+                            <p>Domicilio: {this.state.historial.domicilio}</p>
+                            <p>Alergias: {this.state.historial.alergias}</p>
+                            <p>Peso: {this.state.historial.peso} kg.</p>
+                            <p>Altura: {this.state.historial.altura}</p>
+                            <p>SIP: {this.state.historial.sip}</p>
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div className= "col2">
                 { this.state.sinConsultas ? <div className="card">

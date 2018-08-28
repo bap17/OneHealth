@@ -5,6 +5,7 @@ import ComprobarCita from './ComponenteComprobarCita'
 import Video from './ComponenteVideo'
 import Historial from './ComponenteHistorial'
 import Cita from './ComponenteCita'
+import Mensajes from './ComponenteMensajes'
 
 
 class ComponenteInicio extends React.Component {
@@ -264,11 +265,11 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="clear"></div>
 
-			            <div className="banner">
+			            {/*<div className="banner">
 		            		<img className="img-banner" src="./../img/medico2.png"></img>
-		            	</div>
+						</div>*/}
+						{<Mensajes></Mensajes>}
 
-			   
 			        </div> 
 		//inicio
     	} else {
