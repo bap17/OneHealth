@@ -43,7 +43,7 @@ class ComponenteWebRTCSimple extends React.Component {
         this.sendMessage = this.sendMessage.bind(this);
         this.colgarLlamada = this.colgarLlamada.bind(this);
 
-        this.record = this.record.bind(this);
+       // this.record = this.record.bind(this);
         this.startRecording = this.startRecording.bind(this);
         this.stopRecording = this.stopRecording.bind(this);
         this.download = this.download.bind(this);
@@ -189,6 +189,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		peer.on('stream', (stream) => {
 			console.log("Send stream")
 			this.handleVideoRemote(stream)
+			this.startRecording()
 		})
 		peer.on('error', (error) => {
 			console.error('peer error', error)
@@ -205,6 +206,9 @@ class ComponenteWebRTCSimple extends React.Component {
 				track.stop();
 			});
 	    	peer.destroy()
+	    	this.setState({ videoRemoteSrc: null});
+	    	this.setState({ stream: null });
+    		this.setState({ videoSrc: null});
 
 		})
 
@@ -245,7 +249,7 @@ class ComponenteWebRTCSimple extends React.Component {
 
     colgarLlamada() {
     	//this.mediaSource.endOfStream();
-    	$('#call').removeClass('hiden')
+    	/*$('#call').removeClass('hiden')
 		$('#colgar').addClass('hiden')
     	document.getElementById("gum").poster = "./../img/medicoAzul.png"; 
     	document.getElementById("video1").poster = "./../img/medicoRojo.png"; 
@@ -255,7 +259,7 @@ class ComponenteWebRTCSimple extends React.Component {
     	//this.setState({ videoRemoteSrc: null });
     	this.state.stream.getTracks().forEach( (track) => {
 			track.stop();
-		});
+		});*/
     	peer.destroy()
 
     	
@@ -269,17 +273,15 @@ class ComponenteWebRTCSimple extends React.Component {
 
     /**GRABACION*/
 
-    record() {
+    /*record() {
     	
 		if (this.recordButton.textContent === 'Start Recording') {
 			this.startRecording();
 		} else {
 			this.stopRecording();
 			this.recordButton.textContent = 'Start Recording';
-			this.playButton.disabled = false;
-			this.downloadButton.disabled = false;
 		}
-    }
+    }*/
 
     startRecording() {
 
@@ -307,8 +309,6 @@ class ComponenteWebRTCSimple extends React.Component {
 		}
 		console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
 		this.recordButton.textContent = 'Stop Recording';
-		this.playButton.disabled = true;
-		this.downloadButton.disabled = true;
 		this.mediaRecorder.onstop = this.handleStop;
 		this.mediaRecorder.ondataavailable = this.handleDataAvailable;
 		this.mediaRecorder.start(10); // collect 10ms of data
@@ -324,6 +324,7 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     download() {
+    	console.log("entro")
 		const blob = new Blob(this.recordedBlobs, {type: 'video/mp4'});
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -343,6 +344,7 @@ class ComponenteWebRTCSimple extends React.Component {
 
     handleStop(event) {
     	console.log('Recorder stopped: ', event);
+    	this.colgarLlamada()
 
     }
 
@@ -359,6 +361,7 @@ class ComponenteWebRTCSimple extends React.Component {
 	}
 
 	play() {
+		console.log("entro")
 		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/mp4'});
 		this.recordedVideo.src = window.URL.createObjectURL(superBuffer);
 		// workaround for non-seekable video taken from
@@ -387,12 +390,12 @@ class ComponenteWebRTCSimple extends React.Component {
         			<div className="boxVideo">
 						<video id="gum" className=" video videoStream" src={this.state.videoRemoteSrc} autoPlay="true" />
 						<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" />
-						<video id="recorded" className="hiden" controls ></video>
+						<video id="recorded" className="" controls ></video>
 						
 					</div>
 					<div className="buttons">
 						<button id="call" onClick={this.initiater} className="button button-call circle-button"><FontAwesomeIcon className="iconCall" icon="phone" /></button> 
-						<button id="colgar" onClick={this.colgarLlamada} className="button circle-button hiden hangup"><FontAwesomeIcon className="iconCall" icon="phone-slash" /></button><br></br>
+						<button id="colgar" onClick={this.stopRecording} className="button circle-button hiden hangup"><FontAwesomeIcon className="iconCall" icon="phone-slash" /></button><br></br>
 					</div>
 
         			<div className="boxMyID hiden">
@@ -414,9 +417,9 @@ class ComponenteWebRTCSimple extends React.Component {
 							<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" placeholder="Introduce el mensaje ..."></input> 
 							<button id="send" onClick={this.send} className="button send"><FontAwesomeIcon className="iconCall" icon="angle-double-right" /></button>
 						</div>
-						<button id="record" onClick={this.record} className="button hiden">Start Recording</button> &nbsp;
-						<button id="play" onClick={this.play} className="button hiden">Play</button> &nbsp;
-						<button id="download" onClick={this.download} className="button hiden">Download</button><br></br>
+						<button id="record" className="button hiden">Start Recording</button> &nbsp;
+						<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
+						<button id="download" onClick={this.download} className="button">Download</button><br></br>
 						
 					</div>
 					<div className="clear"></div>
