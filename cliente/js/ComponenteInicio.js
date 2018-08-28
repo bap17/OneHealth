@@ -1,6 +1,5 @@
 import React from 'react'
 
-//import Video from './ComponenteInitVideo'
 import ComprobarCita from './ComponenteComprobarCita'
 import Video from './ComponenteVideo'
 import Historial from './ComponenteHistorial'
@@ -24,7 +23,7 @@ class ComponenteInicio extends React.Component {
             videollamada: false,
             llamando: false,
             info: "",
-            confirmacionLlamada: false
+            confirmacionLlamada: false,
 			video:false
         }
         this.inicio = this.inicio.bind(this);
@@ -144,21 +143,20 @@ class ComponenteInicio extends React.Component {
 		var mythis = this
 		var idUsu = localStorage.getItem('id');
 		this.socket = io.connect("https://localhost:3000", connectionOptions);
-		this.socket.on('connect', function() {
-			mythis.socket.on('User'+ idUsu, function(message) {
-				if(mythis.state.confirmacionLlamada == false) {
-					console.log("\n\n ESTOY EN EL MENSAJE HORRIBLE\N\N")
-					console.log('Received message: ')
-					if (confirm('El usuario' + message.name
-					+ ' te esta llamando. ¿Quieres aceptar la llamada?')) {
-						mythis.vistaVideo(message)
+		mythis.socket.on('User'+ idUsu, function(message) {
+			if(mythis.state.confirmacionLlamada == false) {
+				console.log("\n\n ESTOY EN EL MENSAJE HORRIBLE\N\N")
+				console.log('Received message: ')
+				if (confirm('El usuario' + message.name
+				+ ' te esta llamando. ¿Quieres aceptar la llamada?')) {
+					mythis.vistaVideo(message)
 
 
-					}
 				}
-				
-			})
+			}
+			
 		})
+		
     }
 
 
@@ -245,7 +243,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//historial
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false && this.state.llamando == false !this.state.video){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false && this.state.llamando == false && !this.state.video){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>

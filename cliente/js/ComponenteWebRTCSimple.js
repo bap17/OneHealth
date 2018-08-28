@@ -3,7 +3,6 @@ import Api from './servicios/api.js'
 import Peer from 'simple-peer'
 import $ from 'jquery'
 import css from '../css/mystyle.css';
-import Webcam from 'react-webcam';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -221,7 +220,7 @@ class ComponenteWebRTCSimple extends React.Component {
     	var username = localStorage.getItem('username');
     	var mesg = this.campoMessage.value
     	if(mesg != "") {
-    		this.setState({messages: this.state.messages.concat("\n \t"+username+": "+mesg)})
+    		this.setState({messages: this.state.messages.concat("\n"+username+": "+mesg)})
 	    	peer.send(mesg)
 	    	$('#yourMessage').val('');
     	}

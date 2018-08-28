@@ -46,8 +46,8 @@ class ComponenteMensajes extends Component{
 
         new API().VerRecibidos(id,token).then(datos=>{
             if(datos.status!=200){
-                auxStatus=datos.status.toString()
-                auxMensaje=datos.message.toString()
+                //auxStatus=datos.status.toString()
+                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{

@@ -9,7 +9,6 @@ var consulta = require('../controllers/consultaController')
 var mensaje = require('../controllers/mensajesController')
 var cita = require('../controllers/citaController')
 var webrtc = require('../controllers/webrtcController')
-var kurento = require('../controllers/kurentoController')
 var admin = require('../controllers/adminController')
 
 router.get('/',function (pet,resp){
@@ -63,12 +62,7 @@ router.get('/usuario/:id/paciente',midd.isAuth, webrtc.listarPaciente)
 
 router.put('/usuario/:id/disponibilidad',midd.isAuth, webrtc.cambiarEstado)
 
-/**
- * Kurento
- */
 
-//router.get('/kurento/init',kurento.init)
-//router.get('/kurento/init1',kurento.init1)
 
 /**
  * Admin

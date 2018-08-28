@@ -246,6 +246,7 @@ exports.comprobarCodigo = function(req, res) {
     var idUsu = obj.id
 
     if( codigo != null && codigo != "" && idUsu != null && idUsu != "") {
+        
         connection.query('SELECT * FROM cita as ci where ci.paciente = ? and tipo = 1 and codigo like ?', [idUsu, codigo], function(err, results) {
             if(err) {
                 res.status(500)

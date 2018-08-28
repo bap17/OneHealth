@@ -14,8 +14,6 @@ library.add(faAngleDoubleRight)
 library.add(faTrashAlt)
 library.add(faInfoCircle)
 
-
-import Connect from './ComponenteConnect'
 import Inicio from './ComponenteInicio'
 import Index from './ComponenteIndex'
 

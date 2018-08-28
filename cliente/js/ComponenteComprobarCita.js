@@ -1,6 +1,5 @@
 import React from 'react'
 import Api from './servicios/api'
-import Kurento from './ComponenteKurento'
 import CitaVideo from './ComponenteCitaVideollamada'
 import Paciente from './ComponentePaciente'
 import WebRTCSimple from './ComponenteWebRTCSimple'
