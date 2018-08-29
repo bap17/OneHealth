@@ -753,6 +753,43 @@ video {
 
 /******** END MESANJES *******/
 
+/******** LISTAR CITAS *******/
+.listar-citas{
+	padding: 50px 100px;
+}
+
+.panel-citas{
+	width: 100%;
+	margin-top: 30px;
+}
+
+.form-citas{
+	margin-top: 10px;
+}
+
+.label-citas{
+	float: left;
+    margin-right: 15px;
+}
+
+.form-citas .form-control{
+	width: 30% !important;
+    float: left;
+}
+
+.listar-citas .item{
+	margin-bottom: 10px;
+}
+
+.fecha-citas{
+	margin-right: 20px;
+}
+
+.boton-volver-cita{
+	padding: 20px 0px 0px 130px;
+}
+/******** END LISTAR CITAS *******/
+
 /******************** PROVISIONAL WEBRTC **************************/
 
 

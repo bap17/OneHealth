@@ -243,6 +243,84 @@ class Api  {
                    return respuesta
                })
     }
+
+    CitasMedico(id, token) {
+        return fetch(this.URLAPI + 'medico/'+id+'/citas', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasVMedico(id, token) {
+        return fetch(this.URLAPI + 'medico/'+id+'/citas/video', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasPMedico(id, token) {
+        return fetch(this.URLAPI + 'medico/'+id+'/citas/presencial', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasPaciente(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/citas', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasVPaciente(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/citas/video', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasPPaciente(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/citas/presencial', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
 }
 
 

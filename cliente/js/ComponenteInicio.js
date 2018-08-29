@@ -4,9 +4,10 @@ import React from 'react'
 import ComprobarCita from './ComponenteComprobarCita'
 import Video from './ComponenteVideo'
 import Historial from './ComponenteHistorial'
-import Cita from './ComponenteCita'
+import Cita from './ComponenteNuevaCita'
 import Mensajes from './ComponenteMensajes'
 import NuevaConsulta from './ComponenteNuevaConsulta'
+import ListarCitas from './ComponenteListarCitas'
 
 
 class ComponenteInicio extends React.Component {
@@ -251,9 +252,10 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="clear"></div>
 
-			            <div className="banner">
+			            {/*<div className="banner">
 		            		<img className="img-banner" src="./../img/medicos2.png"></img>
-		            	</div>
+						</div>*/}
+						{<ListarCitas></ListarCitas>}
 
 			   
 			        </div> 

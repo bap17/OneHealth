@@ -31,8 +31,6 @@ class ComponenteNuevaConsulta extends Component {
 
         new API().NuevaConsulta(id,nueva,token).then(datos=>{
             if(datos.status!=201){
-                console.log(nuevaCita)
-                console.log(datos)
                 auxStatus=datos.status.toString()
                 //auxMensaje=datos.message.toString()
                 this.errores()

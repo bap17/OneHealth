@@ -184,8 +184,8 @@ exports.verCita = function(req, res) {
                                         console.log("Hay un error al buscar el paciente")
                                     } else {
                                         if(results2.length > 0) {
-                                            var fecha = service.decrypt({text:results[0].fecha,clave:results2[0].clave})
-                                            var hora = service.decrypt({text:results[0].hora,clave:results2[0].clave})
+                                            var fecha = service.decrypt({text:results[0].fecha,clave:results[0].origen})
+                                            var hora = service.decrypt({text:results[0].hora,clave:results[0].origen})
 
                                             var resu = {
                                                 nombrePac: results1[0].nombre,
