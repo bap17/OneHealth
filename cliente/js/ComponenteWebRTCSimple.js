@@ -5,6 +5,7 @@ import $ from 'jquery'
 import css from '../css/mystyle.css';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import NuevaConsulta from './ComponenteNuevaConsulta'
 
 var peer = null
 var initiator = null
@@ -30,7 +31,9 @@ class ComponenteWebRTCSimple extends React.Component {
             idPac: this.props.idPaciente,
             TypeUser: this.props.user,
             aux: this.props.infoAux,
-            socket: this.props.socket
+            socket: this.props.socket,
+            sip: this.props.sip,
+            medico: false
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -50,6 +53,8 @@ class ComponenteWebRTCSimple extends React.Component {
         this.handleStop = this.handleStop.bind(this);
         this.handleDataAvailable = this.handleDataAvailable.bind(this);
         this.play = this.play.bind(this);
+
+        this.nuevaConsulta = this.nuevaConsulta.bind(this);
 
 
         
@@ -208,6 +213,10 @@ class ComponenteWebRTCSimple extends React.Component {
 	    	this.setState({ videoRemoteSrc: null});
 	    	this.setState({ stream: null });
     		this.setState({ videoSrc: null});
+    		var tipo = localStorage.getItem('tipo');
+    		if(tipo == "medico") {
+    			this.nuevaConsulta(this.state.sip)
+    		}
 
 		})
 
@@ -384,47 +393,54 @@ class ComponenteWebRTCSimple extends React.Component {
 
     /**GRABACION**/
 
-    render() {
-        return <div className="body-videollamada">
-        			<div className="boxVideo">
-						<video id="gum" className=" video videoStream" src={this.state.videoRemoteSrc} autoPlay="true" />
-						<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" />
-						<video id="recorded" className="" controls ></video>
-						
-					</div>
-					<div className="buttons">
-						<button id="call" onClick={this.initiater} className="button button-call circle-button"><FontAwesomeIcon className="iconCall" icon="phone" /></button> 
-						<button id="colgar" onClick={this.stopRecording} className="button circle-button hiden hangup"><FontAwesomeIcon className="iconCall" icon="phone-slash" /></button><br></br>
-					</div>
 
-        			<div className="boxMyID hiden">
-	        			<span>Mi ID: </span>
-	        			<div className="containerMyID"><p id="myId"  ref={(campo)=>{this.campoMyID=campo}} className="myID">{this.state.myID}</p><div className="clear"></div></div>
-					</div>
-					<div className="boxYourId hiden">
-						<span>Otra ID:</span>  <br></br>
-						<input id="otherId" className="input" ref={(campo)=>{this.campoOtherID=campo}}></input> <br></br>
-						<button id="connect" onClick={this.connect} className="button">Conectar</button>  <br></br> <br></br>
-					</div>
-					
-					<div className="boxMessages">
-						<span className="titulo-conversacion">Conversación</span> <br></br>
-						<div className="conversacion">
-							<pre id="messages" >{this.state.messages}</pre>
+    nuevaConsulta(sip) {
+    	this.props.handleConsulta(sip)
+    }
+
+    render() {
+
+	        return <div className="body-videollamada">
+	        			<div className="boxVideo">
+							<video id="gum" className=" video videoStream" src={this.state.videoRemoteSrc} autoPlay="true" />
+							<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" />
+							<video id="recorded" className="" controls ></video>
+							
 						</div>
-						<div className="chat">
-							<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" placeholder="Introduce el mensaje ..."></input> 
-							<button id="send" onClick={this.send} className="button send"><FontAwesomeIcon className="iconCall" icon="angle-double-right" /></button>
+						<div className="buttons">
+							<button id="call" onClick={this.initiater} className="button button-call circle-button"><FontAwesomeIcon className="iconCall" icon="phone" /></button> 
+							<button id="colgar" onClick={this.stopRecording} className="button circle-button hiden hangup"><FontAwesomeIcon className="iconCall" icon="phone-slash" /></button><br></br>
 						</div>
-						<button id="record" className="button hiden">Start Recording</button> &nbsp;
-						<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
-						<button id="download" onClick={this.download} className="button">Download</button><br></br>
+
+	        			<div className="boxMyID hiden">
+		        			<span>Mi ID: </span>
+		        			<div className="containerMyID"><p id="myId"  ref={(campo)=>{this.campoMyID=campo}} className="myID">{this.state.myID}</p><div className="clear"></div></div>
+						</div>
+						<div className="boxYourId hiden">
+							<span>Otra ID:</span>  <br></br>
+							<input id="otherId" className="input" ref={(campo)=>{this.campoOtherID=campo}}></input> <br></br>
+							<button id="connect" onClick={this.connect} className="button">Conectar</button>  <br></br> <br></br>
+						</div>
+						
+						<div className="boxMessages">
+							<span className="titulo-conversacion">Conversación</span> <br></br>
+							<div className="conversacion">
+								<pre id="messages" >{this.state.messages}</pre>
+							</div>
+							<div className="chat">
+								<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" placeholder="Introduce el mensaje ..."></input> 
+								<button id="send" onClick={this.send} className="button send"><FontAwesomeIcon className="iconCall" icon="angle-double-right" /></button>
+							</div>
+							<button id="record" className="button hiden">Start Recording</button> &nbsp;
+							<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
+							<button id="download" onClick={this.download} className="button">Download</button><br></br>
+							
+						</div>
+						<div className="clear"></div>
+						
 						
 					</div>
-					<div className="clear"></div>
-					
-					
-				</div>
+		
     }
 }
 

@@ -16,7 +16,8 @@ class ComponenteComprobarCita extends React.Component {
         	error: false,
         	llamada: false,
         	idPaciente: 0,
-        	socket:this.props.socket
+        	socket:this.props.socket, 
+        	sip: null
 
         }
         this.codigo = this.codigo.bind(this);
@@ -24,6 +25,7 @@ class ComponenteComprobarCita extends React.Component {
         this.buscar = this.buscar.bind(this);
         this.listadoPaciente = this.listadoPaciente.bind(this);
         this.llamar = this.llamar.bind(this);
+        this.consulta = this.consulta.bind(this);
     }
 
     
@@ -99,9 +101,10 @@ class ComponenteComprobarCita extends React.Component {
 
 	}
 
-	llamar(id) {
+	llamar(id, sip1) {
 		this.setState({llamada: true})
 		this.setState({idPaciente: id})
+		this.setState({sip: sip1})
 	}
 
 	listadoPaciente () {
@@ -125,6 +128,10 @@ class ComponenteComprobarCita extends React.Component {
 				
 			}
 		})
+	}
+
+	consulta(sip) {
+		this.props.handleConsulta(sip);
 	}
 
 
@@ -206,7 +213,7 @@ class ComponenteComprobarCita extends React.Component {
 
 
 	    } else if(tipoUsu == 'medico' && this.state.llamada == true) {
-	    	return <WebRTCSimple  idPaciente={this.state.idPaciente} socket={this.state.socket} ></WebRTCSimple>
+	    	return <WebRTCSimple  idPaciente={this.state.idPaciente} socket={this.state.socket} sip={this.state.sip} handleConsulta={this.consulta}></WebRTCSimple>
 	    }
     }
 }

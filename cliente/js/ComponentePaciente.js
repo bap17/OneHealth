@@ -11,7 +11,7 @@ class ComponentePaciente extends React.Component {
 	}
 
 	llamar() {
-		this.props.handlellamar(this.props.id)
+		this.props.handlellamar(this.props.id, this.props.sip)
 	}
 
 

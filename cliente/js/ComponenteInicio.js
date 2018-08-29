@@ -27,7 +27,8 @@ class ComponenteInicio extends React.Component {
             confirmacionLlamada: false,
 			codigoValido: false,
 			video:false,
-			consulta:false
+			consulta:false, 
+			sip: null
         }
         this.inicio = this.inicio.bind(this);
         this.crearCitas = this.crearCitas.bind(this);
@@ -125,7 +126,7 @@ class ComponenteInicio extends React.Component {
 
 	}
 	
-	nuevaConsulta() {
+	nuevaConsulta(sip1) {
     	this.setState({inicio: false})
     	this.setState({crearCitas: false})
     	this.setState({listarCitas: false})
@@ -133,6 +134,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({mensajes: false})
 		this.setState({videollamada: false})
 		this.setState({video: false})
+		this.setState({sip:sip1})
 		this.setState({consulta: true})
 
     }
@@ -152,6 +154,8 @@ class ComponenteInicio extends React.Component {
 		this.setState({video: false})
     	
     }
+
+
 
 
 
@@ -225,7 +229,7 @@ class ComponenteInicio extends React.Component {
 
 			            {/* <Video ></Video> */}
 			            <div className="clear"></div>
-			            <ComprobarCita socket={this.socket} ></ComprobarCita>		   
+			            <ComprobarCita socket={this.socket} handleConsulta={this.nuevaConsulta} ></ComprobarCita>		   
 		        	</div> 
 
 		//crearCitas  
@@ -519,7 +523,7 @@ class ComponenteInicio extends React.Component {
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
 			            <div className="clear"></div>
-			 			<NuevaConsulta></NuevaConsulta>
+			 			<NuevaConsulta sip={this.state.sip}></NuevaConsulta>
 			 		</div>
 
 		//inicio

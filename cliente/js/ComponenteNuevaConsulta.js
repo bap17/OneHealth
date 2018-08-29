@@ -5,11 +5,20 @@ class ComponenteNuevaConsulta extends Component {
     constructor(props) {
         super(props)
         this.state = {  
-          error: false
+          error: false,
+          sip: this.props.sip
         };
         this.errores = this.errores.bind(this)
         this.nuevaConsulta = this.nuevaConsulta.bind(this)
     }
+
+     componentDidMount() {
+        console.log("hola")
+        console.log(this.state.sip)
+        if(this.state.sip != null) {
+           document.getElementById("SIP").value= this.state.sip
+        }
+     }
 
     errores(){
         this.setState({error:true})
@@ -66,7 +75,7 @@ class ComponenteNuevaConsulta extends Component {
             <div className="form-Nconsulta">
                 <div className="form-group">
                     <label>SIP del paciente</label>
-                    <input className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>  
+                    <input id="SIP" className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>  
                 </div>
                 <div className="form-group">
                     <label>Motivo</label>
