@@ -242,6 +242,19 @@ class Api  {
             return respuesta
         })
     }
+
+    NuevaConsulta(id,consulta, token) {
+        return fetch(this.URLAPI + 'medico/'+ id + '/historial/consulta', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+                   body: JSON.stringify(consulta)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
 }
 
 

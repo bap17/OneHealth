@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import WebRTCSimple from './ComponenteWebRTCSimple'
 import Cita from './ComponenteCita'
 import Mensajes from './ComponenteMensajes'
+import NuevaConsulta from './ComponenteNuevaConsulta'
 
 
 class ComponenteInicio extends React.Component {
@@ -24,7 +25,9 @@ class ComponenteInicio extends React.Component {
             llamando: false,
             info: "",
             confirmacionLlamada: false,
-			video:false
+			codigoValido: false,
+			video:false,
+			consulta:false
         }
         this.inicio = this.inicio.bind(this);
         this.crearCitas = this.crearCitas.bind(this);
@@ -32,9 +35,9 @@ class ComponenteInicio extends React.Component {
 		this.historial = this.historial.bind(this);
 		this.historialVideo = this.historialVideo.bind(this);
         this.mensajes = this.mensajes.bind(this);
-        this.videollamada = this.videollamada.bind(this);
         this.vistaVideo = this.vistaVideo.bind(this);
-
+		this.videollamada = this.videollamada.bind(this);
+		this.nuevaConsulta = this.nuevaConsulta.bind(this)
 
     }
 
@@ -59,6 +62,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({videollamada: false})
     	this.setState({llamando: false})
 		this.setState({video: false})
+		this.setState({consulta: false})
     }
 
     listarCitas() {
@@ -70,6 +74,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({llamando: false})
 		this.setState({videollamada: false})
 		this.setState({video: false})
+		this.setState({consulta: false})
    	}
 
    	historial() {
@@ -81,6 +86,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({llamando: false})
     	this.setState({videollamada: false})
 		this.setState({video: false})
+		this.setState({consulta: false})
 	}
 	   
 	historialVideo() {
@@ -91,6 +97,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({mensajes: false})
 		this.setState({videollamada: false})
 		this.setState({video: true})
+		this.setState({consulta: false})
    	}
 
     mensajes() {
@@ -102,6 +109,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({llamando: false})
 		this.setState({videollamada: false})
 		this.setState({video: false})
+		this.setState({consulta: false})
     }
 
     videollamada() {
@@ -110,8 +118,22 @@ class ComponenteInicio extends React.Component {
     	this.setState({listarCitas: false})
     	this.setState({historial: false})
     	this.setState({mensajes: false})
-    	this.setState({videollamada: true})
     	this.setState({llamando: false})
+		this.setState({videollamada: true})
+		this.setState({video: false})
+		this.setState({consulta: false})
+
+	}
+	
+	nuevaConsulta() {
+    	this.setState({inicio: false})
+    	this.setState({crearCitas: false})
+    	this.setState({listarCitas: false})
+    	this.setState({historial: false})
+    	this.setState({mensajes: false})
+		this.setState({videollamada: false})
+		this.setState({video: false})
+		this.setState({consulta: true})
 
     }
 
@@ -165,7 +187,8 @@ class ComponenteInicio extends React.Component {
     	var login = localStorage.getItem('username');
 
     	//Comprobar codigo
-    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && this.state.confirmacionLlamada==false && !this.state.video) {
+
+    	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && this.state.confirmacionLlamada==false && !this.state.video && !this.state.consulta) {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -178,8 +201,24 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -190,7 +229,7 @@ class ComponenteInicio extends React.Component {
 		        	</div> 
 
 		//crearCitas  
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == true && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && !this.state.video){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == true && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && !this.state.video && !this.state.consulta){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -202,8 +241,24 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -217,7 +272,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//listarCitas
-		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == true && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && !this.state.video){
+		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == true && this.state.historial == false && this.state.mensajes == false && this.state.llamando == false && !this.state.video && !this.state.consulta){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -229,8 +284,24 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -243,7 +314,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//historial
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false && this.state.llamando == false && !this.state.video){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == true && this.state.mensajes == false && this.state.llamando == false && !this.state.video && !this.state.consulta){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -255,8 +326,24 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -272,7 +359,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//video
-		}else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.video){
+		}else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.video && !this.state.consulta){
 			return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -284,8 +371,24 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -300,7 +403,7 @@ class ComponenteInicio extends React.Component {
 			   
 			        </div> 
 		//mensajes
-    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == true && this.state.llamando == false && !this.state.video){
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == true && this.state.llamando == false && !this.state.video && !this.state.consulta){
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -312,8 +415,24 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -327,7 +446,7 @@ class ComponenteInicio extends React.Component {
 			        </div> 
 
 		//Llamando
-		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == true) {
+		} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && this.state.llamando == true && !this.state.consulta) {
 
 			return <div>
 	        			<div className="header">
@@ -340,21 +459,71 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
 			            <div className="clear"></div>
-
 			 			<WebRTCSimple user="Response" infoAux={this.state.info} socket={this.socket}></WebRTCSimple>
 			 		</div>
+		//nueva consulta
+    	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && !this.state.video && this.state.consulta){
+    		return <div>
 
-
+	        			<div className="header">
+			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
+			                <div className="options-top">
+			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <button className="mi-cuenta" >Mi cuenta</button>
+			                </div>
+			                
+			            </div>
+			            <div className="top-nav">
+			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
+			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
+			            </div>
+			            <div className="clear"></div>
+			 			<NuevaConsulta></NuevaConsulta>
+			 		</div>
 
 		//inicio
-    	} else {
-    		console.log("Entro aqui")
+    	}else {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
@@ -366,8 +535,24 @@ class ComponenteInicio extends React.Component {
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
-			            	<button className=" nav-opt" onClick={this.crearCitas}>Citas</button>
-			            	<button className=" nav-opt" onClick={this.historial}>Historial</button>
+			            	<div className="menu-cita" >
+								<span className="nav-opt">Citas</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.crearCitas} className="nav-opt">Nueva cita</li>
+									<li onClick={this.listarCitas} className="nav-opt">Ver citas</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
+							<div className="menu-cita" >
+								<span className="nav-opt">Historial</span>
+								<div className="clear"></div>
+								<ul className="lista">
+									<li onClick={this.historial} className="nav-opt">Historial clínico</li>
+									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
+									<div className="clear"></div>
+								</ul>
+							</div>
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
