@@ -6,19 +6,13 @@ class ComponenteNuevaConsulta extends Component {
         super(props)
         this.state = {  
           error: false,
-          sip: this.props.sip,
           video: this.props.video
         };
         this.errores = this.errores.bind(this)
         this.nuevaConsulta = this.nuevaConsulta.bind(this)
     }
 
-    componentDidMount() {
-        console.log(this.state.video)
-        if(this.state.video != undefined) {
-           document.getElementById("SIP").value= this.state.sip
-        }
-    }
+
 
     errores(){
         this.setState({error:true})

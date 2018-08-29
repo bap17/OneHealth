@@ -28,7 +28,6 @@ class ComponenteInicio extends React.Component {
 			codigoValido: false,
 			video:false,
 			consulta:false, 
-			sip: null,
 			srcVideo: null
         }
         this.inicio = this.inicio.bind(this);
@@ -127,7 +126,7 @@ class ComponenteInicio extends React.Component {
 
 	}
 	
-	nuevaConsulta(sip1, video1) {
+	nuevaConsulta( video1) {
     	this.setState({inicio: false})
     	this.setState({crearCitas: false})
     	this.setState({listarCitas: false})
@@ -136,7 +135,6 @@ class ComponenteInicio extends React.Component {
 		this.setState({videollamada: false})
 		this.setState({video: false})
 		this.setState({srcVideo:video1})
-		this.setState({sip:sip1})
 		this.setState({consulta: true})
     }
 
@@ -486,7 +484,7 @@ class ComponenteInicio extends React.Component {
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
 			            <div className="clear"></div>
-			 			<WebRTCSimple user="Response" infoAux={this.state.info} socket={this.socket} handleInicio={this.inicio}></WebRTCSimple>
+			 			<WebRTCSimple user="Response" infoAux={this.state.info} socket={this.socket} handleInicio={this.inicio} handleConsulta={this.nuevaConsulta}></WebRTCSimple>
 			 		</div>
 		//nueva consulta
     	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && !this.state.video && this.state.consulta){

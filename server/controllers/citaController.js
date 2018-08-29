@@ -31,6 +31,7 @@ exports.crearCita=function (pet,resp){
                             var horaC = service.encrypt({text:hora,clave:results[0].clave})
                             //var codigo = service.encrypt({text:iv,clave:results[0].clave})
                             var codigo = randomstring.generate(5)
+                            console.log(codigo)
                             //var codigoC = service.encrypt({text:codigo,clave:results[0].clave})
                             
                             connection.query('INSERT INTO cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,results[0].clave,tipo,codigo], function(err2, result2) {

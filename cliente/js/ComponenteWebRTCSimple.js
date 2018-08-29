@@ -33,7 +33,6 @@ class ComponenteWebRTCSimple extends React.Component {
             TypeUser: this.props.user,
             aux: this.props.infoAux,
             socket: this.props.socket,
-            sip: this.props.sip,
             medico: false,
             otroStream: null
         }
@@ -79,7 +78,7 @@ class ComponenteWebRTCSimple extends React.Component {
 
     	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 	    if (navigator.getUserMedia) {
-	        navigator.getUserMedia({video: true},this.handleVideo, this.videoError);
+	        navigator.getUserMedia({video: true, audio: true},this.handleVideo, this.videoError);
 	        
 	    }
 	    var idUsu = localStorage.getItem('id');
@@ -232,9 +231,9 @@ class ComponenteWebRTCSimple extends React.Component {
 				var yyyy = today.getFullYear();
 				var hour = today.getHours()
 				var id = localStorage.getItem('id')
-				var nombreVideo = this.state.idPac+id+dd+mm+yyyy+hour;
+				var nombreVideo = "OneHealth"+id+dd+mm+yyyy+hour;
     			saveAs(superBuffer, nombreVideo , true)
-    			this.nuevaConsulta(this.state.sip, nombreVideo)
+    			this.nuevaConsulta( nombreVideo)
     		} else if(this.state.TypeUser == "Response") {
     			this.volver()
     		}
@@ -434,7 +433,7 @@ class ComponenteWebRTCSimple extends React.Component {
 	        return <div className="body-videollamada">
 	        			<div className="boxVideo">
 							<video id="gum" className=" video videoStream" src={this.state.videoRemoteSrc} autoPlay="true" />
-							<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" />
+							<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" muted />
 							<video id="recorded" className="hiden" controls ></video>
 							
 						</div>
