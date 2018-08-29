@@ -15,7 +15,7 @@ class ComponenteNuevaConsulta extends Component {
 
     componentDidMount() {
         console.log(this.state.video)
-        if(typeof this.state.sip === "string" ) {
+        if(this.state.video != undefined) {
            document.getElementById("SIP").value= this.state.sip
         }
     }
@@ -53,19 +53,20 @@ class ComponenteNuevaConsulta extends Component {
                     console.log(idConsulta)
                     alert(resp.message)
                     console.log(idConsulta)
-                    
-                    var body = {video: mythis.state.video}
-                    console.log(body)
-                    new API().nuevoVideo(id,idConsulta, body,token).then(datos=>{
-                        if(datos.status!=201){
-                            console.log("Error en introducir el video")
-                        }else{
-                            datos.json().then(resp=>{
-                                console.log(resp)
-                            })
-                           
-                        }         
-                    })
+                    if(this.state.video != undefined) {
+                        var body = {video: mythis.state.video}
+                        console.log(body)
+                        new API().nuevoVideo(id,idConsulta, body,token).then(datos=>{
+                            if(datos.status!=201){
+                                console.log("Error en introducir el video")
+                            }else{
+                                datos.json().then(resp=>{
+                                    console.log(resp)
+                                })
+                               
+                            }         
+                        })
+                    }
                 })
                
             }             

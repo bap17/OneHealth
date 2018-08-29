@@ -347,9 +347,14 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     stopRecording() {
-    	this.mediaRecorder.stop();
- 		console.log('Recorded Blobs: ', this.recordedBlobs);
-  		this.recordedVideo.controls = true;
+    	var tipo = localStorage.getItem('tipo');
+    	if(tipo == "medico") {
+	    	this.mediaRecorder.stop();
+	 		console.log('Recorded Blobs: ', this.recordedBlobs);
+	  		this.recordedVideo.controls = true;
+    	} else {
+    		this.handleStop()
+    	}
 
     }
 
@@ -430,7 +435,7 @@ class ComponenteWebRTCSimple extends React.Component {
 	        			<div className="boxVideo">
 							<video id="gum" className=" video videoStream" src={this.state.videoRemoteSrc} autoPlay="true" />
 							<video id="video1" className="video videoLocal" src={this.state.videoSrc} autoPlay="true" />
-							<video id="recorded" className="" controls ></video>
+							<video id="recorded" className="hiden" controls ></video>
 							
 						</div>
 						<div className="buttons">
