@@ -255,6 +255,20 @@ class Api  {
                    return respuesta
                })
     }
+
+    nuevoVideo(idMed, idCon,video,token) {
+      console.log(video)
+        return fetch(this.URLAPI + 'medico/'+ idMed + '/historial/consulta/'+idCon+'/video', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+                   body: JSON.stringify(video)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
 }
 
 

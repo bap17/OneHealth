@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { faSyncAlt, faPhone, faCircle, faTrashAlt, faInfoCircle, faPhoneSlash, faAngleDoubleRight  } from '@fortawesome/free-solid-svg-icons'
+import { faSyncAlt, faPhone, faCircle, faTrashAlt, faInfoCircle, faPhoneSlash, faAngleDoubleRight, faVideo  } from '@fortawesome/free-solid-svg-icons'
 
 
 library.add(faSyncAlt)
@@ -13,6 +13,7 @@ library.add(faPhoneSlash)
 library.add(faAngleDoubleRight)
 library.add(faTrashAlt)
 library.add(faInfoCircle)
+library.add(faVideo)
 
 import Inicio from './ComponenteInicio'
 import Index from './ComponenteIndex'

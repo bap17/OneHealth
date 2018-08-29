@@ -130,8 +130,8 @@ class ComponenteComprobarCita extends React.Component {
 		})
 	}
 
-	consulta(sip) {
-		this.props.handleConsulta(sip);
+	consulta(sip, video1) {
+		this.props.handleConsulta(sip, video1);
 	}
 
 

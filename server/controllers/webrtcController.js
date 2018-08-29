@@ -359,6 +359,36 @@ exports.cambiarEstado = function(req, res) {
 
 
 
+
+exports.nuevoVideo=function(pet,res){
+    var idUsu = pet.params.idUsu
+    var idCon = pet.params.idCon
+    var video = pet.body.video
+    console.log(idUsu)
+    console.log(idCon)
+    console.log(pet.body)
+    console.log(video)
+
+    if( idUsu != null && idUsu != "" && video != null && video != undefined &&  idCon != null && idCon != "") {
+        connection.query('INSERT INTO video (consulta, video) VALUES(?,?)',[idCon, video],function (err2, results1) {
+            if(err2) {
+                console.log(err2)
+                res.status(500)
+                res.send({error: "Hay un error al insertar el video"})
+                console.log("Hay un error al insertar el video")
+            } else {
+                res.status(201)
+                res.send("Se ha introducido el video correctamente")
+            }
+        })
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
+}
+
+
+
 function getDate() {
     var d = new Date(),
         month = '' + (d.getMonth() + 1),

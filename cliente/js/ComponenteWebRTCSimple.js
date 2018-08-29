@@ -6,6 +6,7 @@ import css from '../css/mystyle.css';
 import io from 'socket.io-client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NuevaConsulta from './ComponenteNuevaConsulta'
+import { saveAs } from 'file-saver/FileSaver';
 
 var peer = null
 var initiator = null
@@ -33,7 +34,8 @@ class ComponenteWebRTCSimple extends React.Component {
             aux: this.props.infoAux,
             socket: this.props.socket,
             sip: this.props.sip,
-            medico: false
+            medico: false,
+            otroStream: null
         }
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -55,6 +57,8 @@ class ComponenteWebRTCSimple extends React.Component {
         this.play = this.play.bind(this);
 
         this.nuevaConsulta = this.nuevaConsulta.bind(this);
+        this.volver = this.volver.bind(this);
+
 
 
         
@@ -94,9 +98,6 @@ class ComponenteWebRTCSimple extends React.Component {
 		this.playButton = document.querySelector('button#play');
 		this.downloadButton = document.querySelector('button#download');
 
-
-
-
     }
 
 	sendMessage(msg) {
@@ -133,11 +134,20 @@ class ComponenteWebRTCSimple extends React.Component {
 
 		$('#call').addClass('hiden')
 		$('#colgar').removeClass('hiden')
+		var tipo = localStorage.getItem('tipo');
+		if(tipo == "medico") {
+			$('#cam').removeClass('hiden')
+		}
+		
     }
 
     connect() {
     	$('#call').addClass('hiden')
 		$('#colgar').removeClass('hiden')
+		var tipo = localStorage.getItem('tipo');
+		if(tipo == "medico") {
+			$('#cam').removeClass('hiden')
+		}
     	var idUsu = localStorage.getItem('id');
     	var username = localStorage.getItem('username');
     	var mythis = this
@@ -192,8 +202,8 @@ class ComponenteWebRTCSimple extends React.Component {
 		})
 		peer.on('stream', (stream) => {
 			console.log("Send stream")
+			this.setState({otroStream: stream})
 			this.handleVideoRemote(stream)
-			this.startRecording()
 		})
 		peer.on('error', (error) => {
 			console.error('peer error', error)
@@ -214,14 +224,21 @@ class ComponenteWebRTCSimple extends React.Component {
 	    	this.setState({ stream: null });
     		this.setState({ videoSrc: null});
     		var tipo = localStorage.getItem('tipo');
+    		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/webm'});
     		if(tipo == "medico") {
-    			this.nuevaConsulta(this.state.sip)
+    			var today = new Date();
+				var dd = today.getDate();
+				var mm = today.getMonth()+1;
+				var yyyy = today.getFullYear();
+				var hour = today.getHours()
+				var id = localStorage.getItem('id')
+				var nombreVideo = this.state.idPac+id+dd+mm+yyyy+hour;
+    			saveAs(superBuffer, nombreVideo , true)
+    			this.nuevaConsulta(this.state.sip, nombreVideo)
+    		} else if(this.state.TypeUser == "Response") {
+    			this.volver()
     		}
-
 		})
-
-		
-		
     }
 
     send() {
@@ -237,7 +254,7 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     handleVideoRemote(str) {	
-
+		
     	this.setState({ videoRemoteSrc: window.URL.createObjectURL(str) });
     }
 
@@ -281,46 +298,51 @@ class ComponenteWebRTCSimple extends React.Component {
 
     /**GRABACION*/
 
-    /*record() {
+    record() {
     	
-		if (this.recordButton.textContent === 'Start Recording') {
+		if (this.recordButton.textContent == 'Start Recording') {
 			this.startRecording();
 		} else {
 			this.stopRecording();
-			this.recordButton.textContent = 'Start Recording';
+			this.recordButton.textContent == 'Start Recording';
 		}
-    }*/
+    }
 
     startRecording() {
 
-		this.recordedBlobs = [];
-		let options = {mimeType: 'video/webm,codecs=vp9'};
-		if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-			console.log(options.mimeType + ' is not Supported');
-			options = {mimeType: 'video/h264'};
+    	$('#cam').attr('disabled', true)
+    	$('#cam').addClass('disabled')
+    	if(this.state.otroStream != null) {
+    		this.recordedBlobs = [];
+			let options = {mimeType: 'video/webm,codecs=vp9'};
 			if (!MediaRecorder.isTypeSupported(options.mimeType)) {
 				console.log(options.mimeType + ' is not Supported');
-				options = {mimeType: 'video/mp4'};
+				options = {mimeType: 'video/h264'};
 				if (!MediaRecorder.isTypeSupported(options.mimeType)) {
 					console.log(options.mimeType + ' is not Supported');
-					options = {mimeType: 'video/webm'};
+					options = {mimeType: 'video/mp4'};
+					if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+						console.log(options.mimeType + ' is not Supported');
+						options = {mimeType: 'video/webm'};
+					}
 				}
 			}
-		}
-		try {
-			console.log(options)
-			this.mediaRecorder = new MediaRecorder(this.state.stream, options);
-		} catch (e) {
-			console.error(e);
-			alert(`Exception while creating MediaRecorder: ${e}. mimeType: ${options.mimeType}`);
-			return;
-		}
-		console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
-		this.recordButton.textContent = 'Stop Recording';
-		this.mediaRecorder.onstop = this.handleStop;
-		this.mediaRecorder.ondataavailable = this.handleDataAvailable;
-		this.mediaRecorder.start(10); // collect 10ms of data
-		console.log('MediaRecorder started', this.mediaRecorder);
+			try {
+				console.log(options)
+				this.mediaRecorder = new MediaRecorder(this.state.otroStream, options);
+			} catch (e) {
+				console.error(e);
+				alert(`Exception while creating MediaRecorder: ${e}. mimeType: ${options.mimeType}`);
+				return;
+			}
+			console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
+			this.recordButton.textContent = 'Stop Recording';
+			this.mediaRecorder.onstop = this.handleStop;
+			this.mediaRecorder.ondataavailable = this.handleDataAvailable;
+			this.mediaRecorder.start(10); // collect 10ms of data
+			console.log('MediaRecorder started', this.mediaRecorder);
+    	}
+
 
     }
 
@@ -333,7 +355,7 @@ class ComponenteWebRTCSimple extends React.Component {
 
     download() {
     	console.log("entro")
-		const blob = new Blob(this.recordedBlobs, {type: 'video/mp4'});
+		const blob = new Blob(this.recordedBlobs, {type: 'video/webm'});
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.style.display = 'none';
@@ -370,7 +392,7 @@ class ComponenteWebRTCSimple extends React.Component {
 
 	play() {
 		console.log("entro")
-		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/mp4'});
+		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/webm'});
 		this.recordedVideo.src = window.URL.createObjectURL(superBuffer);
 		// workaround for non-seekable video taken from
 		// https://bugs.chromium.org/p/chromium/issues/detail?id=642012#c23
@@ -394,8 +416,12 @@ class ComponenteWebRTCSimple extends React.Component {
     /**GRABACION**/
 
 
-    nuevaConsulta(sip) {
-    	this.props.handleConsulta(sip)
+    nuevaConsulta(sip, video) {
+    	this.props.handleConsulta(sip, video)
+    }
+
+    volver() {
+    	this.props.handleInicio()
     }
 
     render() {
@@ -409,7 +435,8 @@ class ComponenteWebRTCSimple extends React.Component {
 						</div>
 						<div className="buttons">
 							<button id="call" onClick={this.initiater} className="button button-call circle-button"><FontAwesomeIcon className="iconCall" icon="phone" /></button> 
-							<button id="colgar" onClick={this.stopRecording} className="button circle-button hiden hangup"><FontAwesomeIcon className="iconCall" icon="phone-slash" /></button><br></br>
+							<button id="colgar" onClick={this.stopRecording} className="button circle-button hiden hangup"><FontAwesomeIcon className="iconCall" icon="phone-slash" /></button> &nbsp;
+							<button id="cam" onClick={this.startRecording} className="button circle-button hiden cam"><FontAwesomeIcon className="iconCall" icon="video" /></button><br></br>
 						</div>
 
 	        			<div className="boxMyID hiden">
@@ -431,7 +458,8 @@ class ComponenteWebRTCSimple extends React.Component {
 								<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" placeholder="Introduce el mensaje ..."></input> 
 								<button id="send" onClick={this.send} className="button send"><FontAwesomeIcon className="iconCall" icon="angle-double-right" /></button>
 							</div>
-							<button id="record" className="button hiden">Start Recording</button> &nbsp;
+							<button id="record" className="button" onClick={this.startRecording} >Start Recording</button> &nbsp;
+							<button id="record" className="button" onClick={this.stopRecording} >Stop Recording</button> &nbsp;
 							<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
 							<button id="download" onClick={this.download} className="button">Download</button><br></br>
 							

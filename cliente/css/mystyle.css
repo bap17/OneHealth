@@ -515,6 +515,7 @@ ul li{
 	width: 95%;
 	margin: 0 auto;
 }
+
 .chat .input {
 	border: 0px;
 	border-bottom: 1px solid #7A7A7A;
@@ -541,6 +542,24 @@ ul li{
 	color: #9d9d9d;
 }
 
+.cam {
+	background-color: #274388;
+	border-color: #274388;
+}
+.cam:hover, .cam:focus {
+	outline: 0px;
+	color:#274388;
+	background-color: white;
+}
+.disabled {
+	background-color:#cccccc;
+	border-color: #cccccc;
+}
+.disabled:hover, .disabled:focus {
+	outline: 0px;
+	color:#cccccc;
+	background-color: white;
+}
 
 
 /********** END VIDEOLLAMADA ************/

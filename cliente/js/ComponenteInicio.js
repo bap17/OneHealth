@@ -28,7 +28,8 @@ class ComponenteInicio extends React.Component {
 			codigoValido: false,
 			video:false,
 			consulta:false, 
-			sip: null
+			sip: null,
+			srcVideo: null
         }
         this.inicio = this.inicio.bind(this);
         this.crearCitas = this.crearCitas.bind(this);
@@ -126,7 +127,7 @@ class ComponenteInicio extends React.Component {
 
 	}
 	
-	nuevaConsulta(sip1) {
+	nuevaConsulta(sip1, video1) {
     	this.setState({inicio: false})
     	this.setState({crearCitas: false})
     	this.setState({listarCitas: false})
@@ -134,9 +135,9 @@ class ComponenteInicio extends React.Component {
     	this.setState({mensajes: false})
 		this.setState({videollamada: false})
 		this.setState({video: false})
+		this.setState({srcVideo:video1})
 		this.setState({sip:sip1})
 		this.setState({consulta: true})
-
     }
 
     vistaVideo(message) {
@@ -485,7 +486,7 @@ class ComponenteInicio extends React.Component {
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
 			            <div className="clear"></div>
-			 			<WebRTCSimple user="Response" infoAux={this.state.info} socket={this.socket}></WebRTCSimple>
+			 			<WebRTCSimple user="Response" infoAux={this.state.info} socket={this.socket} handleInicio={this.inicio}></WebRTCSimple>
 			 		</div>
 		//nueva consulta
     	} else if(this.state.videollamada == false && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && !this.state.video && this.state.consulta){
@@ -523,7 +524,7 @@ class ComponenteInicio extends React.Component {
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
 			            <div className="clear"></div>
-			 			<NuevaConsulta sip={this.state.sip}></NuevaConsulta>
+			 			<NuevaConsulta sip={this.state.sip} video={this.state.srcVideo}></NuevaConsulta>
 			 		</div>
 
 		//inicio
