@@ -9,10 +9,15 @@ class ComponenteNuevaConsulta extends Component {
         };
         this.errores = this.errores.bind(this)
         this.nuevaConsulta = this.nuevaConsulta.bind(this)
+        this.volver = this.volver.bind(this)
     }
 
     errores(){
         this.setState({error:true})
+    }
+
+    volver(){
+        this.props.handleVolver()
     }
 
     nuevaConsulta(){
@@ -38,6 +43,7 @@ class ComponenteNuevaConsulta extends Component {
                 datos.json().then(resp=>{
                     //this.setState({medicos:resp.medicos})
                     alert(resp.message)
+                    this.volver()
                     console.log(resp.message)
                 })
                
@@ -84,6 +90,7 @@ class ComponenteNuevaConsulta extends Component {
                 </div>
             </div>
             <button type="submit" className="button" onClick={this.nuevaConsulta}>Guardar</button>
+            <a onClick={this.volver}>Cancelar</a>
         </div>
     }
 }

@@ -113,6 +113,19 @@ class Api  {
                    return respuesta
                })
     }
+
+    VerHistorialPaciente(id,token) {
+        return fetch(this.URLAPI + 'usuario/'+ id + '/historial', {
+                   method: 'GET',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
+
     litadoPacientes(idUsu, token) {
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/paciente', {
                 method: 'GET',

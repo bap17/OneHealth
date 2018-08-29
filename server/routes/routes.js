@@ -49,6 +49,8 @@ router.get('/usuario/:id/mensaje/recibidos', midd.isAuth, mensaje.verMensajesRec
 router.get('/usuario/:id/mensaje/enviados', midd.isAuth, mensaje.verMensajesEnviados)
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
 router.get('/usuario/:id/medicos', midd.isAuth, medico.listarMedicos)
+router.get('/usuario/:id/historial', midd.isAuth, historial.verHistorialPaciente)
+
 
 
 /**

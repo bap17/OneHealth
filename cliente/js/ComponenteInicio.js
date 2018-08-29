@@ -45,6 +45,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({mensajes: false})
 		this.setState({videollamada: false})
 		this.setState({video: false})
+		this.setState({consulta: false})
     }
 
     crearCitas() {
@@ -131,6 +132,7 @@ class ComponenteInicio extends React.Component {
     render() {
     	console.log(this.state.videollamada)
     	var login = localStorage.getItem('username');
+		var tipo = localStorage.getItem('tipo');
 
     	//Comprobar codigo
     	if(this.state.videollamada == true && this.state.inicio == false && this.state.crearCitas == false && this.state.listarCitas == false && this.state.historial == false && this.state.mensajes == false && !this.state.video && !this.state.consulta) {
@@ -155,7 +157,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-			            	<div className="menu-cita" >
+			            	{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -163,7 +165,7 @@ class ComponenteInicio extends React.Component {
 									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -195,7 +197,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-			            	<div className="menu-cita" >
+			            	{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -203,7 +205,7 @@ class ComponenteInicio extends React.Component {
 									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -238,7 +240,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-			            	<div className="menu-cita" >
+			            	{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -246,7 +248,7 @@ class ComponenteInicio extends React.Component {
 									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -281,7 +283,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-			            	<div className="menu-cita" >
+			            	{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -289,7 +291,7 @@ class ComponenteInicio extends React.Component {
 									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -326,7 +328,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-			            	<div className="menu-cita" >
+			            	{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -334,7 +336,7 @@ class ComponenteInicio extends React.Component {
 									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -370,7 +372,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-			            	<div className="menu-cita" >
+			            	{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -378,7 +380,7 @@ class ComponenteInicio extends React.Component {
 									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -412,7 +414,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-			            	<div className="menu-cita" >
+			            	{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -420,7 +422,7 @@ class ComponenteInicio extends React.Component {
 									<li className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>
@@ -429,7 +431,7 @@ class ComponenteInicio extends React.Component {
 			            {/*<div className="banner">
 		            		<img className="img-banner" src="./../img/medico2.png"></img>
 						</div>*/}
-						{<NuevaConsulta></NuevaConsulta>}
+						{<NuevaConsulta handleVolver={this.inicio}></NuevaConsulta>}
 
 			        </div> 
 		//inicio
@@ -454,7 +456,7 @@ class ComponenteInicio extends React.Component {
 									<div className="clear"></div>
 								</ul>
 							</div>
-							<div className="menu-cita" >
+							{tipo=="medico" ? <div className="menu-cita" >
 								<span className="nav-opt">Historial</span>
 								<div className="clear"></div>
 								<ul className="lista">
@@ -462,7 +464,7 @@ class ComponenteInicio extends React.Component {
 									<li onClick={this.nuevaConsulta} className="nav-opt">Nueva consulta</li>
 									<div className="clear"></div>
 								</ul>
-							</div>
+							</div>: <button className=" nav-opt" onClick={this.historial}>Historial</button>}
 			            	<button className=" nav-opt" onClick={this.mensajes}>Mensajes</button>
 			            	<button className=" nav-opt" onClick={this.videollamada}>Videollamada</button>		            
 			            </div>

@@ -9,7 +9,7 @@ exports.verHistorial=function(pet,resp){
     if(idM==undefined || sip==undefined){
         resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM usuario WHERE id = ?', [idM],function (error, results) {
+        connection.query('SELECT * FROM medico WHERE id = ?', [idM],function (error, results) {
             if(error) {
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
@@ -96,6 +96,53 @@ exports.verHistorial=function(pet,resp){
                                 })
                             } else {
                                 resp.status(404).send({message: "No se han encontrado pacientes"})
+                            }
+                        }
+                    })
+                } else {
+                    resp.status(404).send({message: "No se ha encontrado al usuario"})
+                }
+            }
+        })
+    }
+}
+
+exports.verHistorialPaciente=function(pet,resp){
+    var id = pet.params.id
+
+    if(id==undefined){
+        resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
+    }else{
+        connection.query('SELECT * FROM paciente p INNER JOIN usuario u ON p.id=u.id WHERE p.id=?', [id],function (error, results) {
+            if(error) {
+                resp.status(500).send({message: "Error en el servidor"})
+            } else {
+                if(results.length > 0) {
+                    connection.query('SELECT * FROM historial_clinico h INNER JOIN paciente p ON h.id = p.id WHERE h.id=?',[id],function (err2, results3) {
+                        if(err2) {
+                            resp.status(500).send({message: err2})
+                        } else {
+                            if(results3.length > 0) {
+                                var historial={
+                                    "id": results3[0].id,
+                                    "sip": results3[0].sip,
+                                    "nombre": service.decrypt({text:results3[0].nombre,clave:results[0].clave}),
+                                    "nif": service.decrypt({text:results3[0].nif,clave:results[0].clave}),
+                                    "edad": service.decrypt({text:results3[0].edad,clave:results[0].clave}),
+                                    "sexo": service.decrypt({text:results3[0].sexo,clave:results[0].clave}),
+                                    "nacionalidad":service.decrypt({text:results3[0].nacionalidad,clave:results[0].clave}),
+                                    "estado civil": service.decrypt({text:results3[0].estado_civil,clave:results[0].clave}),
+                                    "ocupacion": service.decrypt({text:results3[0].ocupacion,clave:results[0].clave}),
+                                    "lugar de origen": service.decrypt({text:results3[0].lugar_origen,clave:results[0].clave}),
+                                    "domicilio": service.decrypt({text:results3[0].domicilio,clave:results[0].clave}),
+                                    "alergias": service.decrypt({text:results3[0].alergias,clave:results[0].clave}),
+                                    "peso": service.decrypt({text:results3[0].peso,clave:results[0].clave}),
+                                    "altura": service.decrypt({text:results3[0].altura,clave:results[0].clave}),
+                                    "antecedentes": service.decrypt({text:results3[0].antecedentes,clave:results[0].clave})
+                                }
+                                resp.status(200).send({historial})
+                            } else {
+                                resp.status(404).send({message: "No se ha encontrado el historial del paciente"})
                             }
                         }
                     })

@@ -14,7 +14,9 @@ class ComponenteHistorial extends Component {
           busqueda: false,
           sinConsultas: false,
           consulta: undefined,
-          detalle: false
+          detalle: false,
+          historialPac: this.verHistorialPac(),
+          paciente: false
         };
         this.errores = this.errores.bind(this)
         this.verHistorial = this.verHistorial.bind(this)
@@ -22,6 +24,11 @@ class ComponenteHistorial extends Component {
         this.detalleConsulta = this.detalleConsulta.bind(this)
         this.ocultarDetalles= this.ocultarDetalles.bind(this)
         this.verVideo= this.verVideo.bind(this)
+        this.verHistorialPac = this.verHistorialPac.bind(this)
+    }
+
+    setPaciente(){
+        this.setState({paciente:true})
     }
 
     errores(){
@@ -46,7 +53,6 @@ class ComponenteHistorial extends Component {
     }
 
     verHistorial(){
-        var aux =this.props
         var auxStatus
         var auxMensaje
         var id = localStorage.getItem('id')
@@ -57,7 +63,7 @@ class ComponenteHistorial extends Component {
             if(datos.status!=200){
                 //console.log(datos)
                 auxStatus=datos.status.toString()
-                auxMensaje=datos.message.toString()
+                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
@@ -87,9 +93,33 @@ class ComponenteHistorial extends Component {
           })
     }
 
+    verHistorialPac(){
+        var auxStatus
+        var auxMensaje
+        var id = localStorage.getItem('id')
+        var token = localStorage.getItem('token')
+
+        return new API().VerHistorialPaciente(id,token).then(datos=>{
+            if(datos.status!=200){
+                //console.log(datos)
+                auxStatus=datos.status.toString()
+                //auxMensaje=datos.message.toString()
+                //this.errores()
+            }else{
+                datos.json().then(resp=>{
+                    this.setState({historialPac:resp.historial})
+                })
+               
+            }           
+        })
+        
+    }
+
+    
+
     render(){
-        if(this.state.busqueda && !this.state.detalle){
-            var tipo = localStorage.getItem('tipo')
+        var tipo = localStorage.getItem('tipo')
+        if(this.state.busqueda && !this.state.detalle && tipo=="medico"){
             return <div className="historial">
                 <label className="titulo-comp-cita">Historial clínico y consultas </label>
                 <div className="">
@@ -125,7 +155,7 @@ class ComponenteHistorial extends Component {
                 </div> : <ListarConsul handleDetalle={this.detalleConsulta} consultas={this.state.consultas}/>} 
                         </div>
             </div>
-        }else if(this.state.busqueda && this.state.detalle){
+        }else if(this.state.busqueda && this.state.detalle && tipo=="medico"){
             return <div className="consulta">
                 <label className="titulo-comp-cita">Consulta </label>
                 <br></br>
@@ -147,12 +177,37 @@ class ComponenteHistorial extends Component {
                 </div>
             </div>
 
-        }else{
+        }else if(!this.state.busqueda && !this.state.detalle && tipo=="medico"){
             return <div className="historial">
                 <label className="titulo-comp-cita">Historial clínico y consultas </label>
                 <div className="">
                     <input type="text" className="input input-pequeño input-buscarsip" placeholder="SIP..." ref={(campo)=>{this.campoSip=campo}}/>
                     <button className="button" type="button" onClick={this.verHistorial}>Buscar</button>
+                </div>
+            </div>
+        }else if(tipo=="paciente" && !this.state.paciente){
+            return <div className="historial">
+                <label className="titulo-comp-cita">Historial clínico </label>
+                <br></br>
+                <div className="col2">
+                    <div className= "card">
+                        <div className="card-header">Historial clínico</div>
+                        <div className="card-body">
+                            <p>Nombre: {this.state.historialPac.nombre}</p>
+                            <p>NIF: {this.state.historialPac.nif}</p>
+                            <p>Edad: {this.state.historialPac.edad}</p>
+                            <p>Sexo: {this.state.historialPac.sexo}</p>
+                            <p>Nacionalidad: {this.state.historialPac.nacionalidad}</p>
+                            <p>Estado civil: {this.state.historialPac['estado civil']}</p>
+                            <p>Ocupación: {this.state.historialPac.ocupacion}</p>
+                            <p>Lugar de origen: {this.state.historialPac['lugar de origen']}</p>
+                            <p>Domicilio: {this.state.historialPac.domicilio}</p>
+                            <p>Alergias: {this.state.historialPac.alergias}</p>
+                            <p>Peso: {this.state.historialPac.peso} kg.</p>
+                            <p>Altura: {this.state.historialPac.altura}</p>
+                            <p>SIP: {this.state.historialPac.sip}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
