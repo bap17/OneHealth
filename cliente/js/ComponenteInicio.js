@@ -8,6 +8,7 @@ import WebRTCSimple from './ComponenteWebRTCSimple'
 import Cita from './ComponenteCita'
 import Mensajes from './ComponenteMensajes'
 import NuevaConsulta from './ComponenteNuevaConsulta'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 class ComponenteInicio extends React.Component {
@@ -201,7 +202,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -242,7 +244,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -285,7 +288,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -327,7 +331,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -372,7 +377,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -416,7 +422,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -460,7 +467,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -498,7 +506,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                
@@ -536,7 +545,8 @@ class ComponenteInicio extends React.Component {
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
 			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
+			                    <p className="welcome">¡Hola @{login}!</p> 
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
 			                    <button className="mi-cuenta" >Mi cuenta</button>
 			                </div>
 			                

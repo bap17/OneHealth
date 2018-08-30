@@ -275,6 +275,11 @@ ul li{
 }
 
 
+.header .icono svg {
+	font-size: 27px;
+	color: #eb4f4f;
+}
+
 /* end header */
 
 
@@ -605,7 +610,32 @@ ul li{
 }
 
 video {
-	width: 50%;
+	width: 80%;
+	padding: 30px;
+}
+
+.body-video .mini-titulo {
+	font-size: 25px;
+	color: #9d9d9d;
+}
+
+.body-video .nombre {
+	padding: 30px;
+}
+
+.body-video .conversacion {
+	margin:30px;
+	border: 1px solid #9d9d9d;
+	max-height: 800px;
+
+}
+
+.body-video .error {
+	font-size: 20px;
+	padding: 30px;
+	text-align: center;
+	width: 100%;
+	color: black;
 }
 /******** END VER VIDEO *******/
 
@@ -738,7 +768,7 @@ video {
 }
 
 .consulta .form-consulta a{
-	margin-left: 57%;
+	float: right;
 }
 
 .consulta .input{

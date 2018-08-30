@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import API from './servicios/api'
 import ListarConsul from './ComponenteListarConsultas'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class ComponenteHistorial extends Component {
     constructor(props) {
@@ -133,7 +134,7 @@ class ComponenteHistorial extends Component {
                 <div className="form-consulta">
                     <label>Paciente: </label>&nbsp;
                     <input disabled className="input input-pequeño" value={this.state.historial.nombre}></input>
-                    <a onClick={this.verVideo}>Ver video consulta</a>
+                    <a onClick={this.verVideo}><FontAwesomeIcon icon="paperclip" /> &nbsp; Ver video consulta</a>
                 </div>
                 <div className="datos-consulta">
                     <label>Motivo:</label>
