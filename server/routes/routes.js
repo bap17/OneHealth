@@ -62,6 +62,7 @@ router.get('/usuario/:id/paciente',midd.isAuth, webrtc.listarPaciente)
 
 router.put('/usuario/:id/disponibilidad',midd.isAuth, webrtc.cambiarEstado)
 router.post('/medico/:idUsu/historial/consulta/:idCon/video',midd.isAuth,webrtc.nuevoVideo)
+router.get('/medico/:idUsu/historial/consulta/:idCon',midd.isAuth,webrtc.verVideo)
 
 
 

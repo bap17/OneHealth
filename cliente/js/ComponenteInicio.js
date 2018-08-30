@@ -29,7 +29,8 @@ class ComponenteInicio extends React.Component {
 			video:false,
 			consulta:false, 
 			srcVideo: null,
-			mensajesVideo: null
+			mensajesVideo: null,
+			idVideo: 0
         }
         this.inicio = this.inicio.bind(this);
         this.crearCitas = this.crearCitas.bind(this);
@@ -91,13 +92,14 @@ class ComponenteInicio extends React.Component {
 		this.setState({consulta: false})
 	}
 	   
-	historialVideo() {
+	historialVideo(idVideo1) {
     	this.setState({inicio: false})
     	this.setState({crearCitas: false})
     	this.setState({listarCitas: false})
     	this.setState({historial: false})
     	this.setState({mensajes: false})
 		this.setState({videollamada: false})
+		this.setState({idVideo: idVideo1})
 		this.setState({video: true})
 		this.setState({consulta: false})
    	}
@@ -403,7 +405,7 @@ class ComponenteInicio extends React.Component {
 			            {/*<div className="banner">
 		            		<img className="img-banner" src="./../img/medicos.png"></img>
 		            	</div>*/}
-						{<Video></Video>}
+						{<Video idVideo={this.state.idVideo}></Video>}
 						
 
 			   

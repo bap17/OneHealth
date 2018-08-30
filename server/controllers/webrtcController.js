@@ -371,6 +371,7 @@ exports.nuevoVideo=function(pet,res){
     console.log(mensajes)
 
     if( idUsu != null && idUsu != "" && video != null && video != undefined &&  idCon != null && idCon != "" && mensajes != "" && mensajes != null) {
+
         connection.query('INSERT INTO video (consulta, video, mensajes) VALUES(?,?, ?)',[idCon, video, mensajes],function (err2, results1) {
             if(err2) {
                 console.log(err2)
@@ -380,6 +381,40 @@ exports.nuevoVideo=function(pet,res){
             } else {
                 res.status(201)
                 res.send("Se ha introducido el video correctamente")
+            }
+        })
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
+}
+
+
+
+exports.verVideo=function(pet,res){
+    var idUsu = pet.params.idUsu
+    var idCon = pet.params.idCon
+
+
+    if( idUsu != null && idUsu != "" &&   idCon != null && idCon != "") {
+        connection.query('SELECT * FROM video WHERE consulta = ?',[idCon],function (err2, results1) {
+            if(err2) {
+                console.log(err2)
+                res.status(500)
+                res.send({error: "Hay un error al insertar el video"})
+                console.log("Hay un error al insertar el video")
+            } else {
+                if(results1.length > 0) {
+                    var resul = {
+                        "nombreVideo": results1[0].video,
+                        "conversacion": results1[0].mensajes
+                    }
+                    res.status(200)
+                    res.send(resul)
+                } else {
+                    res.status(404)
+                    res.send("No se encuentra un video para la consulta")
+                }     
             }
         })
     } else {

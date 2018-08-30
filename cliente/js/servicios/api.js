@@ -269,6 +269,18 @@ class Api  {
                    return respuesta
                })
     }
+
+    verVideo(idMed, idCon,token) {
+        return fetch(this.URLAPI + 'medico/'+ idMed + '/historial/consulta/'+idCon, {
+                   method: 'GET',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   }
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
 }
 
 

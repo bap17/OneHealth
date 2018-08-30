@@ -42,7 +42,7 @@ class ComponenteHistorial extends Component {
     }
 
     verVideo(){
-        this.props.verVideo()
+        this.props.verVideo(this.state.consulta.id)
     }
 
     verHistorial(){
