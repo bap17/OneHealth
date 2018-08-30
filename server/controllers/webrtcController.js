@@ -185,8 +185,8 @@ exports.verCita = function(req, res) {
                                         console.log("Hay un error al buscar el paciente")
                                     } else {
                                         if(results2.length > 0) {
-                                            var fecha = service.decrypt({text:results[0].fecha,clave:results2[0].clave})
-                                            var hora = service.decrypt({text:results[0].hora,clave:results2[0].clave})
+                                            var fecha = service.decrypt({text:results[0].fecha,clave:results[0].origen})
+                                            var hora = service.decrypt({text:results[0].hora,clave:results[0].origen})
 
                                             var resu = {
                                                 nombrePac: results1[0].nombre,
@@ -263,8 +263,9 @@ exports.comprobarCodigo = function(req, res) {
                         } else {
                             if(results1.length > 0) {
 
-                                var fecha = service.decrypt({text:results[0].fecha,clave:results1[0].clave})
-                                var hora = service.decrypt({text:results[0].hora,clave:results1[0].clave})
+                                var fecha = service.decrypt({text:results[0].fecha,clave:results[0].origen})
+                                var hora = service.decrypt({text:results[0].hora,clave:results[0].origen})
+                                console.log(hora)
                                 //var cod = service.decrypt({text:results[0].codigo,clave:results1[0].clave})
 
                                // console.log(cod)
@@ -272,6 +273,7 @@ exports.comprobarCodigo = function(req, res) {
                                if(codigo == results[0].codigo) {
                                     var currentHour = getTime()
                                     var currentDate = getDate()
+                                    
                                     var d = new Date();
 
                                     if(fecha == currentDate) {
@@ -495,7 +497,7 @@ function comprobarHora(horaCita, date) {
     var hora = parseInt(parte[0])
     console.log(horaCita)
     console.log("hora: "+hora)
-    var horaCita = new Date(date.getFullYear(), date.getMonth(),date.getDate(),hora, parseInt(parte[1]), parseInt(parte[2]),00);
+    var horaCita = new Date(date.getFullYear(), date.getMonth(),date.getDate(),hora, parseInt(parte[1]), 00,00);
     //var horaSumada = addMinutes(date, 30)
     //var horaRestada = decreaseMinutes(date, 30)
 
