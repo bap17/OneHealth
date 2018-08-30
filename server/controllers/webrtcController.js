@@ -372,17 +372,38 @@ exports.nuevoVideo=function(pet,res){
 
     if( idUsu != null && idUsu != "" && video != null && video != undefined &&  idCon != null && idCon != "" && mensajes != "" && mensajes != null) {
 
-        connection.query('INSERT INTO video (consulta, video, mensajes) VALUES(?,?, ?)',[idCon, video, mensajes],function (err2, results1) {
+        connection.query('SELECT * FROM consulta WHERE id = ?',[idCon],function (err2, results1) {
             if(err2) {
                 console.log(err2)
                 res.status(500)
                 res.send({error: "Hay un error al insertar el video"})
                 console.log("Hay un error al insertar el video")
             } else {
-                res.status(201)
-                res.send("Se ha introducido el video correctamente")
+                if(results1.length > 0) {
+                    var v = service.encrypt({text:video,clave:results1[0].clave_origen})
+                    var m = service.encrypt({text:mensajes,clave:results1[0].clave_origen})
+
+                    connection.query('INSERT INTO video (consulta, video, mensajes) VALUES(?,?,?)',[idCon, v, m],function (err2, results2) {
+                        if(err2) {
+                            console.log(err2)
+                            res.status(500)
+                            res.send({error: "Hay un error al insertar el video"})
+                            console.log("Hay un error al insertar el video")
+                        } else {
+                            res.status(201)
+                            res.send("Se ha introducido el video correctamente")
+                        }
+                    })
+                } else {
+
+                    res.status(404)
+                    res.send({respuesta: "No hay ninguna consulta con ese id"})
+
+                }
+               
             }
         })
+
     } else {
         res.status(400)
         res.send({error: "Alguno de los campos es invalido"})
@@ -397,7 +418,7 @@ exports.verVideo=function(pet,res){
 
 
     if( idUsu != null && idUsu != "" &&   idCon != null && idCon != "") {
-        connection.query('SELECT * FROM video WHERE consulta = ?',[idCon],function (err2, results1) {
+        connection.query('SELECT * FROM video as v inner join consulta as c on  c.id = v.consulta WHERE v.consulta = ?',[idCon],function (err2, results1) {
             if(err2) {
                 console.log(err2)
                 res.status(500)
@@ -406,8 +427,8 @@ exports.verVideo=function(pet,res){
             } else {
                 if(results1.length > 0) {
                     var resul = {
-                        "nombreVideo": results1[0].video,
-                        "conversacion": results1[0].mensajes
+                        "nombreVideo": service.decrypt({text:results1[0].video,clave:results1[0].clave_origen}),
+                        "conversacion": service.decrypt({text:results1[0].mensajes,clave:results1[0].clave_origen})
                     }
                     res.status(200)
                     res.send(resul)
