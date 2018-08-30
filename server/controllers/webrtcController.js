@@ -364,13 +364,14 @@ exports.nuevoVideo=function(pet,res){
     var idUsu = pet.params.idUsu
     var idCon = pet.params.idCon
     var video = pet.body.video
+    var mensajes = pet.body.mensajes
     console.log(idUsu)
     console.log(idCon)
-    console.log(pet.body)
     console.log(video)
+    console.log(mensajes)
 
-    if( idUsu != null && idUsu != "" && video != null && video != undefined &&  idCon != null && idCon != "") {
-        connection.query('INSERT INTO video (consulta, video) VALUES(?,?)',[idCon, video],function (err2, results1) {
+    if( idUsu != null && idUsu != "" && video != null && video != undefined &&  idCon != null && idCon != "" && mensajes != "" && mensajes != null) {
+        connection.query('INSERT INTO video (consulta, video, mensajes) VALUES(?,?, ?)',[idCon, video, mensajes],function (err2, results1) {
             if(err2) {
                 console.log(err2)
                 res.status(500)

@@ -158,10 +158,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		      //console.log('peer signal', data)
 		      if(mythis.state.TypeUser == "Response") {
 		      //	auxID = JSON.stringify(data)
-
 		      	mythis.setState({myID:JSON.stringify(data)})
-
-		      
 
 			      	message = {
 					  	"id": "reponseToken",
@@ -172,16 +169,10 @@ class ComponenteWebRTCSimple extends React.Component {
 					}
 					if(mythis.state.myID != "{\"renegotiate\":true}") {
 						mythis.sendMessage(message)
-					}
-
-					
-					//console.log(message)
-					 
+					}		
+					//console.log(message)		 
 			    }
-
-		    })
-		    	
-		    
+		    })		    		    
 		}
 
 		var data = mythis.state.aux.token
@@ -197,7 +188,8 @@ class ComponenteWebRTCSimple extends React.Component {
 		peer.on('data', (data) => {
 			const message = data.toString('utf-8')
 			console.log('peer received', message)
-			this.setState({messages: this.state.messages.concat("\n"+this.state.aux.name+" "+message)})
+			this.setState({messages: this.state.messages.concat("\n \t"+this.state.aux.name+" "+message)})
+			console.log(this.state.messages)
 		})
 		peer.on('stream', (stream) => {
 			console.log("Send stream")
@@ -233,7 +225,9 @@ class ComponenteWebRTCSimple extends React.Component {
 				var id = localStorage.getItem('id')
 				var nombreVideo = "OneHealth"+id+dd+mm+yyyy+hour;
     			saveAs(superBuffer, nombreVideo , true)
-    			this.nuevaConsulta( nombreVideo)
+    			console.log("hola")
+    			console.log(this.state.messages)
+    			this.nuevaConsulta( nombreVideo, this.state.messages)
     		} else if(this.state.TypeUser == "Response") {
     			this.volver()
     		}
@@ -420,8 +414,8 @@ class ComponenteWebRTCSimple extends React.Component {
     /**GRABACION**/
 
 
-    nuevaConsulta(sip, video) {
-    	this.props.handleConsulta(sip, video)
+    nuevaConsulta(video, mensajes) {
+    	this.props.handleConsulta(video, mensajes)
     }
 
     volver() {

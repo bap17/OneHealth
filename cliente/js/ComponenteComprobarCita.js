@@ -129,8 +129,9 @@ class ComponenteComprobarCita extends React.Component {
 		})
 	}
 
-	consulta(video1) {
-		this.props.handleConsulta( video1);
+	consulta(video1, mensajes) {
+		console.log(this.state.mensajes)
+		this.props.handleConsulta( video1, mensajes);
 	}
 
 

@@ -6,7 +6,8 @@ class ComponenteNuevaConsulta extends Component {
         super(props)
         this.state = {  
           error: false,
-          video: this.props.video
+          video: this.props.video,
+          mensajes: this.props.mensajes
         };
         this.errores = this.errores.bind(this)
         this.nuevaConsulta = this.nuevaConsulta.bind(this)
@@ -48,7 +49,7 @@ class ComponenteNuevaConsulta extends Component {
                     alert(resp.message)
                     console.log(idConsulta)
                     if(this.state.video != undefined) {
-                        var body = {video: mythis.state.video}
+                        var body = {video: mythis.state.video, mensajes: mythis.state.mensajes}
                         console.log(body)
                         new API().nuevoVideo(id,idConsulta, body,token).then(datos=>{
                             if(datos.status!=201){
