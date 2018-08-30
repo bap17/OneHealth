@@ -75,6 +75,17 @@ class Api  {
                    return respuesta
                })
     }
+
+    ObtenerEspecialidades(){
+        return fetch(this.URLAPI + 'medico/especialidades', {
+            method: 'GET',
+            headers: {
+                'Content-type':'application/json'
+            }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+    }
     
     comprobarCodigo(codigo, id, token) {
       return fetch(this.URLAPI + 'usuario/'+id+'/comprobarCod/'+codigo, {

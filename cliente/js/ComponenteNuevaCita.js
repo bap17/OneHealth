@@ -16,10 +16,15 @@ class ComponenteNuevaCita extends Component {
         this.crearCita = this.crearCita.bind(this)
         this.handleDayChange = this.handleDayChange.bind(this)
         this.obtenerMedicos = this.obtenerMedicos.bind(this)
+        this.volver = this.volver.bind(this)
     }
 
     errores(){
         this.setState({error:true})
+    }
+
+    volver(){
+        this.props.handleVolver()
     }
 
     crearCita(){
@@ -31,7 +36,6 @@ class ComponenteNuevaCita extends Component {
             paciente: this.campoSip.value
         }
        
-        var aux =this.props
         var auxStatus
         var auxMensaje
         var id = localStorage.getItem('id')
@@ -47,7 +51,9 @@ class ComponenteNuevaCita extends Component {
             }else{
                 datos.json().then(resp=>{
                     //this.setState({medicos:resp.medicos})
-                    console.log(resp.message)
+                    console.log(resp)
+                    alert(resp.message+ ". El codigo es: "+resp.codigo)
+                    this.volver()
                 })
                
             }             
@@ -73,7 +79,6 @@ class ComponenteNuevaCita extends Component {
     }
 
     obtenerMedicos(){
-        var aux =this.props
         var auxStatus
         var auxMensaje
         var id = localStorage.getItem('id')
@@ -82,7 +87,7 @@ class ComponenteNuevaCita extends Component {
         new API().ListadoMedicos(id,token).then(datos=>{
             if(datos.status!=200){
                 auxStatus=datos.status.toString()
-                auxMensaje=datos.message.toString()
+                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{

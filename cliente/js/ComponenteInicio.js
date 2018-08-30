@@ -35,7 +35,12 @@ class ComponenteInicio extends React.Component {
 		this.videollamada = this.videollamada.bind(this);
 		this.nuevaConsulta = this.nuevaConsulta.bind(this)
 
-    }
+	}
+	
+	doLogout() {
+		localStorage.clear()
+		this.props.handleLogout()
+	}
 
     inicio() {
     	this.setState({inicio: true})
@@ -214,7 +219,7 @@ class ComponenteInicio extends React.Component {
 			            <div className="banner">
 		            		<img className="img-banner" src="./../img/doctor2.png"></img>
 		            	</div>
-						<Cita></Cita>
+						<Cita handleVolver={this.inicio}></Cita>
 
 			   
 			        </div> 

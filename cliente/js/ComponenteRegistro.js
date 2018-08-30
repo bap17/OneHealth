@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import API from './servicios/api'
+import Especialidad from './ComponenteEspecialidad'
 
 class ComponenteRegistro extends Component {
     constructor(props) {
         super(props)
         this.state = {  
           error: false,
-          tipo: false// false para paciente, true para medico
+          tipo: false,// false para paciente, true para medico
+          espe: []
         };
         this.errores = this.errores.bind(this)
         this.returnLogin = this.returnLogin.bind(this)
@@ -74,7 +76,47 @@ class ComponenteRegistro extends Component {
           })
     }
 
+    obtenerEspecialidades(){
+        var auxStatus
+        var auxMensaje
+
+        new API().ObtenerEspecialidades().then(datos=>{
+            if(datos.status!=200){
+                auxStatus=datos.status.toString()
+                //auxMensaje=datos.message.toString()
+                this.errores()
+            }else{
+                datos.json().then(resp=>{
+                    this.setState({espe:resp.especialidades})
+                })
+               
+            }             
+        }).then(function(){
+            if(auxStatus=="400"){
+                console.log(auxMensaje)
+                //document.getElementById('error').value="Hay errores en el formulario"
+            }else if(auxStatus=="403"){
+                //document.getElementById("error").value="No tienes autorización para ésta función"
+            }
+            else if(auxStatus=="404"){
+                //document.getElementById("error").value="No tienes autorización para ésta función"
+            }
+        }).catch(e => {
+            console.log(e)
+          })
+    }
+
+    componentDidMount(){
+        this.obtenerEspecialidades()
+    }
+
     render(){
+        var esp = []
+        for(var i=0; i<this.state.espe.length;i++) {
+            var elemento
+            elemento = <Especialidad espe={this.state.espe[i]} key={i}/>
+            esp.push(elemento)
+        }
         if(!this.state.tipo){
             return <div className="registro">
                 <img src="./../img/logo.png"></img>
@@ -133,7 +175,7 @@ class ComponenteRegistro extends Component {
                     <div className="form-group">
                         <label>Especialidad</label>
                         <select className="form-control" ref={(campo)=>{this.campoEspecialidad=campo}}>
-                            <option>Cirujano</option>
+                            {esp}
                         </select>
                     </div>
                     <div className="form-group">

@@ -32,6 +32,8 @@ router.post('/medico/:id/historial/consulta',midd.isAuth,consulta.nuevaConsulta)
 router.get('/medico/:id/citas', midd.isAuth, cita.obtenerCitasMedico)
 router.get('/medico/:id/citas/video', midd.isAuth, cita.obtenerCitasMedicoVideo)
 router.get('/medico/:id/citas/presencial', midd.isAuth, cita.obtenerCitasMedicoPresencial)
+router.get('/medico/especialidades', medico.listarEspecialidades)
+
 
 /**
  * Usuario generico
