@@ -187,9 +187,11 @@ class ComponenteWebRTCSimple extends React.Component {
 		})
 		peer.on('data', (data) => {
 			const message = data.toString('utf-8')
-			console.log('peer received', message)
-			this.setState({messages: this.state.messages.concat("\n \t"+this.state.aux.name+" "+message)})
-			console.log(this.state.messages)
+			if(message != "" && message != null) {
+				//console.log('peer received', message)
+				this.setState({messages: this.state.messages.concat("\n \t"+this.state.aux.name+" "+message)})
+			}
+			
 		})
 		peer.on('stream', (stream) => {
 			console.log("Send stream")
