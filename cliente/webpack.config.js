@@ -1,4 +1,5 @@
 var path = require('path');
+var fs = require ('fs')
 var dir_js = path.resolve(__dirname, 'js')
 var dir_css = path.resolve(__dirname, 'css')
 module.exports = {
@@ -32,6 +33,12 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             }
         ]
+    },
+    devServer: {
+        https: {
+          key: fs.readFileSync('./security/server.key'),
+          cert: fs.readFileSync('./security/server.crt')
+        }
     },
     //para que podamos hacer debug sobre nuestro código original
     //aunque el navegador esté ejecutando el bundle

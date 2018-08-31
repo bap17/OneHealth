@@ -24,8 +24,6 @@ function nextUniqueId() {
     return idCounter.toString();
 }
 
-
-
 var httpsOptions ={
     cert:fs.readFileSync(path.join(__dirname,'security','server.crt')),
     key: fs.readFileSync(path.join(__dirname,'security','server.key'))
@@ -38,7 +36,6 @@ var server1 = https.createServer(httpsOptions, app).listen(3000, function(){
 
 var io = require('socket.io')(https).listen(server1)
 io.set('transports', ['websocket'])
-
 
 
 io.on('connection', function(socket){
@@ -81,7 +78,7 @@ io.on('connection', function(socket){
 exports.sendMessages = function(destino, message) {
     console.log("envio : ")
 
-    console.log(message)
+   // console.log(message)
     io.emit(destino, message)
 
 }

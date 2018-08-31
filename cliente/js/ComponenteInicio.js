@@ -11,6 +11,7 @@ import NuevaConsulta from './ComponenteNuevaConsulta'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
+
 class ComponenteInicio extends React.Component {
 
 
@@ -173,7 +174,9 @@ class ComponenteInicio extends React.Component {
 		}
 		var mythis = this
 		var idUsu = localStorage.getItem('id');
+
 		this.socket = io.connect("https://localhost:3000", connectionOptions);
+		//console.log(this.socket)
 		mythis.socket.on('User'+ idUsu, function(message) {
 			if(mythis.state.confirmacionLlamada == false) {
 				console.log("\n\n ESTOY EN EL MENSAJE HORRIBLE\N\N")
