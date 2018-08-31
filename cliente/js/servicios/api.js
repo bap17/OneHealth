@@ -345,6 +345,19 @@ class Api  {
         })
   
     }
+
+    ActualizarPass(id,pass,token){
+        return fetch(this.URLAPI + 'usuario/'+ id + '/password', {
+            method: 'PUT',
+            headers: {
+                'Content-type':'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(pass)
+        }).then(function (respuesta) {
+            return respuesta
+        })
+    }
 }
 
 

@@ -43,8 +43,6 @@ class ComponenteNuevaCita extends Component {
 
         new API().CrearCita(id,nuevaCita,token).then(datos=>{
             if(datos.status!=201){
-                console.log(nuevaCita)
-                console.log(datos)
                 auxStatus=datos.status.toString()
                 //auxMensaje=datos.message.toString()
                 this.errores()

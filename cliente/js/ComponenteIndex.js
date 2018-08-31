@@ -28,6 +28,7 @@ class ComponenteIndex extends Component {
 
   logoutOK() {
     this.setState({logged:false})
+    this.setState({confirmado:false})
   }
 
   confirmacion(){

@@ -47,12 +47,10 @@ class ComponenteVerCita extends Component {
                         <label className="label">Apellidos:</label> <label>{this.props.cita.apellidosMed}</label><br></br>
                         <label className="label">Especialidad:</label> <label>{this.props.cita.especialidad}</label><br></br>
                     </div>
-                    <div className="parrafo button-cita-video">
-                    </div>
                 </div>
                
             </div>
-            <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+            <div className="clear"></div>
             <div className="boton-volver-cita"><button onClick={this.volver} className="button">Volver</button></div>
             
         </div>
