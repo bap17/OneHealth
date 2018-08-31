@@ -115,14 +115,32 @@ exports.emailLogin = function(pet, resp) {
                                     "tipo": "medico"
                                 }
                             }else{
-                                resultado={
-                                    "id": results[0].id,
-                                    "nombre": results[0].nombre,
-                                    "apellidos": results[0].apellidos,
-                                    "username": results[0].username,
-                                    "email": results[0].email,
-                                    "tipo": "paciente"
-                                }
+                                connection.query('SELECT * FROM paciente WHERE id = ?', [results[0].id],function (error3, results3) {
+                                    if(error3) {
+                                        resp.status(500).send({message: "Error en el servidor"})
+                                    }else{
+                                        if(results3.length > 0) {
+                                            resultado={
+                                                "id": results[0].id,
+                                                "nombre": results[0].nombre,
+                                                "apellidos": results[0].apellidos,
+                                                "username": results[0].username,
+                                                "email": results[0].email,
+                                                "tipo": "paciente"
+                                            }
+                                        }else{
+                                            resultado={
+                                                "id": results[0].id,
+                                                "nombre": results[0].nombre,
+                                                "apellidos": results[0].apellidos,
+                                                "username": results[0].username,
+                                                "email": results[0].email,
+                                                "tipo": "admin"
+                                            }
+                                        }
+                                    }
+                                })
+                                
                             }
                         }
                     })

@@ -10,6 +10,7 @@ import NuevaConsulta from './ComponenteNuevaConsulta'
 import ListarCitas from './ComponenteListarCitas'
 import Password from './ComponenteUpdatePass'
 import Usuario from './ComponenteUpdateUser'
+import Admin from './ComponenteAdmin'
 
 
 class ComponenteInicio extends React.Component {
@@ -654,7 +655,10 @@ class ComponenteInicio extends React.Component {
 
 			        </div> 
 		//inicio
-    	}else {
+    	}else if(tipo=="admin"){
+			return <Admin salir={this.doLogout}></Admin>
+
+		}else {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>

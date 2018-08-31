@@ -385,6 +385,36 @@ class Api  {
         })
   
     }
+
+    NuevoHistorial(id, historial,token) {
+        return fetch(this.URLAPI + 'admin/'+id+'/historial', {
+                  method: 'POST',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  },
+                  body: JSON.stringify(historial)
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    ValidarMedico(id, medico,token) {
+        return fetch(this.URLAPI + 'admin/'+id+'/medico', {
+                  method: 'POST',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  },
+                  body: JSON.stringify(medico)
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+
 }
 
 

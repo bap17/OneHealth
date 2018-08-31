@@ -72,9 +72,6 @@ class ComponenteRegistro extends Component {
             else if(auxStatus=="500"){
                 document.getElementById("error").innerHTML="Error en el servidor"
             }
-            else if(auxStatus=="500"){
-                document.getElementById("error").innerHTML="Error en el servidor"
-            }
         }).catch(e => {
             console.log(e)
           })

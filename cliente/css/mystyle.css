@@ -844,6 +844,26 @@ video {
 
 /******** END PASSWORD *******/
 
+/******** ADMIN *******/
+.admin{
+	margin: 20px auto;
+	text-align: center;
+	width: 50%;
+}
+
+.admin img{
+	
+	width: 40%;
+	margin: 20px;
+	
+}
+
+.admin .button{
+	width: 25%;
+	margin-bottom: 25px;
+}
+/******** END ADMIN *******/
+
 /******************** PROVISIONAL WEBRTC **************************/
 
 
