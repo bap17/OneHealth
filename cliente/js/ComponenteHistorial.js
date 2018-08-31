@@ -61,9 +61,7 @@ class ComponenteHistorial extends Component {
 
         new API().VerHistorial(id,sip,token).then(datos=>{
             if(datos.status!=200){
-                //console.log(datos)
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
@@ -80,13 +78,14 @@ class ComponenteHistorial extends Component {
             }             
         }).then(function(){
             if(auxStatus=="400"){
-                console.log(auxMensaje)
-                //document.getElementById('error').value="Hay errores en el formulario"
+                document.getElementById('error').innerHTML="Debes introducir la SIP del paciente"
             }else if(auxStatus=="403"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No tienes autorización para ésta función"
             }
             else if(auxStatus=="404"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No se ha encontrado el historial del paciente"
+            }else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
         }).catch(e => {
             console.log(e)
@@ -95,15 +94,12 @@ class ComponenteHistorial extends Component {
 
     verHistorialPac(){
         var auxStatus
-        var auxMensaje
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
 
         return new API().VerHistorialPaciente(id,token).then(datos=>{
             if(datos.status!=200){
-                //console.log(datos)
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 //this.errores()
             }else{
                 datos.json().then(resp=>{
@@ -111,7 +107,13 @@ class ComponenteHistorial extends Component {
                 })
                
             }           
-        })
+        }).then(function(){
+            if(auxStatus=="404"){
+                document.getElementById('error').innerHTML="No se ha encontrado el historial del paciente"
+            }
+        }).catch(e => {
+            console.log(e)
+          })
         
     }
 
@@ -184,12 +186,24 @@ class ComponenteHistorial extends Component {
                     <input type="text" className="input input-pequeño input-buscarsip" placeholder="SIP..." ref={(campo)=>{this.campoSip=campo}}/>
                     <button className="button" type="button" onClick={this.verHistorial}>Buscar</button>
                 </div>
+                <br></br>
+                {this.state.error ?
+
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
             </div>
         }else if(tipo=="paciente" && !this.state.paciente){
             return <div className="historial">
                 <label className="titulo-comp-cita">Historial clínico </label>
                 <br></br>
                 <div className="col2">
+                <br></br>
+                {this.state.error ?
+
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
                     <div className= "card">
                         <div className="card-header">Historial clínico</div>
                         <div className="card-body">

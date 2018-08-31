@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import API from './servicios/api'
 
 
-class ComponenteUpdatePass extends Component {
+class ComponenteUpdateUser extends Component {
     constructor(props) {
         super(props)
         this.state = {
-          error: false
+          error: false,
+          datos: this.getDatos()
         };
         this.errores = this.errores.bind(this)
-        this.actualizarPass=this.actualizarPass.bind(this)
+        this.actualizarDatos=this.actualizarDatos.bind(this)
         this.volver = this.volver.bind(this)
+        this.getDatos = this.getDatos.bind(this)
     }
 
     errores(){
@@ -21,17 +23,36 @@ class ComponenteUpdatePass extends Component {
         this.props.handleVolver()
     }
 
-    actualizarPass(){
-        var pass = {
-            password: this.campoPass.value,
-            newPassword: this.campoNewPass.value
+    getDatos(){
+        var auxStatus
+        var auxMensaje
+        var id = localStorage.getItem('id')
+        var token = localStorage.getItem('token')
+
+        return new API().DatosUsuario(id,token).then(datos=>{
+            if(datos.status!=200){
+                auxStatus=datos.status.toString()
+            }else{
+                datos.json().then(resp=>{
+                    console.log(resp.user)
+                    this.setState({datos:resp.user})
+                })
+               
+            }           
+        })
+    }
+
+    actualizarDatos(){
+        var usu = {
+            nombre: this.campoNombre.value,
+            apellidos: this.campoApellidos.value
         }
        
         var auxStatus
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
 
-        new API().ActualizarPass(id,pass,token).then(datos=>{
+        new API().UpdateUsuario(id,usu,token).then(datos=>{
             if(datos.status!=200){
                 auxStatus=datos.status.toString()
                 this.errores()
@@ -45,13 +66,10 @@ class ComponenteUpdatePass extends Component {
         }).then(function(){
             if(auxStatus=="400"){
                 document.getElementById('error').innerHTML="Faltan campos por rellenar"
-            }else if(auxStatus=="401"){
-                document.getElementById("error").innerHTML="Contraseña incorrecta"
             }
             else if(auxStatus=="404"){
                 document.getElementById("error").innerHTML="El usuario no existe"
-            }
-            else if(auxStatus=="500"){
+            }else if(auxStatus=="500"){
                 document.getElementById("error").innerHTML="Error en el servidor"
             }
         }).catch(e => {
@@ -61,23 +79,24 @@ class ComponenteUpdatePass extends Component {
     
     render(){
         return <div className="act-pass">
-            <label className="titulo-comp-cita">Contraseña </label>
+            <label className="titulo-comp-cita">Datos personales </label>
             <div className="form-cita">
             <br></br>
             {this.state.error ?
+
                 <p id="error" className="error"></p>: 
                 <p className="error"></p>
             }
                 <div className="body-cita">
-                    <label>Contraseña actual</label>
-                    <input type="password" className="input"  ref={(campo)=>{this.campoPass=campo}}/>
-                    <label>Nueva contraseña</label>
-                    <input type="password" className="input"  ref={(campo)=>{this.campoNewPass=campo}}/>
+                    <label>Nombre</label>
+                    <input  className="input" defaultValue={this.state.datos.nombre} ref={(campo)=>{this.campoNombre=campo}}/>
+                    <label>Apellidos</label>
+                    <input className="input" defaultValue={this.state.datos.apellidos} ref={(campo)=>{this.campoApellidos=campo}}/>
                 </div>
-                <button type="submit" className="button" onClick={this.actualizarPass}>Guardar</button>
+                <button type="submit" className="button" onClick={this.actualizarDatos}>Guardar</button>
             </div>
         </div>
     }
 }
 
-export default ComponenteUpdatePass
+export default ComponenteUpdateUser

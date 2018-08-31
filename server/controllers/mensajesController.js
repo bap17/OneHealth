@@ -7,7 +7,7 @@ exports.nuevoMensaje=function(pet,resp){
     var desti = pet.body.destinatario
     var asunto = pet.body.asunto
 
-    if(id==undefined || mensaje==undefined || desti == undefined){
+    if(id==undefined || mensaje==undefined || desti == undefined || desti=="" || mensaje==""){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {

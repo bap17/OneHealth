@@ -25,9 +25,9 @@ exports.emailSignup = function(pet, resp) {
     var esp = pet.body.especialidad
 
 
-    if(nombre==undefined || pass==undefined || tipo==undefined) {
+    if(nombre==undefined || pass==undefined || tipo==undefined || nombre=="" || pass=="" || tipo=="") {
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
-    }else if(sip==undefined && esp==undefined){
+    }else if(sip==undefined || esp==undefined || sip=="" || esp==""){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else if(!service.isValidEmail(email)){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
@@ -92,7 +92,7 @@ exports.emailLogin = function(pet, resp) {
     var user = pet.body.username
     var pass = pet.body.password
 
-    if(user==undefined || pass==undefined) {  
+    if(user==undefined || pass==undefined || user=="" || pass=="") {  
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM usuario WHERE username = ?', [user],function (error, results) {
@@ -159,7 +159,7 @@ exports.emailLogin = function(pet, resp) {
 exports.checkCode=function(pet,resp){
     var cod = pet.body.codigo
 
-    if(cod==undefined){
+    if(cod==undefined || cod==""){
         resp.status(400).send({message: "Debes de poner el código de confirmación"})
     }else{
         if(cod==codigo){

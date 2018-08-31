@@ -56,7 +56,6 @@ class ComponenteRegistro extends Component {
         var auxStatus
 
         new API().RegistroP(nuevoUser).then(datos=>{
-            //console.log(datos)
             if(datos.status!=201){
                 auxStatus=datos.status.toString()
                 this.errores()
@@ -66,10 +65,15 @@ class ComponenteRegistro extends Component {
                       
         }).then(function(){
             if(auxStatus=="400"){
-                console.log(auxStatus)
-                //document.getElementById('error').value="Hay errores en el formulario"
+                document.getElementById('error').innerHTML="Alguno de los campos es inválido o vacío"
             }else if(auxStatus=="409"){
-                document.getElementById("error").value="Ya hay un usuario con el mismo nombre de usuario"
+                document.getElementById("error").innerHTML="El nombre de usuario ya está en uso"
+            }
+            else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
+            }
+            else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
         }).catch(e => {
             console.log(e)
@@ -78,12 +82,10 @@ class ComponenteRegistro extends Component {
 
     obtenerEspecialidades(){
         var auxStatus
-        var auxMensaje
 
         new API().ObtenerEspecialidades().then(datos=>{
             if(datos.status!=200){
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
@@ -92,14 +94,13 @@ class ComponenteRegistro extends Component {
                
             }             
         }).then(function(){
-            if(auxStatus=="400"){
-                console.log(auxMensaje)
-                //document.getElementById('error').value="Hay errores en el formulario"
-            }else if(auxStatus=="403"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+            if(auxStatus=="404"){
+                document.getElementById('error').innerHTML="Alguno de los campos es inválido o vacío"
+            }else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
-            else if(auxStatus=="404"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+            else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
         }).catch(e => {
             console.log(e)
@@ -123,6 +124,11 @@ class ComponenteRegistro extends Component {
                 <br></br>
                 <label className="titulo-login">Registro</label>
                 <div className="form-login">
+                <br></br>
+                {this.state.error ?
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
                     <div className="form-group">
                         <label>Tipo</label>
                         <select className="form-control" onChange={this.tipoMedico} ref={(campo)=>{this.campoTipo=campo}}>
@@ -157,6 +163,11 @@ class ComponenteRegistro extends Component {
                 <br></br>
                 <label className="titulo-login">Registro</label>
                 <div className="form-login">
+                <br></br>
+                {this.state.error ?
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
                     <div className="form-group">
                         <label>Tipo</label>
                         <select className="form-control" onChange={this.tipoPaciente} ref={(campo)=>{this.campoTipo=campo}}>

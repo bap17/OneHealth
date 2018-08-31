@@ -19,7 +19,6 @@ class ComponenteNuevoMensaje extends Component{
 
     nuevoMensaje(){
         var auxStatus
-        var auxMensaje
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
 
@@ -32,23 +31,20 @@ class ComponenteNuevoMensaje extends Component{
         new API().NuevoMensaje(id,mensaje,token).then(datos=>{
             if(datos.status!=201){
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
-                    console.log(resp.message)
                     this.enviado()
                 })
             }             
         }).then(function(){
             if(auxStatus=="400"){
-                console.log(auxMensaje)
-                //document.getElementById('error').value="Hay errores en el formulario"
-            }else if(auxStatus=="403"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById('error').innerHTML="Alguno de los campos es inválido o vacío"
+            }else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
             else if(auxStatus=="404"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No se ha encontrado el destinatario"
             }
         }).catch(e => {
             console.log(e)
@@ -67,6 +63,12 @@ class ComponenteNuevoMensaje extends Component{
         return <div className="mensajes">
             <label className="titulo-comp-cita">Nuevo Mensaje</label>
             <br></br>
+            <br></br>
+            {this.state.error ?
+
+                <p id="error" className="error"></p>: 
+                <p className="error"></p>
+            }
             <div className="nuevo-mensaje">
                 <label>Para: </label>
                 <input className="input" ref={(campo)=>{this.campoPara=campo}}></input>

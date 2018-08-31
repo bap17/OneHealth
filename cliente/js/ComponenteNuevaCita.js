@@ -28,28 +28,27 @@ class ComponenteNuevaCita extends Component {
     }
 
     crearCita(){
-        var nuevaCita = {
-            fecha: this.state.selectedDay.toISOString().substring(0, 10),
-            hora: this.campoHora.value,
-            medico: this.campoMedico.value,
-            tipo: this.campoTipo.value,
-            paciente: this.campoSip.value
-        }
-       
+        if(this.state.selectedDay==undefined){
+            this.errores()
+        }else{
+            var nuevaCita = {
+                fecha: this.state.selectedDay.toISOString().substring(0, 10),
+                hora: this.campoHora.value,
+                medico: this.campoMedico.value,
+                tipo: this.campoTipo.value,
+                paciente: this.campoSip.value
+            }
+       }        
         var auxStatus
-        var auxMensaje
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
 
         new API().CrearCita(id,nuevaCita,token).then(datos=>{
             if(datos.status!=201){
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
-                    //this.setState({medicos:resp.medicos})
-                    console.log(resp)
                     alert(resp.message+ ". El codigo es: "+resp.codigo)
                     this.volver()
                 })
@@ -57,14 +56,12 @@ class ComponenteNuevaCita extends Component {
             }             
         }).then(function(){
             if(auxStatus=="400"){
-                console.log(auxMensaje)
-                console.log(auxStatus)
-                //document.getElementById('error').value="Hay errores en el formulario"
-            }else if(auxStatus=="403"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById('error').innerHTML="Alguno de los parámetros es inválido o vacío"
+            }else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
             else if(auxStatus=="404"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No se ha encontrado al paciente, comprueba la SIP"
             }
         }).catch(e => {
             console.log(e)
@@ -85,8 +82,7 @@ class ComponenteNuevaCita extends Component {
         new API().ListadoMedicos(id,token).then(datos=>{
             if(datos.status!=200){
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
-                this.errores()
+                //this.errores()
             }else{
                 datos.json().then(resp=>{
                     this.setState({medicos:resp.medicos})
@@ -123,6 +119,12 @@ class ComponenteNuevaCita extends Component {
         return <div className="nueva-cita">
         <label className="titulo-comp-cita">Nueva cita </label>
         <div className="form-cita">
+        <br></br>
+            {this.state.error ?
+
+                <p id="error" className="error"></p>: 
+                <p className="error"></p>
+            }
             <div className="body-cita">
             <label>SIP</label>
             <br></br>

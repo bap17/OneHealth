@@ -37,9 +37,11 @@ class ComponenteConfirmarLogin extends Component {
             }         
           }).then(function(){
             if(auxStatus=="400"){
-              document.getElementById("error").value="Debes de poner el código de confirmación"
+                document.getElementById("error").innerHTML="Debes de poner el código de confirmación"
             }else if(auxStatus=="401"){
-              document.getElementById("error").value="Código incorrecto"
+                document.getElementById("error").innerHTML="Código incorrecto"
+            }else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
           }).catch(e => {
               console.log(e)
@@ -53,6 +55,11 @@ class ComponenteConfirmarLogin extends Component {
             <label className="titulo-login">Verificación en dos pasos</label>
             <br></br>
             <label className="texto-confirmar">Te hemos enviado un correo con un código de confirmación</label>
+            <br></br>
+                {this.state.error ?
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
             <div className="form-codigo">
                 <label>Código</label>
                 <input type="email" className="input" id="cod" placeholder="Introduce el código" ref={(campo)=>{this.campoCodigo=campo}}/>

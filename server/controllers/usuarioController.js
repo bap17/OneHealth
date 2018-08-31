@@ -14,7 +14,7 @@ exports.updateUsuario=function (pet,resp){
     var nombre = pet.body.nombre
     var apellidos = pet.body.apellidos
 
-    if(nombre==undefined && apellidos==undefined){
+    if((nombre==undefined || apellidos==undefined) || (nombre=="" || apellidos=="")) {
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
@@ -30,7 +30,7 @@ exports.updateUsuario=function (pet,resp){
                         }
                     })
                 } else {
-                    resp.status(403).send({message: "El usuario no existe"})
+                    resp.status(404).send({message: "El usuario no existe"})
                 }
             }
         })
@@ -42,7 +42,7 @@ exports.updatePassword=function (pet,resp){
     var pass = pet.body.password
     var nuevaPass = pet.body.newPassword
 
-    if(pass==undefined && nuevaPass == undefined){
+    if((pass==undefined || nuevaPass == undefined) || (pass=="" || nuevaPass == "")){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
@@ -71,6 +71,31 @@ exports.updatePassword=function (pet,resp){
                     
                 } else {
                     resp.status(404).send({message: "El usuario no existe"})
+                }
+            }
+        })
+    }
+}
+
+exports.getUsuario=function (pet,resp){
+    var id = pet.params.id
+
+    if(id==undefined){
+        resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
+    }else{
+        connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
+            if(error) {
+                resp.status(500).send({message: "Error en el servidor"})
+            } else {
+                if(results.length > 0) {
+                    var user={
+                        "nombre": results[0].nombre,
+                        "apellidos": results[0].apellidos,
+                        "email": results[0].email,
+                    }
+                    resp.status(200).send({user})
+                } else {
+                    resp.status(403).send({message: "El usuario no existe"})
                 }
             }
         })

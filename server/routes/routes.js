@@ -52,6 +52,7 @@ router.get('/usuario/:id/mensaje/enviados', midd.isAuth, mensaje.verMensajesEnvi
 router.delete('/usuario/:id/mensaje/:idMen', midd.isAuth, mensaje.borrarMensaje)
 router.get('/usuario/:id/medicos', midd.isAuth, medico.listarMedicos)
 router.get('/usuario/:id/historial', midd.isAuth, historial.verHistorialPaciente)
+router.get('/usuario/:id', midd.isAuth, usuario.getUsuario)
 
 
 

@@ -358,6 +358,33 @@ class Api  {
             return respuesta
         })
     }
+
+    DatosUsuario(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id, {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    UpdateUsuario(id, user,token) {
+        return fetch(this.URLAPI + 'usuario/'+id, {
+                  method: 'PUT',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  },
+                  body: JSON.stringify(user)
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
 }
 
 

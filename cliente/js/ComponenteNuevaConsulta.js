@@ -30,18 +30,15 @@ class ComponenteNuevaConsulta extends Component {
         }
        
         var auxStatus
-        var auxMensaje
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
 
         new API().NuevaConsulta(id,nueva,token).then(datos=>{
             if(datos.status!=201){
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
-                    //this.setState({medicos:resp.medicos})
                     alert(resp.message)
                     this.volver()
                     console.log(resp.message)
@@ -50,14 +47,15 @@ class ComponenteNuevaConsulta extends Component {
             }             
         }).then(function(){
             if(auxStatus=="400"){
-                console.log(auxMensaje)
-                console.log(auxStatus)
-                //document.getElementById('error').value="Hay errores en el formulario"
+                document.getElementById('error').innerHTML="El campo SIP es obligatorio"
             }else if(auxStatus=="403"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No tienes autorización para ésta función"
             }
             else if(auxStatus=="404"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No se ha encontrado el historial del paciente"
+            }
+            else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
         }).catch(e => {
             console.log(e)
@@ -68,6 +66,12 @@ class ComponenteNuevaConsulta extends Component {
         return <div className="nueva-consulta">
             <label className="titulo-comp-cita">Nueva consulta </label>
             <div className="form-Nconsulta">
+            <br></br>
+            {this.state.error ?
+
+                <p id="error" className="error"></p>: 
+                <p className="error"></p>
+            }
                 <div className="form-group">
                     <label>SIP del paciente</label>
                     <input className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>  

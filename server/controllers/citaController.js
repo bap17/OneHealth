@@ -12,7 +12,7 @@ exports.crearCita=function (pet,resp){
     var tipo = pet.body.tipo
 
 
-    if(fecha==undefined || hora==undefined || medico==undefined || sip==undefined){
+    if(fecha==undefined || hora==undefined || medico==undefined || sip==undefined || fecha==""  || hora==""  || medico=="" || sip=="" ){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
@@ -24,21 +24,25 @@ exports.crearCita=function (pet,resp){
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
-                            //var iv = crypto.randomBytes(8);
-                            //var iv = randomstring.generate(5)
-                            var codigo = randomstring.generate(5)
-                            var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
-                            var horaC = service.encrypt({text:hora,clave:results[0].clave})
-                            var codigoC = service.encrypt({text:codigo,clave:results[0].clave})
-                            
-                            connection.query('INSERT INTO cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,results[0].clave,tipo,codigoC], function(err2, result2) {
+                            if(result.length > 0) {
+                                //var iv = crypto.randomBytes(8);
+                                //var iv = randomstring.generate(5)
+                                var codigo = randomstring.generate(5)
+                                var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
+                                var horaC = service.encrypt({text:hora,clave:results[0].clave})
+                                var codigoC = service.encrypt({text:codigo,clave:results[0].clave})
+                                
+                                connection.query('INSERT INTO cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,results[0].clave,tipo,codigoC], function(err2, result2) {
 
-                                if(err2) {
-                                    resp.status(500).send({message: err2})
-                                } else {
-                                    resp.status(201).send({message:"La cita se ha registrado correctamente", codigo: codigo})
-                                }
-                            })
+                                    if(err2) {
+                                        resp.status(500).send({message: err2})
+                                    } else {
+                                        resp.status(201).send({message:"La cita se ha registrado correctamente", codigo: codigo})
+                                    }
+                                })
+                            }else{
+                                resp.status(404).send({message: "No se ha encontrado al usuario"})
+                            }  
                         }
                     })
                 } else {

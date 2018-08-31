@@ -6,7 +6,7 @@ exports.verHistorial=function(pet,resp){
     //var idP = pet.params.idP
     var sip = pet.params.sip
 
-    if(idM==undefined || sip==undefined){
+    if(idM==undefined || sip==undefined || sip==""){
         resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM medico WHERE id = ?', [idM],function (error, results) {
