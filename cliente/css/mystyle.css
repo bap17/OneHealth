@@ -99,6 +99,50 @@ a:hover, a:focus {
 	color: #b23e3e !important;
 }
 
+
+.error {
+	color: #eb4f4f;
+	background-color: white;
+	border: 0px;
+	outline: 0px;
+	height: 24px;
+	padding: 10px;
+}
+
+.clear {
+	clear:both;
+}
+
+.hiden {
+	display: none !important;
+}
+
+.circle-button {
+	-webkit-border-radius: 122px;
+	-moz-border-radius: 122px;
+	border-radius: 122px;
+}
+
+
+/* SCROLL
+body::-webkit-scrollbar, conversacion::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+body::-webkit-scrollbar-track, conversacion::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0.1,0.1);
+}
+ 
+body::-webkit-scrollbar-thumb , conversacion::-webkit-scrollbar-thumb {
+ 	 background-color: #D8D8D8;
+  	outline: 1px solid slategrey;
+  	-webkit-border-radius: 59px;
+	-moz-border-radius: 59px;
+	border-radius: 59px;
+}
+*/
+
+
 .textarea{
 	width:100%;
 	border: 1px solid #C7C7C7;
@@ -117,6 +161,7 @@ a:hover, a:focus {
 ul li{
 	text-decoration: none;
 }
+
 /*  end global  */
 
 
@@ -247,6 +292,11 @@ ul li{
 
 .menu-perfil .nav-opt{
 	width: 100%;
+}
+
+.header .icono svg {
+	font-size: 27px;
+	color: #eb4f4f;
 }
 
 /* end header */
@@ -381,7 +431,7 @@ ul li{
 /********** END PACIENTE ************/
 
 
-/***** OPT VIDEOLLAMADA ******/
+/***** OPT VIDEOLLAMADA MEDICO ******/
 
 .banner {
 
@@ -443,8 +493,100 @@ ul li{
 	border-bottom: 1px solid #E0E0E0;
 }
 
+
 /***** END OPT VIDEOLLAMADA ******/
 
+
+
+/*
+.boxMyID, .boxYourId, .boxMessages{
+	border: 1px solid #C7C7C7;
+	border-radius: 46px 46px 46px 46px;
+	-moz-border-radius: 46px 46px 46px 46px;
+	-webkit-border-radius: 46px 46px 46px 46px;
+	padding: 25px;
+	margin:10px;
+}*/
+
+.video {
+	width: 50%;
+	padding: 10px 30px;
+	-webkit-border-radius: 122px;
+	-moz-border-radius: 122px;
+	border-radius: 57px;
+}
+.video:focus {
+	outline:0px;
+}
+.buttons  {
+	margin: 20px auto;
+	text-align: center;
+}
+
+.buttons .button {
+	margin: 0px 20px;
+}
+
+.boxMessages, .boxVideo {
+	float: left;
+	width: 100%;
+	padding: 0px 30px;
+}
+.iconCall {
+	font-size: 30px;
+}
+.chat {
+	width: 95%;
+	margin: 0 auto;
+}
+
+.chat .input {
+	border: 0px;
+	border-bottom: 1px solid #7A7A7A;
+	width: 93%;
+	float: left;
+}
+
+.send {
+	width: 5%;
+	padding: 5px;
+	float: right;
+}
+
+.conversacion {
+	height: 210px;
+	max-height: 210px;
+	overflow-y: scroll;
+	padding: 20px;
+}
+
+.titulo-conversacion {
+	padding: 40px;
+	font-size: 25px;
+	color: #9d9d9d;
+}
+
+.cam {
+	background-color: #274388;
+	border-color: #274388;
+}
+.cam:hover, .cam:focus {
+	outline: 0px;
+	color:#274388;
+	background-color: white;
+}
+.disabled {
+	background-color:#cccccc;
+	border-color: #cccccc;
+}
+.disabled:hover, .disabled:focus {
+	outline: 0px;
+	color:#cccccc;
+	background-color: white;
+}
+
+
+/********** END VIDEOLLAMADA ************/
 
 
 /******* INICIO ***************/
@@ -487,7 +629,32 @@ ul li{
 }
 
 video {
-	width: 50%;
+	width: 80%;
+	padding: 30px;
+}
+
+.body-video .mini-titulo {
+	font-size: 25px;
+	color: #9d9d9d;
+}
+
+.body-video .nombre {
+	padding: 30px;
+}
+
+.body-video .conversacion {
+	margin:30px;
+	border: 1px solid #9d9d9d;
+	max-height: 800px;
+
+}
+
+.body-video .error {
+	font-size: 20px;
+	padding: 30px;
+	text-align: center;
+	width: 100%;
+	color: black;
 }
 /******** END VER VIDEO *******/
 
@@ -620,7 +787,7 @@ video {
 }
 
 .consulta .form-consulta a{
-	margin-left: 57%;
+	float: right;
 }
 
 .consulta .input{
@@ -731,27 +898,28 @@ video {
 	width: 15%;
 }
 
-.item li:hover, .item li:focus, .item li:active{
-	background-color: #efefef;
-	box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+¡
+.item li:hover,  .item li:focus, .item li:active{
+	background-color: #efefef !important;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.6) !important;
 	
 }
 
 .item li{
-	display: inline-block;
-  	vertical-align: middle;
- 	-webkit-transform: perspective(1px) translateZ(0);
-  	transform: perspective(1px) translateZ(0);
-  	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  	-webkit-transition-duration: 0.3s;
-  	transition-duration: 0.3s;
-  	-webkit-transition-property: box-shadow;
-	transition-property: box-shadow;
-	width: 100%;
+	display: inline-block !important;
+  	vertical-align: middle !important;
+ 	-webkit-transform: perspective(1px) translateZ(0) !important;
+  	transform: perspective(1px) translateZ(0) !important;
+  	box-shadow: 0 0 1px rgba(0, 0, 0, 0) !important;
+  	-webkit-transition-duration: 0.3s !important;
+  	transition-duration: 0.3s !important;
+  	-webkit-transition-property: box-shadow !important;
+  	transition-property: box-shadow !important;
+  	width: 100%;
 }
 
 .item li p{
-	margin: 0px;
+	margin: 0px !important;
 }
 
 .button2 {
@@ -866,7 +1034,7 @@ video {
 
 /******************** PROVISIONAL WEBRTC **************************/
 
-
+/*
 .boxMyID, .boxYourId, .boxMessages, .boxVideo {
 	border: 1px solid #C7C7C7;
 	border-radius: 46px 46px 46px 46px;
@@ -874,12 +1042,9 @@ video {
 	-webkit-border-radius: 46px 46px 46px 46px;
 	padding: 25px;
 	margin:10px;
-}
+}*/
 .containerMyID {
 	background-color: #F5F5F5;
-}
-.clear {
-	clear:both;
 }
 
 /*
@@ -915,21 +1080,7 @@ video {
 }
 
 */
-.boxMessages, .boxVideo {
-	float: left;
-	width: 45%;
-}
 
-/******************** END PROVISIONAL WEBRTC **************************/
-
-.videoBig {
-	width: 50%;
-}
-.videoSmall {
-	width: 50%;
-}
-
-/******************** END PROVISIONAL WEBRTC **************************/
 
 /* DayPicker styles */
 

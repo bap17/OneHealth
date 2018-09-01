@@ -1,18 +1,22 @@
 import React from 'react'
 import Api from './servicios/api'
-import Kurento from './ComponenteKurento'
 import CitaVideo from './ComponenteCitaVideollamada'
 import Paciente from './ComponentePaciente'
+import WebRTCSimple from './ComponenteWebRTCSimple'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 class ComponenteComprobarCita extends React.Component {
 
-	constructor() {
-        super()
+	constructor(props) {
+        super(props)
         this.state = {
         	codigoValido: false,
         	idCita: 0,
         	paciente:[],
-        	search:false
+        	search:false,
+        	error: false,
+        	llamada: false,
+        	idPaciente: 0,
+        	socket:this.props.socket
 
         }
         this.codigo = this.codigo.bind(this);
@@ -20,11 +24,13 @@ class ComponenteComprobarCita extends React.Component {
         this.buscar = this.buscar.bind(this);
         this.listadoPaciente = this.listadoPaciente.bind(this);
         this.llamar = this.llamar.bind(this);
+        this.consulta = this.consulta.bind(this);
     }
 
     
 
 	componentDidMount() {
+
 
  		this.listadoPaciente();
 
@@ -37,20 +43,18 @@ class ComponenteComprobarCita extends React.Component {
 
 
 	comprobarCodigo() {
-
-		console.log("estoy in")
 		var codigo = this.codigo.value
 		var idUsu = localStorage.getItem('id');
 		var mythis = this
 
 		var token = localStorage.getItem('token');
+		var auxStatus
+		var auxRespuesta
 		new Api().comprobarCodigo(codigo, idUsu ,token).then(function(datos){
 
 			if(datos.status!=200) {
-				datos.json().then(function(valor){
-					console.log(valor.respuesta)
-				})
-				
+				auxStatus=datos.status.toString()
+				mythis.setState({error: true})
 			} else {
 				datos.json().then(function(valor){
 					
@@ -60,8 +64,19 @@ class ComponenteComprobarCita extends React.Component {
 
 				
 			}
-		})
-	}
+		}).then(function(){
+            if(auxStatus=="400"){
+              document.getElementById("error").innerHTML="Faltan datos por introducir"
+            } else if(auxStatus == "500") {
+            	document.getElementById("error").innerHTML="Lo sentimos, hay errores por resolver"
+            } else if(auxStatus == "202") {
+            	document.getElementById("error").innerHTML="La cita no esta disponible"
+            } else if(auxStatus == "404") {
+            	document.getElementById("error").innerHTML="El código introducido no existe"
+            }
+          })
+    }
+	
 
 	buscar() {
 
@@ -85,8 +100,10 @@ class ComponenteComprobarCita extends React.Component {
 
 	}
 
-	llamar() {
-		console.log("estoy en llamar")
+	llamar(id, sip1) {
+		this.setState({llamada: true})
+		this.setState({idPaciente: id})
+		this.setState({sip: sip1})
 	}
 
 	listadoPaciente () {
@@ -112,16 +129,21 @@ class ComponenteComprobarCita extends React.Component {
 		})
 	}
 
+	consulta(video1, mensajes) {
+		console.log(this.state.mensajes)
+		this.props.handleConsulta( video1, mensajes);
+	}
+
 
     render() {
 
     	var prods = []
 		for (var i=0; i<this.state.paciente.length; i++) {
 			var actual = this.state.paciente[i]
-			console.log(actual.nombre)
 			var elemento
 			elemento = <Paciente key={i}
 				pos={i}
+				id={actual.id}
 				nombre={actual.nombre}
 				apellidos={actual.apellidos}
 				sip={actual.sip}
@@ -136,21 +158,28 @@ class ComponenteComprobarCita extends React.Component {
 
 
     	var tipoUsu = localStorage.getItem('tipo');
-    	if(this.state.codigoValido == false && tipoUsu == 'paciente') {
+    	if(this.state.codigoValido == false && tipoUsu == 'paciente' && this.state.llamada == false) {
 	        return <div>
-	            <div className="comprobarCita">
-	            	
-	            	<div className="form">
-						<span className="titulo-comp-cita">Número de cita </span>  <br></br><br></br><br></br>
-						<input id="codcita" className="input" ref={(campo)=>{this.codigo=campo}} placeholder="Ingresa el código cita ..."></input> <br></br><br></br><br></br><br></br>
-						<button id="comprobar" onClick={this.comprobarCodigo} className="button">Comprobar</button>  <br></br> <br></br>
-					</div>
-				</div>
-				
-	        </div> 
-	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente'){
-	    	return <CitaVideo idCita={this.state.idCita}></CitaVideo>
-	    } else if(tipoUsu == 'medico') {
+			            <div className="comprobarCita">
+			            	
+			            	<div className="form">
+								<span className="titulo-comp-cita">Número de cita </span>  <br></br>
+								{this.state.error ?
+
+									<p id="error" className="error"></p>: 
+									<p className="error"></p>
+								}
+								
+								<br></br>
+								<input id="codcita" className="input" ref={(campo)=>{this.codigo=campo}} placeholder="Ingresa el código cita ..."></input> <br></br><br></br><br></br><br></br>
+								<button id="comprobar" onClick={this.comprobarCodigo} className="button">Comprobar</button>  <br></br> <br></br>
+							</div>
+						</div>
+						
+			        </div> 
+	    } else if(this.state.codigoValido == true && tipoUsu == 'paciente' && this.state.llamada == false){
+	    	return <CitaVideo idCita={this.state.idCita} socket={this.state.socket}></CitaVideo>
+	    } else if(tipoUsu == 'medico' && this.state.llamada == false) {
 	    	return <div>
 	    			
     				<div className="clear"></div>
@@ -183,6 +212,8 @@ class ComponenteComprobarCita extends React.Component {
 		        </div> 
 
 
+	    } else if(tipoUsu == 'medico' && this.state.llamada == true) {
+	    	return <WebRTCSimple  idPaciente={this.state.idPaciente} socket={this.state.socket}  handleConsulta={this.consulta}></WebRTCSimple>
 	    }
     }
 }

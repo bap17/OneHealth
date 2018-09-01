@@ -178,6 +178,18 @@ class Api  {
 
     }
 
+    cancelarCita(idUsu, cita, token) {
+      return fetch(this.URLAPI + 'usuario/'+idUsu+'/cita/'+cita, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type':'application/json',
+                    'Authorization': token
+                }
+      }).then(function(respuesta) {
+          return respuesta
+      })
+    }
+
     ListadoMedicos(id, token) {
         return fetch(this.URLAPI + 'usuario/'+id+'/medicos', {
                   method: 'GET',
@@ -415,6 +427,31 @@ class Api  {
     }
 
 
+    nuevoVideo(idMed, idCon,video,token) {
+      console.log(video)
+        return fetch(this.URLAPI + 'medico/'+ idMed + '/historial/consulta/'+idCon+'/video', {
+                   method: 'POST',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+                   body: JSON.stringify(video)
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
+
+    verVideo(idMed, idCon,token) {
+        return fetch(this.URLAPI + 'medico/'+ idMed + '/historial/consulta/'+idCon, {
+                   method: 'GET',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   }
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
 }
 
 

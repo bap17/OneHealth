@@ -30,6 +30,7 @@ class ComponenteNuevoMensaje extends Component{
 
         new API().NuevoMensaje(id,mensaje,token).then(datos=>{
             if(datos.status!=201){
+                console.log(datos)
                 auxStatus=datos.status.toString()
                 this.errores()
             }else{

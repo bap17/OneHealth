@@ -33,7 +33,12 @@ exports.nuevaConsulta=function(pet,resp){
                                     if(err2) {
                                         resp.status(500).send({message: err2})
                                     } else {
-                                        resp.status(201).send({message:"La consulta se ha creado correctamente"})
+                                        console.log(results3)
+                                        var res = {
+                                            message: "La consulta se ha creado correctamente",
+                                            id: results3.insertId
+                                        }
+                                        resp.status(201).send(res)
                                     }
                                 })
                             } else {

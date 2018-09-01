@@ -5,12 +5,16 @@ class ComponenteNuevaConsulta extends Component {
     constructor(props) {
         super(props)
         this.state = {  
-          error: false
+          error: false,
+          video: this.props.video,
+          mensajes: this.props.mensajes
         };
         this.errores = this.errores.bind(this)
         this.nuevaConsulta = this.nuevaConsulta.bind(this)
         this.volver = this.volver.bind(this)
     }
+
+
 
     errores(){
         this.setState({error:true})
@@ -32,6 +36,8 @@ class ComponenteNuevaConsulta extends Component {
         var auxStatus
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
+        var idConsulta
+        var mythis = this
 
         new API().NuevaConsulta(id,nueva,token).then(datos=>{
             if(datos.status!=201){
@@ -39,9 +45,24 @@ class ComponenteNuevaConsulta extends Component {
                 this.errores()
             }else{
                 datos.json().then(resp=>{
+                    idConsulta = resp.id
+                    console.log(idConsulta)
+                    if(this.state.video != undefined) {
+                        var body = {video: mythis.state.video, mensajes: mythis.state.mensajes}
+                        console.log(body)
+                        new API().nuevoVideo(id,idConsulta, body,token).then(datos=>{
+                            if(datos.status!=201){
+                                console.log("Error en introducir el video")
+                            }else{
+                                datos.json().then(resp=>{
+                                    console.log(resp)
+                                })
+                               
+                            }         
+                        })
+                    }
                     alert(resp.message)
                     this.volver()
-                    console.log(resp.message)
                 })
                
             }             
@@ -57,6 +78,7 @@ class ComponenteNuevaConsulta extends Component {
             else if(auxStatus=="500"){
                 document.getElementById("error").innerHTML="Error en el servidor"
             }
+
         }).catch(e => {
             console.log(e)
           })
@@ -74,7 +96,7 @@ class ComponenteNuevaConsulta extends Component {
             }
                 <div className="form-group">
                     <label>SIP del paciente</label>
-                    <input className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>  
+                    <input id="SIP" className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>  
                 </div>
                 <div className="form-group">
                     <label>Motivo</label>

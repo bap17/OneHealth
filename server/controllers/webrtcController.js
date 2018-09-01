@@ -137,6 +137,7 @@ exports.listarPaciente = function(req, res) {
                                                
                     for(var i = 0;  i < results.length; i++) {                                        
                         var paciente = {
+                            "id": results[i].id,
                             "nombre" : results[i].nombre,
                             "apellidos": results[i].apellidos,
                             "sip": results[i].sip
@@ -177,7 +178,7 @@ exports.verCita = function(req, res) {
                             console.log("Hay un error al buscar el paciente")
                         } else {
                             if(results1.length > 0) {
-                                connection.query('SELECT us.nombre, us.apellidos, es.nombre as espe, us.clave FROM usuario as us inner join especialidad as es on us.id = es.medico where us.id = ?', [results[0].medico], function(err, results2) {
+                                connection.query('SELECT us.nombre, us.apellidos, es.nombre as espe, us.clave, us.id FROM usuario as us inner join especialidad as es on us.id = es.medico where us.id = ?', [results[0].medico], function(err, results2) {
                                     if(err) {
                                         res.status(500)
                                         res.send({error: "Hay un error al buscar el paciente"})
@@ -194,6 +195,7 @@ exports.verCita = function(req, res) {
                                                 nombreMed: results2[0].nombre,
                                                 apellidosMed: results2[0].apellidos,
                                                 especialidad: results2[0].espe,
+                                                idMedico: results2[0].id,
                                                 fecha: fecha,
                                                 hora: hora
 
@@ -244,6 +246,7 @@ exports.comprobarCodigo = function(req, res) {
     var idUsu = obj.id
 
     if( codigo != null && codigo != "" && idUsu != null && idUsu != "") {
+        
         connection.query('SELECT * FROM cita as ci where ci.paciente = ? and tipo = 1 and codigo like ?', [idUsu, codigo], function(err, results) {
             if(err) {
                 res.status(500)
@@ -260,8 +263,9 @@ exports.comprobarCodigo = function(req, res) {
                         } else {
                             if(results1.length > 0) {
 
-                                var fecha = service.decrypt({text:results[0].fecha,clave:results1[0].clave})
-                                var hora = service.decrypt({text:results[0].hora,clave:results1[0].clave})
+                                var fecha = service.decrypt({text:results[0].fecha,clave:results[0].origen})
+                                var hora = service.decrypt({text:results[0].hora,clave:results[0].origen})
+                                console.log(hora)
                                 //var cod = service.decrypt({text:results[0].codigo,clave:results1[0].clave})
 
                                // console.log(cod)
@@ -269,6 +273,7 @@ exports.comprobarCodigo = function(req, res) {
                                if(codigo == results[0].codigo) {
                                     var currentHour = getTime()
                                     var currentDate = getDate()
+                                    
                                     var d = new Date();
 
                                     if(fecha == currentDate) {
@@ -310,20 +315,20 @@ exports.comprobarCodigo = function(req, res) {
 
                             }else {
                                 res.status(404)
-                                res.send({error: "No hay medico con ese nombre"})
+                                res.send({respuesta: "No hay medico con ese nombre"})
                             }
                         }
                     })
                                      
                 } else {
                     res.status(404)
-                    res.send({error: "No hay pacientes con ese nombre"})
+                    res.send({respuesta: "No hay ningun código igual"})
                 }
             }
         })
     } else {
         res.status(400)
-        res.send({error: "Alguno de los campos es invalido"})
+        res.send({respuesta: "Alguno de los campos es invalido"})
     }
 }
 
@@ -337,7 +342,7 @@ exports.cambiarEstado = function(req, res) {
     console.log(idUsu)
     var dis = parseInt(disponible)
     if( idUsu != null && idUsu != "" && disponible != null && (disponible == 1 || disponible == 0) ) {
-        connection.query('UPDATE Usuario SET disponible = ? WHERE id = ?', [disponible, idUsu], function(err, results) {
+        connection.query('UPDATE usuario SET disponible = ? WHERE id = ?', [disponible, idUsu], function(err, results) {
             if(err) {
                 res.status(500)
                 res.send({error: "Hay un error al modificar al usuario"})
@@ -352,6 +357,93 @@ exports.cambiarEstado = function(req, res) {
         res.send({error: "Alguno de los campos es invalido"})
     }
 
+}
+
+
+
+
+exports.nuevoVideo=function(pet,res){
+    var idUsu = pet.params.idUsu
+    var idCon = pet.params.idCon
+    var video = pet.body.video
+    var mensajes = pet.body.mensajes
+    console.log(idUsu)
+    console.log(idCon)
+    console.log(video)
+    console.log(mensajes)
+
+    if( idUsu != null && idUsu != "" && video != null && video != undefined &&  idCon != null && idCon != "" && mensajes != "" && mensajes != null) {
+
+        connection.query('SELECT * FROM consulta WHERE id = ?',[idCon],function (err2, results1) {
+            if(err2) {
+                console.log(err2)
+                res.status(500)
+                res.send({error: "Hay un error al insertar el video"})
+                console.log("Hay un error al insertar el video")
+            } else {
+                if(results1.length > 0) {
+                    var v = service.encrypt({text:video,clave:results1[0].clave_origen})
+                    var m = service.encrypt({text:mensajes,clave:results1[0].clave_origen})
+
+                    connection.query('INSERT INTO video (consulta, video, mensajes) VALUES(?,?,?)',[idCon, v, m],function (err2, results2) {
+                        if(err2) {
+                            console.log(err2)
+                            res.status(500)
+                            res.send({error: "Hay un error al insertar el video"})
+                            console.log("Hay un error al insertar el video")
+                        } else {
+                            res.status(201)
+                            res.send("Se ha introducido el video correctamente")
+                        }
+                    })
+                } else {
+
+                    res.status(404)
+                    res.send({respuesta: "No hay ninguna consulta con ese id"})
+
+                }
+               
+            }
+        })
+
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
+}
+
+
+
+exports.verVideo=function(pet,res){
+    var idUsu = pet.params.idUsu
+    var idCon = pet.params.idCon
+
+
+    if( idUsu != null && idUsu != "" &&   idCon != null && idCon != "") {
+        connection.query('SELECT * FROM video as v inner join consulta as c on  c.id = v.consulta WHERE v.consulta = ?',[idCon],function (err2, results1) {
+            if(err2) {
+                console.log(err2)
+                res.status(500)
+                res.send({error: "Hay un error al insertar el video"})
+                console.log("Hay un error al insertar el video")
+            } else {
+                if(results1.length > 0) {
+                    var resul = {
+                        "nombreVideo": service.decrypt({text:results1[0].video,clave:results1[0].clave_origen}),
+                        "conversacion": service.decrypt({text:results1[0].mensajes,clave:results1[0].clave_origen})
+                    }
+                    res.status(200)
+                    res.send(resul)
+                } else {
+                    res.status(404)
+                    res.send("No se encuentra un video para la consulta")
+                }     
+            }
+        })
+    } else {
+        res.status(400)
+        res.send({error: "Alguno de los campos es invalido"})
+    }
 }
 
 
@@ -405,7 +497,7 @@ function comprobarHora(horaCita, date) {
     var hora = parseInt(parte[0])
     console.log(horaCita)
     console.log("hora: "+hora)
-    var horaCita = new Date(date.getFullYear(), date.getMonth(),date.getDate(),hora, parseInt(parte[1]), parseInt(parte[2]),00);
+    var horaCita = new Date(date.getFullYear(), date.getMonth(),date.getDate(),hora, parseInt(parte[1]), 00,00);
     //var horaSumada = addMinutes(date, 30)
     //var horaRestada = decreaseMinutes(date, 30)
 

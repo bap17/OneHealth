@@ -16,8 +16,6 @@
     "fs": "0.0.1-security",
     "https": "^1.0.0",
     "jwt-simple": "^0.5.1",
-    "kurento-client": "^6.6.0",
-    "minimist": "^1.2.0",
     "moment": "^2.22.2",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",

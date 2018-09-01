@@ -32,6 +32,7 @@ exports.verHistorial=function(pet,resp){
                                                         var consultas = new Array()
                                                         results4.forEach(consulta => {
                                                             var resul ={
+                                                                "id": consulta.id,
                                                                 "fecha": service.decrypt({text:consulta.fecha,clave:consulta.clave_origen}),
                                                                 "motivo": service.decrypt({text:consulta.motivo,clave:consulta.clave_origen}),
                                                                 "enfermedad_actual": service.decrypt({text:consulta.enfermedad_actual,clave:consulta.clave_origen}),

@@ -24,15 +24,18 @@ exports.crearCita=function (pet,resp){
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
-                            if(result.length > 0) {
+                                if(result.length > 0) {
                                 //var iv = crypto.randomBytes(8);
                                 //var iv = randomstring.generate(5)
-                                var codigo = randomstring.generate(5)
+                                //var codigo = randomstring.generate(5)
                                 var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
                                 var horaC = service.encrypt({text:hora,clave:results[0].clave})
-                                var codigoC = service.encrypt({text:codigo,clave:results[0].clave})
+                                //var codigo = service.encrypt({text:iv,clave:results[0].clave})
+                                var codigo = randomstring.generate(5)
+                                //console.log(codigo)
+                                //var codigoC = service.encrypt({text:codigo,clave:results[0].clave})
                                 
-                                connection.query('INSERT INTO cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,results[0].clave,tipo,codigoC], function(err2, result2) {
+                                connection.query('INSERT INTO cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,results[0].clave,tipo,codigo], function(err2, result2) {
 
                                     if(err2) {
                                         resp.status(500).send({message: err2})
@@ -60,10 +63,12 @@ exports.obtenerCitasMedico=function (pet,resp){
         resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
     }else{
         connection.query('SELECT nombre,clave,validado FROM medico m INNER JOIN usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
+
             if(error) {
                 resp.status(500).send({message: error})
             } else {
                 if(results.length > 0 && results[0].validado) {
+
                     connection.query('SELECT * FROM cita WHERE medico = ?', [id], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
@@ -72,7 +77,6 @@ exports.obtenerCitasMedico=function (pet,resp){
                             var citas = new Array()
                             results2.forEach(cita => {
                                 var resul
-                                
                                 resul={
                                     "id": cita.id,
                                     "fecha": service.decrypt({text:cita.fecha,clave:cita.origen}),
@@ -106,6 +110,7 @@ exports.obtenerCitasPaciente=function (pet,resp){
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
+
                     connection.query('SELECT * FROM cita WHERE paciente = ?', [id], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
@@ -122,7 +127,6 @@ exports.obtenerCitasPaciente=function (pet,resp){
                                 citas.push(resul)
                             })
                             resp.status(200).send({citas:citas})
-                           
                         }
                     })
                 } else {
@@ -139,6 +143,7 @@ exports.obtenerCitasMedicoVideo=function (pet,resp){
     if(id==undefined){
         resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
     }else{
+
         connection.query('SELECT clave,validado FROM medico m INNER JOIN usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
             if(error) {
                 resp.status(500).send({message: error})
@@ -160,9 +165,7 @@ exports.obtenerCitasMedicoVideo=function (pet,resp){
                                     }
                                     citas.push(resul)
                                 })
-                                resp.status(200).send({citas:citas})
-                            
-                                
+                                resp.status(200).send({citas:citas})                                
                             }else{
                                 resp.status(401).send({message: "No tienes citas"})
                             } 
