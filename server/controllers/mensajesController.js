@@ -80,7 +80,7 @@ exports.verMensajesRecibidos=function(pet,resp){
                                 } 
                                 resp.status(200).send({mensajes})*/                                 
                             } else {
-                                resp.status(404).send({message: "No tienes mensajes"})
+                                resp.status(200).send({message: "No tienes mensajes"})
                             }
                         }
                     })

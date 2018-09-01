@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.23, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: tfg
 -- ------------------------------------------------------
--- Server version	5.7.23-0ubuntu0.16.04.1
+-- Server version	5.7.22
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,7 +26,7 @@ CREATE TABLE `administrador` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   CONSTRAINT `admin_usuario` FOREIGN KEY (`id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `administrador` (
 
 LOCK TABLES `administrador` WRITE;
 /*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
-INSERT INTO `administrador` VALUES (3);
+INSERT INTO `administrador` VALUES (16),(17);
 /*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +92,7 @@ CREATE TABLE `consulta` (
   PRIMARY KEY (`id`,`historial`),
   KEY `consulta_historial` (`historial`),
   CONSTRAINT `consulta_historial` FOREIGN KEY (`historial`) REFERENCES `historial_clinico` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `consulta` (
 
 LOCK TABLES `consulta` WRITE;
 /*!40000 ALTER TABLE `consulta` DISABLE KEYS */;
-INSERT INTO `consulta` VALUES (46,4,'a4f290d853b3083f11b912dbf4ef36ed1a0cc07552b744aca4242fd8ecfaad80','f37c235565b84cbde6a06d83e43c21c4621c2aa9cb1e6c79542012541e14529e','3501bb880a298dc5759b54a0ea786ee029bf02e699948fb1a9fb70c5f8352d8d','13794c4fa3039b7692b2d49b9d0424c4aaf50c7d09b8c6578f398ddb5db8bf8a','c35ac9cf9b78fc2a2345fcc90a1999408460d19c0d356f95abb34ae4b97cdc13','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV'),(47,4,'5042b52976990a2b8db9cf36b5f6a9d7c62d317a585a6954ff9d94c2787564ad','b15bd45410c97184fd2155465386721471910be6ca6185dd544bf0b88d495773','278c534df70bae78993da381e2c59bb7f58b7cfb5ee311f5680d226e366c1c84','f3702e83f312a99cabb50ca0d3754e1e357ad835b831f976604476e7af7ddbcc','c5821bdd94f1369f93d079070b2d8f0cabc26cef6d1b1d74abb82798af398794','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV');
+INSERT INTO `consulta` VALUES (46,4,'a4f290d853b3083f11b912dbf4ef36ed1a0cc07552b744aca4242fd8ecfaad80','f37c235565b84cbde6a06d83e43c21c4621c2aa9cb1e6c79542012541e14529e','3501bb880a298dc5759b54a0ea786ee029bf02e699948fb1a9fb70c5f8352d8d','13794c4fa3039b7692b2d49b9d0424c4aaf50c7d09b8c6578f398ddb5db8bf8a','c35ac9cf9b78fc2a2345fcc90a1999408460d19c0d356f95abb34ae4b97cdc13','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV'),(47,4,'5042b52976990a2b8db9cf36b5f6a9d7c62d317a585a6954ff9d94c2787564ad','b15bd45410c97184fd2155465386721471910be6ca6185dd544bf0b88d495773','278c534df70bae78993da381e2c59bb7f58b7cfb5ee311f5680d226e366c1c84','f3702e83f312a99cabb50ca0d3754e1e357ad835b831f976604476e7af7ddbcc','c5821bdd94f1369f93d079070b2d8f0cabc26cef6d1b1d74abb82798af398794','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV'),(48,4,'e47e10a2dd4a2461047eb4a71316114ac264882a908179162219a9f3593fde04','9e88cfbb4a5716ed835c8349013339afff3439beef378f0ec4b3d5e7cbe7c246','cb83bea63cff9504478f410f88569581bcb47bd0eb575667bcce0d63e96ea9b775c0d0678796bdd969746c49123239fe','be8242ff421abc2532c3cebda008c577b7a55a4959eb158007763246b79e1e05','304be9844ed6a47e92f497ce2c2168ec0ce6ca9d77253e95849fd0db057a9a2b','pOBWT5or4gmha35EBqKTMwYKRDLmF+Wp');
 /*!40000 ALTER TABLE `consulta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `especialidad` (
   `nombre` varchar(300) NOT NULL,
   PRIMARY KEY (`id`,`medico`),
   KEY `especialidad_medico_idx` (`medico`),
-  CONSTRAINT `especialidad_medico` FOREIGN KEY (`medico`) REFERENCES `medico` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `especialidad_medico` FOREIGN KEY (`medico`) REFERENCES `medico` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -300,7 +300,7 @@ CREATE TABLE `mensaje` (
 
 LOCK TABLES `mensaje` WRITE;
 /*!40000 ALTER TABLE `mensaje` DISABLE KEYS */;
-INSERT INTO `mensaje` VALUES (4,3,4,'5d410c4c62f68e843d97de963a5e249919c4fe23fa48066c45f6c847ac0168a3','pOBWT5or4gmha35EBqKTMwYKRDLmF+Wp',NULL,NULL,NULL),(5,3,4,'aace824b0059e96e7c34d33b00e5188f0c28dde962dec1dc328146845efee586','pOBWT5or4gmha35EBqKTMwYKRDLmF+Wp',NULL,NULL,NULL),(6,3,4,'8d8a9b338060d98b7ebb40378e8414161734e3117a8dc4787204770551c5d6e44bf977365702f1242b28fe40ce1a9af9','pOBWT5or4gmha35EBqKTMwYKRDLmF+Wp',NULL,NULL,NULL),(10,15,4,'c9ca69b7229fd807342f28e9c7c70c3415eb23eb590fd0b0cb97da4960adbf11','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV','hulio','bea','572eac57a4f12ce8fc52f2a7e99f34d92df660c8f7d45801390f791f6f99fe90'),(11,15,4,'0e46c475c32fa19e6b132d09b389fc9160d4e3c5d54e413d6c88bffc8973b944','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV','hulio','bea','bea7d4c0677067fa83caaf62c31d2431d5e16b80b1177ad0715d41b8d8394ad9'),(12,15,4,'5bdd66841cd0c2a16afc97c6ddb3ed2a4e5fa64cb33a87566156616b2c75b298','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV','hulio','bea','a0a972d1cca9bb405b9d5f1110874683e92c87723fcc8147678b76517e09f071');
+INSERT INTO `mensaje` VALUES (10,15,4,'c9ca69b7229fd807342f28e9c7c70c3415eb23eb590fd0b0cb97da4960adbf11','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV','hulio','bea','572eac57a4f12ce8fc52f2a7e99f34d92df660c8f7d45801390f791f6f99fe90'),(11,15,4,'0e46c475c32fa19e6b132d09b389fc9160d4e3c5d54e413d6c88bffc8973b944','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV','hulio','bea','bea7d4c0677067fa83caaf62c31d2431d5e16b80b1177ad0715d41b8d8394ad9'),(12,15,4,'5bdd66841cd0c2a16afc97c6ddb3ed2a4e5fa64cb33a87566156616b2c75b298','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV','hulio','bea','a0a972d1cca9bb405b9d5f1110874683e92c87723fcc8147678b76517e09f071');
 /*!40000 ALTER TABLE `mensaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +376,7 @@ CREATE TABLE `usuario` (
   `disponible` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,7 +385,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (3,'Roberto Andre','Vega','robertoandrevega3d@gmail.com','andre','vmM8TBpjuWaF3p4xOdWRqSpnp07XUIjHmiG0nHxUz8Q928ogVfYUT9DeO5BTi2dZ9pewLzUnTQ6cYjG55Dm3GQ==','k3xAeuM0MQ+X5uWLxcPjhcpqVcMtO62TYgYQ3zVleEef6o6ozuikH/0ZgZAWRNKRISAbgH3XZcUSXzupPuTPZw==','pOBWT5or4gmha35EBqKTMwYKRDLmF+Wp',1),(4,'Beatriz','Asensi','beatrizasensi17@gmail.com','bea','Zf3yfCSKC+kfnDNVONjSu55Mg42htDM7rNJhoBYI1N/myvDssBN1U8M3Xsles/EIx5Xrdyn1chQEGyF1suPn/g==','HvmuWwCzfj+Nlu3lC1IBMvcYadUwRaCi+IuRwO8iWIt4vJQFn+I6yxkced9sdZTA3o6dV/D9FqJQsQXGzfD0JQ==','djeOIV3Zv0miskLgaYU7kRgNlsZTfl4m',1),(5,'Sergio Julio','Garcia','sergio@gmail.com','sergio','UbGOvDNrH+pwUB7oRDgoUi3CW80bWzexfsxhwy/mTeZFi5lrGT3hih4VgBhc4rKwSjr+taKEopgqGXkaWc2qvQ==','4tQ/UOO40E+6R5LLAfbQTx9wU9L9u3AG+b65Rh+uhdYi57EcZr/619fQa8QoKgW9UssqlatUpiSHpSGN7tdfEQ==','ZekBPZU8fGmO+Uoqo098J2i62JCvHvIV',1),(10,'Luis Pascual','Martí','luis@gmail.com','luis','+pVli+Eu9hHfOcbzgzb/RTlRhJ5IHeP9PUY3xKjK9+LGFNSp6fOAZZUqsmEHFkCraigX5YcbWdNX+haKycJrQg==','sE5Bh0KUT87b756iIhVKQZ73lFkK0ykXyy9C2nr33tGxttj57G0tiviMu/JP2oOXA4cm8UmR3QHpR9CyQIrhxg==','0aFhBOeGY1l+Wb8v45XzsGmMB4PZGd2r',NULL),(11,'Lawrence Arthur','Rider García','larry@gmail.com','larry','AelzmP0uVF9jumKXjbgQo8LuwTWppRnujUyg06xv9MnkovK/gKI3g41CpJn/+6n5DaYiDTIysKZ2gO842gaDDQ==','E+i27ZSHsnspUZ+W6dAmSKTu5AkHiVqBnJOGPfk1AE4EHm9AKONL07hLQgdPvcnghb4zWBvX/4qMK/A2O/52Ig==','JJ/lJBUk6jeeEcX2wAC9u8LNwDMjT0SS',NULL),(15,'Hulio','De La Fuente','Hulio@gmail.com','hulio','T5JCnXCs5zCoRC2nkQhk4UGHgbK63V6mkmjao9cUIWrdKMKpncnlIjkbx2y/brjyasIbuwSRhsbpBYte91sF3A==','/h5QrX8t436ZT655MktaZtFIOEP/o3t6Ys5xd/Ydu8UshIXQs23PCGQkKnDqmuC2k2RSlbiLbk8Th/22s5BCiw==','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV',NULL);
+INSERT INTO `usuario` VALUES (3,'Roberto Andre','Vega','robertoandrevega3d@gmail.com','andre','SIpfxURhNLCexZc5BkP1rGDGAlcqHCjH2ab0mmZRJWb8rN+JCYB6EIsGxZqCrf+wY7XGq3CHMyo5LQbOrdbfvg==','9o2oYVDFwYF7XmLpC9a6QaOeYVB3L68hePcILr8iTZXZ3oc3WEx2uLxXZct8PsJ/GuHdvSZXUCxWcLag/M+ApQ==','pOBWT5or4gmha35EBqKTMwYKRDLmF+Wp',1),(4,'Beatriz','Asensi','beatrizasensi17@gmail.com','bea','Zf3yfCSKC+kfnDNVONjSu55Mg42htDM7rNJhoBYI1N/myvDssBN1U8M3Xsles/EIx5Xrdyn1chQEGyF1suPn/g==','HvmuWwCzfj+Nlu3lC1IBMvcYadUwRaCi+IuRwO8iWIt4vJQFn+I6yxkced9sdZTA3o6dV/D9FqJQsQXGzfD0JQ==','djeOIV3Zv0miskLgaYU7kRgNlsZTfl4m',1),(5,'Sergio Julio','Garcia','sergio@gmail.com','sergio','UbGOvDNrH+pwUB7oRDgoUi3CW80bWzexfsxhwy/mTeZFi5lrGT3hih4VgBhc4rKwSjr+taKEopgqGXkaWc2qvQ==','4tQ/UOO40E+6R5LLAfbQTx9wU9L9u3AG+b65Rh+uhdYi57EcZr/619fQa8QoKgW9UssqlatUpiSHpSGN7tdfEQ==','ZekBPZU8fGmO+Uoqo098J2i62JCvHvIV',1),(10,'Luis Pascual','Martí','luis@gmail.com','luis','+pVli+Eu9hHfOcbzgzb/RTlRhJ5IHeP9PUY3xKjK9+LGFNSp6fOAZZUqsmEHFkCraigX5YcbWdNX+haKycJrQg==','sE5Bh0KUT87b756iIhVKQZ73lFkK0ykXyy9C2nr33tGxttj57G0tiviMu/JP2oOXA4cm8UmR3QHpR9CyQIrhxg==','0aFhBOeGY1l+Wb8v45XzsGmMB4PZGd2r',NULL),(11,'Lawrence Arthur','Rider García','larry@gmail.com','larry','AelzmP0uVF9jumKXjbgQo8LuwTWppRnujUyg06xv9MnkovK/gKI3g41CpJn/+6n5DaYiDTIysKZ2gO842gaDDQ==','E+i27ZSHsnspUZ+W6dAmSKTu5AkHiVqBnJOGPfk1AE4EHm9AKONL07hLQgdPvcnghb4zWBvX/4qMK/A2O/52Ig==','JJ/lJBUk6jeeEcX2wAC9u8LNwDMjT0SS',NULL),(15,'Hulio','De La Fuente','Hulio@gmail.com','hulio','T5JCnXCs5zCoRC2nkQhk4UGHgbK63V6mkmjao9cUIWrdKMKpncnlIjkbx2y/brjyasIbuwSRhsbpBYte91sF3A==','/h5QrX8t436ZT655MktaZtFIOEP/o3t6Ys5xd/Ydu8UshIXQs23PCGQkKnDqmuC2k2RSlbiLbk8Th/22s5BCiw==','oU8uz0SXg1mcCMb/XzfTdqq/g4j9f1kV',NULL),(16,'admin','admin','robertoandrevega3d@gmail.com','admin','SIpfxURhNLCexZc5BkP1rGDGAlcqHCjH2ab0mmZRJWb8rN+JCYB6EIsGxZqCrf+wY7XGq3CHMyo5LQbOrdbfvg==','9o2oYVDFwYF7XmLpC9a6QaOeYVB3L68hePcILr8iTZXZ3oc3WEx2uLxXZct8PsJ/GuHdvSZXUCxWcLag/M+ApQ==',NULL,NULL),(17,'admin2','admin2','beatrizasensi17@gmail.com','admin2','Zf3yfCSKC+kfnDNVONjSu55Mg42htDM7rNJhoBYI1N/myvDssBN1U8M3Xsles/EIx5Xrdyn1chQEGyF1suPn/g==','HvmuWwCzfj+Nlu3lC1IBMvcYadUwRaCi+IuRwO8iWIt4vJQFn+I6yxkced9sdZTA3o6dV/D9FqJQsQXGzfD0JQ==','djeOIV3Zv0miskLgaYU7kRgNlsZTfl4m',NULL);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -426,4 +426,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-30 20:53:09
+-- Dump completed on 2018-09-01 11:27:02

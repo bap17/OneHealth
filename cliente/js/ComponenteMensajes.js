@@ -40,14 +40,12 @@ class ComponenteMensajes extends Component{
 
     mensajesRecibidos(){
         var auxStatus
-        var auxMensaje
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
 
         new API().VerRecibidos(id,token).then(datos=>{
             if(datos.status!=200){
                 //auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
@@ -76,14 +74,12 @@ class ComponenteMensajes extends Component{
 
     mensajesEnviados(){
         var auxStatus
-        var auxMensaje
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
 
         new API().VerEnviados(id,token).then(datos=>{
             if(datos.status!=200){
                 //auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{

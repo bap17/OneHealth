@@ -3,7 +3,7 @@ import React from 'react'
 import ComprobarCita from './ComponenteComprobarCita'
 import Video from './ComponenteVideo'
 import Historial from './ComponenteHistorial'
-import Cita from './ComponenteNuevaCita'
+import NuevaCita from './ComponenteNuevaCita'
 import Mensajes from './ComponenteMensajes'
 import NuevaConsulta from './ComponenteNuevaConsulta'
 import ListarCitas from './ComponenteListarCitas'
@@ -12,9 +12,6 @@ import Usuario from './ComponenteUpdateUser'
 import Admin from './ComponenteAdmin'
 import io from 'socket.io-client';
 import WebRTCSimple from './ComponenteWebRTCSimple'
-import Cita from './ComponenteCita'
-import Mensajes from './ComponenteMensajes'
-import NuevaConsulta from './ComponenteNuevaConsulta'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
@@ -467,7 +464,7 @@ class ComponenteInicio extends React.Component {
 			            <div className="banner">
 		            		<img className="img-banner" src="./../img/doctor2.png"></img>
 		            	</div>
-						<Cita handleVolver={this.inicio}></Cita>
+						<NuevaCita handleVolver={this.inicio}></NuevaCita>
 
 			   
 			        </div> 
