@@ -36,8 +36,8 @@ module.exports = {
     },
     devServer: {
         https: {
-          key: fs.readFileSync('./security/server.key'),
-          cert: fs.readFileSync('./security/server.crt')
+          key: fs.readFileSync('./security/ca.key'),
+          cert: fs.readFileSync('./security/ca.crt')
         }
     },
     //para que podamos hacer debug sobre nuestro código original

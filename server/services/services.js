@@ -57,52 +57,6 @@ exports.enviarEmail=function(pet) {
   return resultado
 }
 
-/*exports.cifrar =function(pet){
-    key =pet.clave
-    var texto = pet.text
-    console.log(texto)
-    var iv = Buffer.concat([crypto.randomBytes(12), Buffer.alloc(4, 0)])
-    console.log(iv)
-    var cipher = crypto.createCipheriv("aes-256-ctr", key, iv)
-    return iv.toString('base64') + cipher.update(texto,'utf8','base64') +  cipher.final('base64')
-    //console.log(ctext)
-}
-
-exports.descifrar =function(pet){
-    key =pet.clave
-    //var buf = new Buffer(pet.text, 'base64');
-    var crypt = pet.text.toString('base64', 16)
-    //console.log(texto)
-    var iv = Buffer.from(pet.text.substring(0,24), 'base64')
-    var decipher = crypto.createDecipheriv("aes-256-ctr", key, iv)
-    //decipher.setAutoPadding(false)
-    return decipher.update(crypt,'base64','utf8')+ decipher.final('utf8')
-}
-
-exports.encrypt=function(pet) {
-    key =pet.clave
-    let iv = crypto.randomBytes(IV_LENGTH);
-    let cipher = crypto.createCipheriv('aes-256-cbc', new Buffer(key), iv);
-    let encrypted = cipher.update(pet.text) + cipher.final()
-   
-    //encrypted = Buffer.concat([encrypted, cipher.final()]);
-   
-    return iv.toString('hex') + ':' + encrypted.toString('hex');
-}
-   
-exports.decrypt=function(pet) {
-    key =pet.clave
-    let textParts = pet.text.split(':');
-    let iv = new Buffer(textParts.shift(), 'hex');
-    let encryptedText = new Buffer(textParts.join(':'), 'hex');
-    let decipher = crypto.createDecipheriv('aes-256-cbc', new Buffer(key), iv);
-    let decrypted = decipher.update(encryptedText,'hex', 'utf8') + decipher.final('utf8')
-   
-    //decrypted = Buffer.concat([decrypted, decipher.final()]);
-   
-    return decrypted.toString();
-}*/
-
 exports.encrypt=function (input) {
 	try {
 		var iv = crypto.randomBytes(16);
