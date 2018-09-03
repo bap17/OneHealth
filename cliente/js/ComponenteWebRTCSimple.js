@@ -458,10 +458,10 @@ class ComponenteWebRTCSimple extends React.Component {
 								<input id="yourMessage" ref={(campo)=>{this.campoMessage=campo}} className="input" placeholder="Introduce el mensaje ..."></input> 
 								<button id="send" onClick={this.send} className="button send"><FontAwesomeIcon className="iconCall" icon="angle-double-right" /></button>
 							</div>
-							<button id="record" className="button" onClick={this.startRecording} >Start Recording</button> &nbsp;
-							<button id="record" className="button" onClick={this.stopRecording} >Stop Recording</button> &nbsp;
-							<button id="play" onClick={this.play} className="button">Play</button> &nbsp;
-							<button id="download" onClick={this.download} className="button">Download</button><br></br>
+							<button id="record" className="button hiden" onClick={this.startRecording} >Start Recording</button> &nbsp;
+							<button id="record" className="button hiden" onClick={this.stopRecording} >Stop Recording</button> &nbsp;
+							<button id="play" onClick={this.play} className="button hiden">Play</button> &nbsp;
+							<button id="download" onClick={this.download} className="button hiden">Download</button><br></br>
 							
 						</div>
 						<div className="clear"></div>
