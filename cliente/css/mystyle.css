@@ -159,7 +159,8 @@ body::-webkit-scrollbar-thumb , conversacion::-webkit-scrollbar-thumb {
 }
 
 ul li{
-	text-decoration: none;
+	text-decoration: none !important;
+	list-style: none;
 }
 
 /*  end global  */
@@ -191,11 +192,10 @@ ul li{
     position: relative;
     top: 28%;
 	right: 10px;
-	width: 20%;
 }
 
 .options-top *{
-	float: left;
+	float: right;
 	padding: 0px 5px!important;
 	margin: 0px !important;
 }
@@ -218,6 +218,9 @@ ul li{
  	color: #b23e3e;;
 }
 
+.mi-cuenta .arrow {
+	width: 30%;
+}
 
 
 .top-nav {
@@ -274,25 +277,18 @@ ul li{
   	-webkit-transition-property: box-shadow;
 	transition-property: box-shadow;
 }
-
-.menu-perfil{
-	float: left;
-    width: 47%;
+.lista-header {
+	width: 60%;
+	float: right;
+	display: none;
+}
+.lista-header li {
+	width: 100%;
+	padding: 10px !important;
 	text-align: center;
-	height: 1px;
 }
 
-.menu-perfil:hover .lista{
-	display: block;
-}
 
-.menu-perfil .mi-cuenta{
-	width: 100%;
-}
-
-.menu-perfil .nav-opt{
-	width: 100%;
-}
 
 .header .icono svg {
 	font-size: 27px;

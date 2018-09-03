@@ -14,6 +14,7 @@ import io from 'socket.io-client';
 import WebRTCSimple from './ComponenteWebRTCSimple'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Api from './servicios/api'
+import $ from 'jquery'
 
 
 
@@ -54,6 +55,18 @@ class ComponenteInicio extends React.Component {
 		this.actualizar = this.actualizar.bind(this)
 		this.actualizarUser = this.actualizarUser.bind(this)
 
+		this.mouseOver = this.mouseOver.bind(this)
+		this.onLeave = this.onLeave.bind(this)
+
+	}
+
+	mouseOver() {
+			$('.header .options-top .lista-header').css("display",  "block")
+		
+	}
+
+	onLeave() {
+		$('.header .options-top .lista-header').css("display",  "none")
 	}
 	
 	doLogout() {
@@ -282,22 +295,24 @@ class ComponenteInicio extends React.Component {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! </p> 
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
-
 			            </div>
 			            <div className="top-nav">
 			            	<button className=" nav-opt" onClick={this.inicio}>Inicio</button>
@@ -333,20 +348,23 @@ class ComponenteInicio extends React.Component {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! </p> 
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
-										<li  className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
+										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -385,19 +403,23 @@ class ComponenteInicio extends React.Component {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -436,19 +458,23 @@ class ComponenteInicio extends React.Component {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p> 
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -488,20 +514,23 @@ class ComponenteInicio extends React.Component {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! </p> 
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -541,20 +570,23 @@ class ComponenteInicio extends React.Component {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
 			                    <p className="welcome">¡Hola @{login}! </p>
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -596,20 +628,23 @@ class ComponenteInicio extends React.Component {
 			return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! </p> 
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -650,20 +685,23 @@ class ComponenteInicio extends React.Component {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
 			                    <p className="welcome">¡Hola @{login}! </p>
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -704,11 +742,23 @@ class ComponenteInicio extends React.Component {
 			return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}!</p> 
-			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span>
-			                    <button className="mi-cuenta" >Mi cuenta</button>
-			                </div>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
+										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<div className="clear"></div>
+									</ul>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -743,20 +793,23 @@ class ComponenteInicio extends React.Component {
 
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
-			                    <p className="welcome">¡Hola @{login}! :D </p>
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
-			                    <div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
-										<li  className="nav-opt">Actualizar datos</li>
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
+			                    <p className="welcome">¡Hola @{login}! </p>
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
+										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
-										<li  onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
+										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
-			                </div>
+									<div className="clear"></div>
+								</div>	
+								
+							</div>
 			                
 			            </div>
 			            <div className="top-nav">
@@ -786,27 +839,30 @@ class ComponenteInicio extends React.Component {
 			 			<NuevaConsulta sip={this.state.sip} video={this.state.srcVideo} mensajes={this.state.mensajesVideo} handleVolver={this.inicio}></NuevaConsulta>
 			 		</div>
 
-		//inicio
+		
     	}else if(tipo=="admin"){
 			return <Admin salir={this.doLogout}></Admin>
-
+		//inicio
 		}else {
     		return <div>
 	        			<div className="header">
 			                <img className="logo" src="../img/logo.png" onClick={this.inicio}></img>
-			                <div className="options-top">
+			                <div className="options-top">	
+			                    <span className="mi-cuenta" onMouseEnter={this.mouseOver}  >Perfil <FontAwesomeIcon className="arrow" icon="sort-down" /></span>
+			                    <span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
 			                    <p className="welcome">¡Hola @{login}! </p>
-								<span className="icono"><FontAwesomeIcon icon="heartbeat" /></span> 
-								<div className="menu-perfil">
-			                    <span className="mi-cuenta" >Perfil</span>
-									<div className="clear"></div>
-									<ul className="lista">
+								
+			                    <div className="clear"></div>
+			                    <div onMouseLeave={this.onLeave}>
+									<ul className="lista-header" >
 										<li onClick={this.actualizarUser} className="nav-opt">Actualizar datos</li>
 										<li onClick={this.actualizar} className="nav-opt">Cambiar contraseña</li>
 										<li onClick={this.doLogout} className="nav-opt">Cerrar cesión</li>
 										<div className="clear"></div>
 									</ul>
-								</div>
+									<div className="clear"></div>
+								</div>	
+								
 							</div>
 			                
 			            </div>
