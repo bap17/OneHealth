@@ -895,14 +895,16 @@ class ComponenteInicio extends React.Component {
 		            		<img className="img-banner" src="./../img/personas.jpg"></img>
 		            	</div>
 
-		            	<div className="body">		
+		            	<div className="body">
 
-		            		{/*<div className="col2">
-		            		 <div class="tumblr-post" data-href="https://embed.tumblr.com/embed/post/KiBYEnmyXDZwvI54OqkLNA/156134830236" data-did="da39a3ee5e6b4b0d3255bfef95601890afd80709"><a href="https://equipo.tumblr.com/post/156134830236"></a></div> 				
-			            	</div>
-			            	 <div className="col2">
-			            	 <div class="tumblr-post" data-href="https://embed.tumblr.com/embed/post/B4Lx_b2m0KJ3EZSaE8FhfA/141487923528" data-did="7d65340aa45472fff844822c255eb2e212a9ff04"><a href="https://vidachistosa.tumblr.com/post/141487923528/lo-divertido-de-tener-apoyo-moral"></a></div> 
+		            		<div className="col2">
+		            			<a data-pin-do="embedPin" data-pin-lang="es" data-pin-width="large" href="https://www.pinterest.com/pin/468304061232202965/"></a>
+		            		</div>		
+
+		            		{/*<div className="col2 hide">
+		            		 <div className="tumblr-post" data-href="https://embed.tumblr.com/embed/post/KiBYEnmyXDZwvI54OqkLNA/156134830236" data-did="da39a3ee5e6b4b0d3255bfef95601890afd80709"><a href="https://equipo.tumblr.com/post/156134830236"></a></div> 				
 			            	</div>*/}
+			            	
 			            	<div className="col2">
 			            		<label className="titulo-inicio">España es el penúltimo país desarrollado en comunicación médico-paciente</label>
 
@@ -910,14 +912,24 @@ class ComponenteInicio extends React.Component {
 
 							</div>
 
-
-				            <div className="col2">
+							<div className="col2">
 			            		<label className="titulo-inicio">Estas son las tres especialidades médicas más 'envejecidas' en el SNS </label>
 			            		En los próximos diez años se estima que se jubilen en torno a 70.000 médicos en España. Esta situación deriva en un gran número de especialidades 'envejecidas' y que necesitan de un cambio generacional, que debería de llegar a través del incremento de plazas MIR.
 			            		Según el ‘Estudio sobre Demografía Médica’, elaborado por la OMC y CESM, el promedio de edad del médico activo en España en el año 2017 es de 49,2 años. Girona es la provincia con el promedio más elevado (56,8 años) mientras que, por el otro lado, se encuentra a Madrid con el promedio de edad del médico activo más bajo (46,2 años).
 
 								En este sentido, Análisis Clínicos es la especialidad más 'envejecida' con una edad media de sus especialistas de 56,4 años. A esta le sigue Medicina del Trabajo (55,0 años)  y Medicina Legal y Forense (54,8 años). -La especialidad de Estomatología desapareció en 2001 y cuenta con una edad media de 59,7 años
 							</div>
+				            
+
+							<div className="col2">
+								<a data-pin-do="embedPin" data-pin-lang="es" data-pin-width="large" href="https://www.pinterest.com/pin/490399846918505668/"></a>
+							</div>
+
+
+							{/*
+							<div className="col2">
+			            	 <div className="tumblr-post" data-href="https://embed.tumblr.com/embed/post/B4Lx_b2m0KJ3EZSaE8FhfA/141487923528" data-did="7d65340aa45472fff844822c255eb2e212a9ff04"><a href="https://vidachistosa.tumblr.com/post/141487923528/lo-divertido-de-tener-apoyo-moral"></a></div> 
+			            	</div>*/}
 
 							<div className="col2">
 			            		<label className="titulo-inicio">España es el penúltimo país desarrollado en comunicación médico-paciente</label>
