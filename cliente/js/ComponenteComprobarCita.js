@@ -88,7 +88,7 @@ class ComponenteComprobarCita extends React.Component {
 
 			if(datos.status!=200) {
 				datos.json().then(function(valor){
-					console.log(valor.respuesta)
+					//console.log(valor.respuesta)
 				})				
 			} else {
 				datos.json().then(function(valor){
@@ -114,7 +114,7 @@ class ComponenteComprobarCita extends React.Component {
 
 			if(datos.status!=200) {
 				datos.json().then(function(valor){
-					console.log(valor.respuesta)
+					//console.log(valor.respuesta)
 				})
 				
 			} else {
@@ -130,7 +130,7 @@ class ComponenteComprobarCita extends React.Component {
 	}
 
 	consulta(video1, mensajes) {
-		console.log(this.state.mensajes)
+		//console.log(this.state.mensajes)
 		this.props.handleConsulta( video1, mensajes);
 	}
 

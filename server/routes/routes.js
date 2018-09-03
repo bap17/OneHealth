@@ -58,8 +58,7 @@ router.get('/usuario/:id', midd.isAuth, usuario.getUsuario)
 /**
  * WebRTC
  */
-router.get('/webrtc/medico/:espe',webrtc.buscarMedico)
-//router.get('/webrtc/paciente/:nombre',webrtc.buscarPacienteNombre)
+
 router.get('/usuario/:id/paciente/:sip',midd.isAuth, webrtc.buscarPacienteSip)
 router.get('/usuario/:id/comprobarCod/:cod', midd.isAuth, webrtc.comprobarCodigo)
 router.get('/usuario/:id/cita/:idCita', midd.isAuth, webrtc.verCita)

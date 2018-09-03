@@ -33,7 +33,7 @@ class ComponenteVideo extends React.Component {
 			if(datos.status!=200) {
                 auxStatus=datos.status.toString()
 				datos.json().then(function(valor){
-					console.log(valor)
+					//console.log(valor)
 
 				})
 				

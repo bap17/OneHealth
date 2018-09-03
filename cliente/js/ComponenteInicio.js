@@ -167,7 +167,7 @@ class ComponenteInicio extends React.Component {
     	this.setState({historial: false})
     	this.setState({mensajes: false})
 		this.setState({videollamada: false})
-		console.log(mensajes)
+		//console.log(mensajes)
 		this.setState({mensajesVideo: mensajes})
 		this.setState({video: false})
 		this.setState({srcVideo:video1})
@@ -241,8 +241,8 @@ class ComponenteInicio extends React.Component {
 		//console.log(this.socket)
 		mythis.socket.on('User'+ idUsu, function(message) {
 			if(mythis.state.confirmacionLlamada == false) {
-				console.log("\n\n ESTOY EN EL MENSAJE HORRIBLE\N\N")
-				console.log('Received message: ')
+				//console.log("\n\n ESTOY EN EL MENSAJE HORRIBLE\N\N")
+				//console.log('Received message: ')
 				if (confirm('El usuario' + message.name
 				+ ' te esta llamando. ¿Quieres aceptar la llamada?')) {
 					mythis.vistaVideo(message)
@@ -257,7 +257,7 @@ class ComponenteInicio extends React.Component {
 
 
     render() {
-    	console.log(this.state.videollamada)
+    	//console.log(this.state.videollamada)
     	var login = localStorage.getItem('username');
 		var tipo = localStorage.getItem('tipo');
 

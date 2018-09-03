@@ -8,37 +8,6 @@ class Api  {
         this.URLAPI = url2
     }
 
-    //Inicializar
-    init() {
-        return fetch(this.API_URL+'connect?init=true', {
-                   method: 'GET',
-                   headers: {
-                       'Content-type':'application/json'
-                   }
-               }).then(function (respuesta) {
-                      console.log(respuesta)
-                      //console.log(respuesta.json())
-                      return respuesta.json()
-
-               })
-    }   
-
-    //Conectar los dos puntos
-    connect(ID) {
-        console.log(ID)
-
-        return fetch(this.API_URL+'connectTo', {
-                   method: 'POST',
-                   headers: {
-                      'Content-type':'application/json'
-                   },
-                   body: JSON.stringify(ID)
-               }).then(function (respuesta) {
-                      //console.log(respuesta.json())
-                      return respuesta.json()
-
-               })
-    }
     
     Login(user) {
         return fetch(this.URLAPI + 'login', {
@@ -164,7 +133,7 @@ class Api  {
     }
 
     disponible(disp, idUsu, token) {
-      console.log("dispoini")
+      //console.log("dispoini")
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/disponibilidad', {
                 method: 'PUT',
                 headers: {
@@ -428,7 +397,7 @@ class Api  {
 
 
     nuevoVideo(idMed, idCon,video,token) {
-      console.log(video)
+     // console.log(video)
         return fetch(this.URLAPI + 'medico/'+ idMed + '/historial/consulta/'+idCon+'/video', {
                    method: 'POST',
                    headers: {

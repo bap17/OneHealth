@@ -76,7 +76,7 @@ io.on('connection', function(socket){
 
 
 exports.sendMessages = function(destino, message) {
-    console.log("envio : ")
+   // console.log("envio : ")
 
    // console.log(message)
     io.emit(destino, message)

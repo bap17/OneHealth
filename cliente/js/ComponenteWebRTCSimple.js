@@ -83,8 +83,8 @@ class ComponenteWebRTCSimple extends React.Component {
 	    }
 	    var idUsu = localStorage.getItem('id');
 		this.state.socket.on('Response'+ idUsu, function(message) {
-			console.log('Estoy en la vuelta: ')
-			console.log(message) ;
+			//console.log('Estoy en la vuelta: ')
+			//console.log(message) ;
 			mythis.setState({aux: message})
 			mythis.connect()
 		})
@@ -100,21 +100,21 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
 	sendMessage(msg) {
-		console.log("estoy enviando cosas al servidor con la info ")
-		console.log(msg)
+		//console.log("estoy enviando cosas al servidor con la info ")
+		//console.log(msg)
 		//this.socket.emit("message", msg);
 		this.state.socket.emit("message", msg)
 	}
 
     initiater() {
-    	console.log("estoy en initiater")
+    	//console.log("estoy en initiater")
     	var idUsu = localStorage.getItem('id');
     	var username = localStorage.getItem('username');
     	var mythis = this
     	peer = Peer({trickle: false, initiator: true, stream: this.state.stream})
 
 		peer.on('signal', (data) => {
-		  console.log('peer signal', data)
+		  //console.log('peer signal', data)
 		  mythis.setState({myID:JSON.stringify(data)})
 		 
 		  	var message = {
@@ -183,7 +183,7 @@ class ComponenteWebRTCSimple extends React.Component {
 		
 		//console.log("Estoy dentro de connect")
 		peer.on('connect', () => {
-			console.log('peer connected')
+			//console.log('peer connected')
 		})
 		peer.on('data', (data) => {
 			const message = data.toString('utf-8')
@@ -194,15 +194,15 @@ class ComponenteWebRTCSimple extends React.Component {
 			
 		})
 		peer.on('stream', (stream) => {
-			console.log("Send stream")
+			//console.log("Send stream")
 			this.setState({otroStream: stream})
 			this.handleVideoRemote(stream)
 		})
 		peer.on('error', (error) => {
-			console.error('peer error', error)
+			//console.error('peer error', error)
 		})
 		peer.on('close', () => {
-			console.log('peer connection closed')
+			//console.log('peer connection closed')
 			document.getElementById("gum").poster = "./../img/medicoAzul.png"; 
 	    	document.getElementById("video1").poster = "./../img/medicoRojo.png"; 
 	    	document.getElementById("gum").src = null;
@@ -227,8 +227,7 @@ class ComponenteWebRTCSimple extends React.Component {
 				var id = localStorage.getItem('id')
 				var nombreVideo = "OneHealth"+id+dd+mm+yyyy+hour;
     			saveAs(superBuffer, nombreVideo , true)
-    			console.log("hola")
-    			console.log(this.state.messages)
+    			//console.log(this.state.messages)
     			this.nuevaConsulta( nombreVideo, this.state.messages)
     		} else if(this.state.TypeUser == "Response") {
     			this.volver()
@@ -311,31 +310,31 @@ class ComponenteWebRTCSimple extends React.Component {
     		this.recordedBlobs = [];
 			let options = {mimeType: 'video/webm,codecs=vp9'};
 			if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-				console.log(options.mimeType + ' is not Supported');
+				//console.log(options.mimeType + ' is not Supported');
 				options = {mimeType: 'video/h264'};
 				if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-					console.log(options.mimeType + ' is not Supported');
+					//console.log(options.mimeType + ' is not Supported');
 					options = {mimeType: 'video/mp4'};
 					if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-						console.log(options.mimeType + ' is not Supported');
+						//console.log(options.mimeType + ' is not Supported');
 						options = {mimeType: 'video/webm'};
 					}
 				}
 			}
 			try {
-				console.log(options)
+				//console.log(options)
 				this.mediaRecorder = new MediaRecorder(this.state.otroStream, options);
 			} catch (e) {
-				console.error(e);
+				//console.error(e);
 				alert(`Exception while creating MediaRecorder: ${e}. mimeType: ${options.mimeType}`);
 				return;
 			}
-			console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
+			//console.log('Created MediaRecorder', this.mediaRecorder, 'with options', options);
 			this.recordButton.textContent = 'Stop Recording';
 			this.mediaRecorder.onstop = this.handleStop;
 			this.mediaRecorder.ondataavailable = this.handleDataAvailable;
 			this.mediaRecorder.start(10); // collect 10ms of data
-			console.log('MediaRecorder started', this.mediaRecorder);
+			//console.log('MediaRecorder started', this.mediaRecorder);
     	}
 
 
@@ -345,7 +344,7 @@ class ComponenteWebRTCSimple extends React.Component {
     	var tipo = localStorage.getItem('tipo');
     	if(tipo == "medico") {
 	    	this.mediaRecorder.stop();
-	 		console.log('Recorded Blobs: ', this.recordedBlobs);
+	 		//console.log('Recorded Blobs: ', this.recordedBlobs);
 	  		this.recordedVideo.controls = true;
     	} else {
     		this.handleStop()
@@ -354,7 +353,7 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     download() {
-    	console.log("entro")
+    	//console.log("entro")
 		const blob = new Blob(this.recordedBlobs, {type: 'video/webm'});
 		const url = window.URL.createObjectURL(blob);
 		const a = document.createElement('a');
@@ -373,15 +372,15 @@ class ComponenteWebRTCSimple extends React.Component {
     }
 
     handleStop(event) {
-    	console.log('Recorder stopped: ', event);
+    	//console.log('Recorder stopped: ', event);
     	this.colgarLlamada()
 
     }
 
     handleSourceOpen(event) {
-		console.log('MediaSource opened');
+		//console.log('MediaSource opened');
 		this.sourceBuffer = mediaSource.addSourceBuffer('video/mp4;');
-		console.log('Source buffer: ', sourceBuffer);
+		//console.log('Source buffer: ', sourceBuffer);
 	}
 
 	handleDataAvailable(event) {
@@ -391,7 +390,7 @@ class ComponenteWebRTCSimple extends React.Component {
 	}
 
 	play() {
-		console.log("entro")
+		//console.log("entro")
 		const superBuffer = new Blob(this.recordedBlobs, {type: 'video/webm'});
 		this.recordedVideo.src = window.URL.createObjectURL(superBuffer);
 		// workaround for non-seekable video taken from
