@@ -75,6 +75,17 @@ class Api  {
                    return respuesta
                })
     }
+
+    ObtenerEspecialidades(){
+        return fetch(this.URLAPI + 'medico/especialidades', {
+            method: 'GET',
+            headers: {
+                'Content-type':'application/json'
+            }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+    }
     
     comprobarCodigo(codigo, id, token) {
       return fetch(this.URLAPI + 'usuario/'+id+'/comprobarCod/'+codigo, {
@@ -113,6 +124,19 @@ class Api  {
                    return respuesta
                })
     }
+
+    VerHistorialPaciente(id,token) {
+        return fetch(this.URLAPI + 'usuario/'+ id + '/historial', {
+                   method: 'GET',
+                   headers: {
+                       'Content-type':'application/json',
+                       'Authorization': token
+                   },
+               }).then(function (respuesta) {
+                   return respuesta
+               })
+    }
+
     litadoPacientes(idUsu, token) {
       return fetch(this.URLAPI + 'usuario/'+idUsu+'/paciente', {
                 method: 'GET',
@@ -255,6 +279,153 @@ class Api  {
                    return respuesta
                })
     }
+
+    CitasMedico(id, token) {
+        return fetch(this.URLAPI + 'medico/'+id+'/citas', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasVMedico(id, token) {
+        return fetch(this.URLAPI + 'medico/'+id+'/citas/video', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasPMedico(id, token) {
+        return fetch(this.URLAPI + 'medico/'+id+'/citas/presencial', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasPaciente(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/citas', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasVPaciente(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/citas/video', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    CitasPPaciente(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id+'/citas/presencial', {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    ActualizarPass(id,pass,token){
+        return fetch(this.URLAPI + 'usuario/'+ id + '/password', {
+            method: 'PUT',
+            headers: {
+                'Content-type':'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify(pass)
+        }).then(function (respuesta) {
+            return respuesta
+        })
+    }
+
+    DatosUsuario(id, token) {
+        return fetch(this.URLAPI + 'usuario/'+id, {
+                  method: 'GET',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  }
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    UpdateUsuario(id, user,token) {
+        return fetch(this.URLAPI + 'usuario/'+id, {
+                  method: 'PUT',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  },
+                  body: JSON.stringify(user)
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    NuevoHistorial(id, historial,token) {
+        return fetch(this.URLAPI + 'admin/'+id+'/historial', {
+                  method: 'POST',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  },
+                  body: JSON.stringify(historial)
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
+    ValidarMedico(id, medico,token) {
+        return fetch(this.URLAPI + 'admin/'+id+'/medico', {
+                  method: 'POST',
+                  headers: {
+                      'Content-type':'application/json',
+                      'Authorization': token
+                  },
+                  body: JSON.stringify(medico)
+        }).then(function(respuesta) {
+            return respuesta
+        })
+  
+    }
+
 
     nuevoVideo(idMed, idCon,video,token) {
       console.log(video)

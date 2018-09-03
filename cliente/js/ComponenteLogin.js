@@ -28,7 +28,6 @@ class ComponenteLogin extends Component {
     }
 
     login(){
-        //evento.preventDefault()
         var nuevoUser = {
             username: this.campoUser.value,
             password: this.campoPassword.value,
@@ -37,7 +36,6 @@ class ComponenteLogin extends Component {
         var auxStatus
         new API().Login(nuevoUser).then(datos=>{
             if(datos.status!=200){
-              console.log(datos)  
               auxStatus=datos.status.toString()
               this.errores()
             }else{
@@ -47,11 +45,13 @@ class ComponenteLogin extends Component {
             }         
           }).then(function(){
             if(auxStatus=="400"){
-              document.getElementById("error").value="Error en el login"
+                document.getElementById("error").innerHTML="Alguno de los campos es inválido o vacío"
             }else if(auxStatus=="404"){
-              document.getElementById("error").value="No existe el usuario"
+                document.getElementById("error").innerHTML="No existe el usuario"
             }else if(auxStatus=="401"){
-              document.getElementById("error").value="Constraseña incorrecta"
+                document.getElementById("error").innerHTML="Contraseña incorrecta"
+            }else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
           }).catch(e => {
               console.log(e)
@@ -65,6 +65,11 @@ class ComponenteLogin extends Component {
                 <br></br>
                 <label className="titulo-login">Iniciar sesión</label>
                 <div className="form-login">
+                <br></br>
+                {this.state.error ?
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
                     <div className="form-group">
                         <label>Nombre de usuario</label>
                         <input  className="input" id="exampleInputEmail1"  placeholder="Nombre de usuario" ref={(campo)=>{this.campoUser=campo}}/>

@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import API from './servicios/api'
+import Especialidad from './ComponenteEspecialidad'
 
 class ComponenteRegistro extends Component {
     constructor(props) {
         super(props)
         this.state = {  
           error: false,
-          tipo: false// false para paciente, true para medico
+          tipo: false,// false para paciente, true para medico
+          espe: []
         };
         this.errores = this.errores.bind(this)
         this.returnLogin = this.returnLogin.bind(this)
@@ -54,7 +56,6 @@ class ComponenteRegistro extends Component {
         var auxStatus
 
         new API().RegistroP(nuevoUser).then(datos=>{
-            //console.log(datos)
             if(datos.status!=201){
                 auxStatus=datos.status.toString()
                 this.errores()
@@ -64,23 +65,67 @@ class ComponenteRegistro extends Component {
                       
         }).then(function(){
             if(auxStatus=="400"){
-                console.log(auxStatus)
-                //document.getElementById('error').value="Hay errores en el formulario"
+                document.getElementById('error').innerHTML="Alguno de los campos es inválido o vacío"
             }else if(auxStatus=="409"){
-                document.getElementById("error").value="Ya hay un usuario con el mismo nombre de usuario"
+                document.getElementById("error").innerHTML="El nombre de usuario ya está en uso"
+            }
+            else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
         }).catch(e => {
             console.log(e)
           })
     }
 
+    obtenerEspecialidades(){
+        var auxStatus
+
+        new API().ObtenerEspecialidades().then(datos=>{
+            if(datos.status!=200){
+                auxStatus=datos.status.toString()
+                this.errores()
+            }else{
+                datos.json().then(resp=>{
+                    this.setState({espe:resp.especialidades})
+                })
+               
+            }             
+        }).then(function(){
+            if(auxStatus=="404"){
+                document.getElementById('error').innerHTML="Alguno de los campos es inválido o vacío"
+            }else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
+            }
+            else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
+            }
+        }).catch(e => {
+            console.log(e)
+          })
+    }
+
+    componentDidMount(){
+        this.obtenerEspecialidades()
+    }
+
     render(){
+        var esp = []
+        for(var i=0; i<this.state.espe.length;i++) {
+            var elemento
+            elemento = <Especialidad espe={this.state.espe[i]} key={i}/>
+            esp.push(elemento)
+        }
         if(!this.state.tipo){
             return <div className="registro">
                 <img src="./../img/logo.png"></img>
                 <br></br>
                 <label className="titulo-login">Registro</label>
                 <div className="form-login">
+                <br></br>
+                {this.state.error ?
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
                     <div className="form-group">
                         <label>Tipo</label>
                         <select className="form-control" onChange={this.tipoMedico} ref={(campo)=>{this.campoTipo=campo}}>
@@ -115,6 +160,11 @@ class ComponenteRegistro extends Component {
                 <br></br>
                 <label className="titulo-login">Registro</label>
                 <div className="form-login">
+                <br></br>
+                {this.state.error ?
+                    <p id="error" className="error"></p>: 
+                    <p className="error"></p>
+                }
                     <div className="form-group">
                         <label>Tipo</label>
                         <select className="form-control" onChange={this.tipoPaciente} ref={(campo)=>{this.campoTipo=campo}}>
@@ -133,7 +183,7 @@ class ComponenteRegistro extends Component {
                     <div className="form-group">
                         <label>Especialidad</label>
                         <select className="form-control" ref={(campo)=>{this.campoEspecialidad=campo}}>
-                            <option>Cirujano</option>
+                            {esp}
                         </select>
                     </div>
                     <div className="form-group">

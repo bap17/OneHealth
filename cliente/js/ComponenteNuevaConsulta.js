@@ -11,12 +11,17 @@ class ComponenteNuevaConsulta extends Component {
         };
         this.errores = this.errores.bind(this)
         this.nuevaConsulta = this.nuevaConsulta.bind(this)
+        this.volver = this.volver.bind(this)
     }
 
 
 
     errores(){
         this.setState({error:true})
+    }
+
+    volver(){
+        this.props.handleVolver()
     }
 
     nuevaConsulta(){
@@ -29,7 +34,6 @@ class ComponenteNuevaConsulta extends Component {
         }
        
         var auxStatus
-        var auxMensaje
         var id = localStorage.getItem('id')
         var token = localStorage.getItem('token')
         var idConsulta
@@ -38,15 +42,10 @@ class ComponenteNuevaConsulta extends Component {
         new API().NuevaConsulta(id,nueva,token).then(datos=>{
             if(datos.status!=201){
                 auxStatus=datos.status.toString()
-                //auxMensaje=datos.message.toString()
                 this.errores()
             }else{
                 datos.json().then(resp=>{
-                    //this.setState({medicos:resp.medicos})
-                    console.log(resp)
                     idConsulta = resp.id
-                    console.log(idConsulta)
-                    alert(resp.message)
                     console.log(idConsulta)
                     if(this.state.video != undefined) {
                         var body = {video: mythis.state.video, mensajes: mythis.state.mensajes}
@@ -62,19 +61,22 @@ class ComponenteNuevaConsulta extends Component {
                             }         
                         })
                     }
+                    alert(resp.message)
+                    this.volver()
                 })
                
             }             
         }).then(function(){
             if(auxStatus=="400"){
-                console.log(auxMensaje)
-                console.log(auxStatus)
-                //document.getElementById('error').value="Hay errores en el formulario"
+                document.getElementById('error').innerHTML="El campo SIP es obligatorio"
             }else if(auxStatus=="403"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No tienes autorización para ésta función"
             }
             else if(auxStatus=="404"){
-                //document.getElementById("error").value="No tienes autorización para ésta función"
+                document.getElementById("error").innerHTML="No se ha encontrado el historial del paciente"
+            }
+            else if(auxStatus=="500"){
+                document.getElementById("error").innerHTML="Error en el servidor"
             }
 
         }).catch(e => {
@@ -86,6 +88,12 @@ class ComponenteNuevaConsulta extends Component {
         return <div className="nueva-consulta">
             <label className="titulo-comp-cita">Nueva consulta </label>
             <div className="form-Nconsulta">
+            <br></br>
+            {this.state.error ?
+
+                <p id="error" className="error"></p>: 
+                <p className="error"></p>
+            }
                 <div className="form-group">
                     <label>SIP del paciente</label>
                     <input id="SIP" className="input" placeholder="Enter SIP" ref={(campo)=>{this.campoSip=campo}}/>  
@@ -108,6 +116,7 @@ class ComponenteNuevaConsulta extends Component {
                 </div>
             </div>
             <button type="submit" className="button" onClick={this.nuevaConsulta}>Guardar</button>
+            <a onClick={this.volver}>Cancelar</a>
         </div>
     }
 }

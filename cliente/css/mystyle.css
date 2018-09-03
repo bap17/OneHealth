@@ -190,7 +190,8 @@ ul li{
     float: right;
     position: relative;
     top: 28%;
-    right: 10px;
+	right: 10px;
+	width: 20%;
 }
 
 .options-top *{
@@ -274,6 +275,24 @@ ul li{
 	transition-property: box-shadow;
 }
 
+.menu-perfil{
+	float: left;
+    width: 47%;
+	text-align: center;
+	height: 1px;
+}
+
+.menu-perfil:hover .lista{
+	display: block;
+}
+
+.menu-perfil .mi-cuenta{
+	width: 100%;
+}
+
+.menu-perfil .nav-opt{
+	width: 100%;
+}
 
 .header .icono svg {
 	font-size: 27px;
@@ -791,6 +810,16 @@ video {
 	margin-bottom: 20px;
 }
 
+.nueva-consulta button{
+	margin-right: 15px;
+}
+
+.historial .card-body{
+	overflow-y: scroll;
+    max-height: 560px;
+
+}
+
 /******** END HISTORIAL *******/
 
 
@@ -814,6 +843,15 @@ video {
 
 .body-cita select{
 	margin:  10px 0px;
+}
+
+.panel-citas .card-body{
+	overflow-y: scroll;
+    max-height: 400px;
+}
+
+.nueva-cita .button{
+	width: 22%;
 }
 
 /******** END CITA *******/
@@ -919,7 +957,80 @@ video {
 	width: 6%;
 }
 
+.panel-mensajes .card-body{
+	overflow-y: scroll;
+    max-height: 400px;
+}
+
 /******** END MESANJES *******/
+
+/******** LISTAR CITAS *******/
+.listar-citas{
+	padding: 50px 100px;
+}
+
+.panel-citas{
+	width: 100%;
+	margin-top: 30px;
+}
+
+.form-citas{
+	margin-top: 10px;
+}
+
+.label-citas{
+	float: left;
+    margin-right: 15px;
+}
+
+.form-citas .form-control{
+	width: 30% !important;
+    float: left;
+}
+
+.listar-citas .item{
+	margin-bottom: 10px;
+}
+
+.fecha-citas{
+	margin-right: 20px;
+}
+
+.boton-volver-cita{
+	padding: 20px 0px 0px 130px;
+}
+/******** END LISTAR CITAS *******/
+
+/******** PASSWORD *******/
+.act-pass{
+	padding: 50px 100px;
+}
+
+.act-pass .button{
+	width: 26%;
+}
+
+/******** END PASSWORD *******/
+
+/******** ADMIN *******/
+.admin{
+	margin: 20px auto;
+	text-align: center;
+	width: 50%;
+}
+
+.admin img{
+	
+	width: 40%;
+	margin: 20px;
+	
+}
+
+.admin .button{
+	width: 25%;
+	margin-bottom: 25px;
+}
+/******** END ADMIN *******/
 
 /******************** PROVISIONAL WEBRTC **************************/
 

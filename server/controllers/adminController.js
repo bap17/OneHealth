@@ -56,7 +56,7 @@ exports.nuevoHistorial=function(pet,resp){
     var antecedentes = pet.body.antecedentes
     
 
-    if(idPac==undefined || id==undefined ) {
+    if(idPac==undefined || id==undefined || idPac=="") {
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM administrador WHERE id = ?', [id],function (error, results) {

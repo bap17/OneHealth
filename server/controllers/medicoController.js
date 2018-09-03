@@ -53,9 +53,29 @@ exports.listarMedicos=function (pet,resp){
                         }
                     })
                 } else {
-                    resp.status(403).send({message: "No tienes autorizacion para ésta función"})
+                    resp.status(404).send({message: "No se ha encontrado el usuario"})
                 }
             }
         })
     }
+}
+
+exports.listarEspecialidades=function (pet,resp){
+  
+ 
+    connection.query('SELECT DISTINCT nombre FROM especialidad',function (err, results2) {
+        if(err) {
+            resp.status(500).send({message: err})
+        } else {
+            if(results2.length > 0) {
+                resp.status(200).send({especialidades:results2}) 
+            } else {
+                resp.status(404).send({message: "No se han encontrado especialidades"})
+            }
+        }
+    })
+            
+        
+    
+    
 }

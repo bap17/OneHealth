@@ -11,7 +11,7 @@ exports.nuevaConsulta=function(pet,resp){
     var diag = pet.body.diagnostico
     var trat = pet.body.tratamiento
 
-    if(id==undefined || sip==undefined){
+    if(id==undefined || sip==undefined || sip==""){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM medico m INNER JOIN usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
