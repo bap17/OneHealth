@@ -47,11 +47,11 @@ class ComponenteIndex extends Component {
 
       if(datos.status!=204) {
         datos.json().then(function(valor){
-          console.log(valor.respuesta)
+          //console.log(valor.respuesta)
         })
         
       } else {
-        console.log("El estado ha cambiado")
+        //console.log("El estado ha cambiado")
 
         
       }

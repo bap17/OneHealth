@@ -13,6 +13,7 @@ import Admin from './ComponenteAdmin'
 import io from 'socket.io-client';
 import WebRTCSimple from './ComponenteWebRTCSimple'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Api from './servicios/api'
 
 
 
@@ -56,6 +57,20 @@ class ComponenteInicio extends React.Component {
 	}
 	
 	doLogout() {
+		var idUsu = localStorage.getItem('id')
+		var token = localStorage.getItem('token')
+		var disp = {"disponible": 0}
+	    new Api().disponible(disp, idUsu, token).then(function(datos){
+
+			if(datos.status!=204) {
+				datos.json().then(function(valor){
+			  	console.log(valor.respuesta)
+			})
+
+			} else {
+				console.log("El estado ha cambiado")
+			}
+		})
 		localStorage.clear()
 		this.props.handleLogout()
 	}
