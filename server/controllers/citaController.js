@@ -1,15 +1,18 @@
 var connection = require('./bd')
 var service = require('../services/services')
+var crypto = require('crypto')
+var randomstring = require("randomstring");
 
 exports.crearCita=function (pet,resp){
     var id = pet.params.id
     var fecha = pet.body.fecha
     var hora = pet.body.hora
-    var medico = pet.body.medico//verificar si es necesario
+    var medico = pet.body.medico
     var sip = pet.body.paciente
+    var tipo = pet.body.tipo
 
 
-    if(fecha==undefined || hora==undefined || medico==undefined || sip==undefined){
+    if(fecha==undefined || hora==undefined || medico==undefined || sip==undefined || fecha==""  || hora==""  || medico=="" || sip=="" ){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
@@ -21,14 +24,28 @@ exports.crearCita=function (pet,resp){
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
-                            service.cifrar({fecha,id})
-                            connection.query('INSERT INTO cita (fecha, hora, paciente,medico) VALUES(?,?,?,?)', [fecha,hora,result[0].id,medico], function(err2, result2) {
-                                if(err2) {
-                                    resp.status(500).send({message: "Error en el servidor1"})
-                                } else {
-                                    resp.status(201).send({message:"La cita se ha registrado correctamente"})
-                                }
-                            })
+                                if(result.length > 0) {
+                                //var iv = crypto.randomBytes(8);
+                                //var iv = randomstring.generate(5)
+                                //var codigo = randomstring.generate(5)
+                                var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
+                                var horaC = service.encrypt({text:hora,clave:results[0].clave})
+                                //var codigo = service.encrypt({text:iv,clave:results[0].clave})
+                                var codigo = randomstring.generate(5)
+                                //console.log(codigo)
+                                //var codigoC = service.encrypt({text:codigo,clave:results[0].clave})
+                                
+                                connection.query('INSERT INTO cita (fecha, hora, paciente,medico,origen,tipo, codigo) VALUES(?,?,?,?,?,?,?)', [fechaC,horaC,result[0].id,medico,results[0].clave,tipo,codigo], function(err2, result2) {
+
+                                    if(err2) {
+                                        resp.status(500).send({message: err2})
+                                    } else {
+                                        resp.status(201).send({message:"La cita se ha registrado correctamente", codigo: codigo})
+                                    }
+                                })
+                            }else{
+                                resp.status(404).send({message: "No se ha encontrado al usuario"})
+                            }  
                         }
                     })
                 } else {
@@ -45,16 +62,33 @@ exports.obtenerCitasMedico=function (pet,resp){
     if(id==undefined){
         resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM medico WHERE id = ?', [id],function (error, results) {
+        connection.query('SELECT nombre,clave,validado FROM medico m INNER JOIN usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
+
             if(error) {
-                resp.status(500).send({message: "Error en el servidor"})
+                resp.status(500).send({message: error})
             } else {
                 if(results.length > 0 && results[0].validado) {
-                    connection.query('SELECT * FROM cita WHERE medico = ?', [id], function(err, citas) {
+
+                    connection.query('SELECT * FROM cita WHERE medico = ?', [id], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
-                            resp.status(200).send({citas})
+                            
+                            var citas = new Array()
+                            results2.forEach(cita => {
+                                var resul
+                                resul={
+                                    "id": cita.id,
+                                    "fecha": service.decrypt({text:cita.fecha,clave:cita.origen}),
+                                    "hora": service.decrypt({text:cita.hora,clave:cita.origen}),
+                                    "paciente": cita.paciente,
+                                    "medico": cita.medico
+                                }
+                                citas.push(resul)
+                                
+                                
+                            })
+                            resp.status(200).send({citas:citas})
                         }
                     })
                 } else {
@@ -76,11 +110,194 @@ exports.obtenerCitasPaciente=function (pet,resp){
                 resp.status(500).send({message: "Error en el servidor"})
             } else {
                 if(results.length > 0) {
-                    connection.query('SELECT * FROM cita WHERE paciente = ?', [id], function(err, citas) {
+
+                    connection.query('SELECT * FROM cita WHERE paciente = ?', [id], function(err, results2) {
                         if(err) {
                             resp.status(500).send({message: "Error en el servidor"})
                         } else {
-                            resp.status(200).send({citas})//TODO: que no aparezca la fecha completa
+                            var citas = new Array()
+                            results2.forEach(cita => {
+                                var resul={
+                                    "id": cita.id,
+                                    "fecha": service.decrypt({text:cita.fecha,clave:cita.origen}),
+                                    "hora": service.decrypt({text:cita.hora,clave:cita.origen}),
+                                    "paciente": cita.paciente,
+                                    "medico": cita.medico
+                                }
+                                citas.push(resul)
+                            })
+                            resp.status(200).send({citas:citas})
+                        }
+                    })
+                } else {
+                    resp.status(404).send({message: "No se ha encontrado al usuario"})
+                }
+            }
+        })
+    }
+}
+
+exports.obtenerCitasMedicoVideo=function (pet,resp){
+    var id = pet.params.id
+
+    if(id==undefined){
+        resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
+    }else{
+
+        connection.query('SELECT clave,validado FROM medico m INNER JOIN usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
+            if(error) {
+                resp.status(500).send({message: error})
+            } else {
+                if(results.length > 0 && results[0].validado) {
+                    connection.query('SELECT * FROM cita WHERE medico = ? AND tipo = 1', [id], function(err, results2) {
+                        if(err) {
+                            resp.status(500).send({message: "Error en el servidor"})
+                        } else {
+                            if(results2.length > 0){
+                                var citas = new Array()
+                                results2.forEach(cita => {
+                                    var resul={
+                                        "id": cita.id,
+                                        "fecha": service.decrypt({text:cita.fecha,clave:cita.origen}),
+                                        "hora": service.decrypt({text:cita.hora,clave:cita.origen}),
+                                        "paciente": cita.paciente,
+                                        "medico": cita.medico
+                                    }
+                                    citas.push(resul)
+                                })
+                                resp.status(200).send({citas:citas})                                
+                            }else{
+                                resp.status(401).send({message: "No tienes citas"})
+                            } 
+                        }
+                    })
+                } else {
+                    resp.status(403).send({message: "No tienes autorizacion para ésta función"})
+                }
+            }
+        })
+    }
+}
+
+exports.obtenerCitasMedicoPresencial=function (pet,resp){
+    var id = pet.params.id
+
+    if(id==undefined){
+        resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
+    }else{
+        connection.query('SELECT clave,validado FROM medico m INNER JOIN usuario u ON m.id = u.id WHERE m.id = ?', [id],function (error, results) {
+            if(error) {
+                resp.status(500).send({message: error})
+            } else {
+                if(results.length > 0 && results[0].validado) {
+                    connection.query('SELECT * FROM cita WHERE medico = ? AND tipo = 0', [id], function(err, results2) {
+                        if(err) {
+                            resp.status(500).send({message: "Error en el servidor"})
+                        } else {
+                            if(results2.length > 0){
+                                var citas = new Array()
+                                results2.forEach(cita => {
+                                    var resul={
+                                        "id": cita.id,
+                                        "fecha": service.decrypt({text:cita.fecha,clave:cita.origen}),
+                                        "hora": service.decrypt({text:cita.hora,clave:cita.origen}),
+                                        "paciente": cita.paciente,
+                                        "medico": cita.medico
+                                    }
+                                    citas.push(resul)
+                                })
+                                resp.status(200).send({citas:citas})
+                                
+                                
+                            }else{
+                                resp.status(401).send({message: "No tienes citas"})
+                            }
+                        }
+                    })
+                } else {
+                    resp.status(403).send({message: "No tienes autorizacion para ésta función"})
+                }
+            }
+        })
+    }
+}
+
+exports.obtenerCitasPacienteVideo=function (pet,resp){
+    var id = pet.params.id
+
+    if(id==undefined){
+        resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
+    }else{
+        connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
+            if(error) {
+                resp.status(500).send({message: "Error en el servidor"})
+            } else {
+                if(results.length > 0) {
+                    connection.query('SELECT * FROM cita WHERE paciente = ? AND tipo = 1', [id], function(err, results2) {
+                        if(err) {
+                            resp.status(500).send({message: "Error en el servidor"})
+                        } else {
+                            if(results2.length > 0){
+                                var citas = new Array()
+                                results2.forEach(cita => {
+                                    var resul={
+                                        "id": cita.id,
+                                        "fecha": service.decrypt({text:cita.fecha,clave:cita.origen}),
+                                        "hora": service.decrypt({text:cita.hora,clave:cita.origen}),
+                                        "paciente": cita.paciente,
+                                        "medico": cita.medico
+                                    }
+                                    citas.push(resul)
+                                })
+                                resp.status(200).send({citas:citas})
+                                
+                                
+                            }else{
+                                resp.status(401).send({message: "No tienes citas"})
+                            } 
+                        }
+                    })
+                } else {
+                    resp.status(404).send({message: "No se ha encontrado al usuario"})
+                }
+            }
+        })
+    }
+}
+
+exports.obtenerCitasPacientePresencial=function (pet,resp){
+    var id = pet.params.id
+
+    if(id==undefined){
+        resp.status(400).send({message: "Alguno de los parámetros es inválido o vacío"})
+    }else{
+        connection.query('SELECT * FROM usuario WHERE id = ?', [id],function (error, results) {
+            if(error) {
+                resp.status(500).send({message: "Error en el servidor"})
+            } else {
+                if(results.length > 0) {
+                    connection.query('SELECT * FROM cita WHERE paciente = ? AND tipo = 0', [id], function(err, results2) {
+                        if(err) {
+                            resp.status(500).send({message: "Error en el servidor"})
+                        } else {
+                            if(results2.length > 0){
+                                var citas = new Array()
+                                results2.forEach(cita => {
+                                    var resul={
+                                        "id": cita.id,
+                                        "fecha": service.decrypt({text:cita.fecha,clave:cita.origen}),
+                                        "hora": service.decrypt({text:cita.hora,clave:cita.origen}),
+                                        "paciente": cita.paciente,
+                                        "medico": cita.medico
+                                    }
+                                    citas.push(resul)
+                                })
+                                resp.status(200).send({citas:citas})
+                                
+                                
+                            }else{
+                                resp.status(401).send({message: "No tienes citas"})
+                            }
                         }
                     })
                 } else {
@@ -114,7 +331,7 @@ exports.borrarCita=function (pet,resp){
                                             resp.status(500).send({message: "Error en el servidor"})
                                         } else {
                                             if(results3.length > 0 && results3[0].validado) {
-                                                connection.query('DELETE FROM Cita WHERE id=?',[cita],function (err2, results4) {
+                                                connection.query('DELETE FROM cita WHERE id=?',[cita],function (err2, results4) {
                                                     if(err2) {
                                                         resp.status(500).send({message: err2})
                                                     } else {
@@ -128,7 +345,7 @@ exports.borrarCita=function (pet,resp){
                                         }
                                     })
                                 }else if(results2[0].paciente==id){
-                                    connection.query('DELETE FROM Cita WHERE id=?',[cita],function (err2, results4) {
+                                    connection.query('DELETE FROM cita WHERE id=?',[cita],function (err2, results4) {
                                         if(err2) {
                                             resp.status(500).send({message: err2})
                                         } else {
@@ -178,7 +395,9 @@ exports.editarCita=function (pet,resp){
                                             resp.status(500).send({message: "Error en el servidor"})
                                         } else {
                                             if(results3.length > 0 && results3[0].validado) {
-                                                connection.query('UPDATE Cita SET fecha = ?, hora=? WHERE id=?',[fecha,hora,cita],function (err2, results4) {
+                                                var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
+                                                var horaC = service.encrypt({text:hora,clave:results[0].clave})
+                                                connection.query('UPDATE cita SET fecha = ?, hora=?, origen=? WHERE id=?',[fechaC,horaC,results[0].clave,cita],function (err2, results4) {
                                                     if(err2) {
                                                         resp.status(500).send({message: err2})
                                                     } else {
@@ -192,12 +411,13 @@ exports.editarCita=function (pet,resp){
                                         }
                                     })
                                 }else if(results2[0].paciente==id){
-                                    connection.query('UPDATE Cita SET fecha = ?, hora=? WHERE id=?',[fecha,hora,cita],function (err2, results4) {
+                                    var fechaC = service.encrypt({text:fecha,clave:results[0].clave})
+                                    var horaC = service.encrypt({text:hora,clave:results[0].clave})
+                                    connection.query('UPDATE cita SET fecha = ?, hora=?, origen=? WHERE id=?',[fechaC,horaC,results[0].clave,cita],function (err2, results4) {
                                         if(err2) {
                                             resp.status(500).send({message: err2})
                                         } else {
-                                            resp.status(200).send({message: "Cita actualizada"})
-                                            
+                                            resp.status(200).send({message: "Cita actualizada"}) 
                                         }
                                     })
                                 }else{

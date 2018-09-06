@@ -3,6 +3,9 @@ var moment = require('moment');
 var config = require('./config');
 var nodemailer = require('nodemailer')
 var crypto = require('crypto')
+var connection = require('../controllers/bd')
+
+const IV_LENGTH = 16; // For AES, this is always 16
 
 exports.createToken = function(user) {
   var payload = {
@@ -34,7 +37,7 @@ exports.enviarEmail=function(pet) {
 
   // setup email data with unicode symbols
   let mailOptions = {
-      from: '"OneHealth💙" <integracionmtis@gmail.com', // sender address
+      from: '"OneHealth💙❤" <integracionmtis@gmail.com', // sender address
       to: pet.email, // list of receivers
       subject: 'Confirmación', // Subject line
       html: 'El código de confirmación es <b>'+pet.codigo + '</b>' // html body
@@ -54,10 +57,63 @@ exports.enviarEmail=function(pet) {
   return resultado
 }
 
-exports.cifrar =function(pet){
-    var key = "6A80FD8D38D579D1090F6CDB62C729311781E4BA31CD7D804BD7BF5AEC3BFC2D"
-    var iv = Buffer.concat([crypto.randomBytes(12), Buffer.alloc(4, 0)])
-    var cipher = crypto.createCipheriv("aes-256-ctr", key, iv)
-    var ctext = iv.toString('hex') + cipher.update(pet.text,'utf8','hex') +  cipher.final('hex')
-    console.log(ctext)
+exports.encrypt=function (input) {
+	try {
+		var iv = crypto.randomBytes(16);
+        //console.info('iv',iv);
+        var num
+        var data
+        if(typeof input.text == 'number'){
+            num = input.text.toString()
+            data = new Buffer(num).toString('binary');
+        }else{
+            data = new Buffer(input.text).toString('binary');
+        }
+		
+		//console.info('data',data);
+		
+		key = new Buffer(input.clave);
+		//console.info(key);
+		var cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+
+		var nodev = process.version.match(/^v(\d+)\.(\d+)/);
+
+		var encrypted;
+
+		if( nodev[1] === '0' && parseInt(nodev[2]) < 10) {
+			encrypted = cipher.update(data, 'binary') + cipher.final('binary');
+		} else {
+			encrypted =  cipher.update(data, 'utf8', 'binary') +  cipher.final('binary');
+		}
+
+		var encoded = new Buffer(iv, 'binary').toString('hex') + new Buffer(encrypted, 'binary').toString('hex');
+
+		return encoded;
+	} catch (ex) {
+	  console.error(ex);
+	}
+}
+exports.decrypt=function (encoded) { 	
+	var combined = new Buffer(encoded.text, 'hex');		
+
+	key = new Buffer(encoded.clave);
+
+	var iv = new Buffer(16);
+	
+	combined.copy(iv, 0, 0, 16);
+	edata = combined.slice(16).toString('binary');
+
+	// Decipher encrypted data
+	var decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+
+	var nodev = process.version.match(/^v(\d+)\.(\d+)/);
+
+	var decrypted, plaintext;
+	if( nodev[1] === '0' && parseInt(nodev[2]) < 10) {  
+		decrypted = decipher.update(edata, 'binary') + decipher.final('binary');    
+		plaintext = new Buffer(decrypted, 'binary').toString('utf8');
+	} else {
+		plaintext = (decipher.update(edata, 'binary', 'utf8') + decipher.final('utf8'));
+	}
+	return plaintext;
 }

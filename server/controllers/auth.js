@@ -25,14 +25,14 @@ exports.emailSignup = function(pet, resp) {
     var esp = pet.body.especialidad
 
 
-    if(nombre==undefined || pass==undefined || tipo==undefined) {
+    if(nombre==undefined || pass==undefined || tipo==undefined || nombre=="" || pass=="" || tipo=="") {
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
-    }else if(sip==undefined && esp==undefined){
+    }else if(sip==undefined || esp==undefined || sip=="" || esp==""){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else if(!service.isValidEmail(email)){
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
-        connection.query('SELECT * FROM Usuario WHERE username = ?', [nombre], function(err, results) {
+        connection.query('SELECT * FROM usuario WHERE username = ?', [nombre], function(err, results) {
             if(err) {
                 resp.status(500).send({message: "Error en el servidor1"})
             } else {
@@ -40,10 +40,10 @@ exports.emailSignup = function(pet, resp) {
                     resp.status(409).send({message: "Ya hay un usuario con el mismo nombre de usuario"})
                 } else {
                     var salt = crypto.randomBytes(SALTBYTES).toString('base64')
-                    var key = crypto.randomBytes(16).toString('base64')
+                    var key = crypto.randomBytes(24).toString('base64')
                     crypto.pbkdf2(pass, salt, PBKDF2ITERATIONS, HASHBYTES, 'sha512', (err, derivedKey) => {
                         if (err) throw err
-                        connection.query('INSERT INTO Usuario (username, email, password, salt, clave) VALUES(?,?,?,?,?)', [nombre,email,derivedKey,salt,key], function(err2, result) {
+                        connection.query('INSERT INTO usuario (username, email, password, salt, clave) VALUES(?,?,?,?,?)', [nombre,email,derivedKey,salt,key], function(err2, result) {
                             if(err2) {
                                 resp.status(500).send({message: err2})
                             } else {
@@ -51,7 +51,7 @@ exports.emailSignup = function(pet, resp) {
                                     if(sip==undefined) {
                                         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
                                     }else{
-                                        connection.query('INSERT INTO Paciente (id,sip) VALUES(?,?)', [result.insertId,sip], function(err3, result2) {
+                                        connection.query('INSERT INTO paciente (id,sip) VALUES(?,?)', [result.insertId,sip], function(err3, result2) {
                                             if(err3) {
                                                 resp.status(500).send({message: err3})
                                             } else {
@@ -63,11 +63,17 @@ exports.emailSignup = function(pet, resp) {
                                     if(esp==undefined){
                                         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
                                     }else{
-                                        connection.query('INSERT INTO Medico (id,especialidad) VALUES(?,?)', [result.insertId,esp], function(err3, result2) {
+                                        connection.query('INSERT INTO medico (id) VALUES(?)', [result.insertId], function(err3, result2) {
                                             if(err3) {
                                                 resp.status(500).send({message: "Error en el servidor4"})
                                             } else {
-                                                resp.status(201).send({message:"El usuario se ha registrado correctamente"})
+                                                connection.query('INSERT INTO especialidad (medico,nombre) VALUES(?,?)', [result.insertId,esp], function(err4, result3) {
+                                                    if(err4) {
+                                                        resp.status(500).send({message: err4})
+                                                    } else {
+                                                        resp.status(201).send({message:"El usuario se ha registrado correctamente"})
+                                                    }
+                                                })
                                             }
                                         })
                                     } 
@@ -86,7 +92,7 @@ exports.emailLogin = function(pet, resp) {
     var user = pet.body.username
     var pass = pet.body.password
 
-    if(user==undefined || pass==undefined) {  
+    if(user==undefined || pass==undefined || user=="" || pass=="") {  
         resp.status(400).send({message: "Alguno de los campos es inválido o vacío"})
     }else{
         connection.query('SELECT * FROM usuario WHERE username = ?', [user],function (error, results) {
@@ -95,7 +101,7 @@ exports.emailLogin = function(pet, resp) {
             } else {
                 if(results.length > 0) {
                     var resultado
-                    connection.query('SELECT * FROM Medico WHERE id = ?', [results[0].id],function (error2, results2) {
+                    connection.query('SELECT * FROM medico WHERE id = ?', [results[0].id],function (error2, results2) {
                         if(error2) {
                             resp.status(500).send({message: "Error en el servidor"})
                         }else{
@@ -104,24 +110,44 @@ exports.emailLogin = function(pet, resp) {
                                     "id": results[0].id,
                                     "nombre": results[0].nombre,
                                     "apellidos": results[0].apellidos,
+                                    "username": results[0].username,
                                     "email": results[0].email,
                                     "tipo": "medico"
                                 }
                             }else{
-                                resultado={
-                                    "id": results[0].id,
-                                    "nombre": results[0].nombre,
-                                    "apellidos": results[0].apellidos,
-                                    "email": results[0].email,
-                                    "tipo": "paciente"
-                                }
+                                connection.query('SELECT * FROM paciente WHERE id = ?', [results[0].id],function (error3, results3) {
+                                    if(error3) {
+                                        resp.status(500).send({message: "Error en el servidor"})
+                                    }else{
+                                        if(results3.length > 0) {
+                                            resultado={
+                                                "id": results[0].id,
+                                                "nombre": results[0].nombre,
+                                                "apellidos": results[0].apellidos,
+                                                "username": results[0].username,
+                                                "email": results[0].email,
+                                                "tipo": "paciente"
+                                            }
+                                        }else{
+                                            resultado={
+                                                "id": results[0].id,
+                                                "nombre": results[0].nombre,
+                                                "apellidos": results[0].apellidos,
+                                                "username": results[0].username,
+                                                "email": results[0].email,
+                                                "tipo": "admin"
+                                            }
+                                        }
+                                    }
+                                })
+                                
                             }
                         }
                     })
                     crypto.pbkdf2(pass, results[0].salt, PBKDF2ITERATIONS, HASHBYTES, 'sha512', (err, derivedKey) => {
                         if (err) throw err
                         if(derivedKey == results[0].password) {
-                            usuario = results[0]
+                            usuario = resultado
                             codigo = Math.floor((Math.random() * 9000) + 1000)
                             var code = {
                                 email: results[0].email,
@@ -151,12 +177,12 @@ exports.emailLogin = function(pet, resp) {
 exports.checkCode=function(pet,resp){
     var cod = pet.body.codigo
 
-    if(cod==undefined){
+    if(cod==undefined || cod==""){
         resp.status(400).send({message: "Debes de poner el código de confirmación"})
     }else{
         if(cod==codigo){
             var token = service.createToken(usuario)                        
-            resp.status(200).send({message: "Login correcto",token: token})
+            resp.status(200).send({message: "Login correcto",token: token, usuario})
         }else{
             resp.status(401).send({message: "Codigo incorrecto"})
         }
