@@ -1,4 +1,4 @@
-# TFG Sistema de temelemedina
+# TFG Sistema de telemedicina
 Repositorio para sistema de telemedicina - Trabajo de Fin de Grado en Ingeniería Informática 2018 UA
 
 ![Alt text](logo.png?raw=true "Logo")
@@ -17,10 +17,11 @@ Esta desarrollado con diversas tecnologías actuales como React, Nodejs, WebRTC 
 - Crear consultas
 - Ver historial clínico
 - Ver consultas de pacientes
+- Mensajes entre paciente-médico
 - Videollamada médico-paciente
 - Grabación de videollamada (solo parte del paciente)
 - Chat de texto en videollamada
-- Ver información de una videollamda realizada
+- Ver información de una videollamada realizada
 
 
 ### Guía de instalación
